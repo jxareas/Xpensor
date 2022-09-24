@@ -1,4 +1,4 @@
-package com.jxareas.xpensor
+package com.jxareas.xpensor.core.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
