@@ -9,4 +9,19 @@
         android:name="com.jxareas.xpensor.core.ui.transactions.TransactionsFragment"
         android:label="Transactions"
         tools:layout="@layout/fragment_transactions" />
+    <fragment
+        android:id="@+id/accountsFragment"
+        android:name="com.jxareas.xpensor.core.ui.accounts.AccountsFragment"
+        android:label="fragment_accounts"
+        tools:layout="@layout/fragment_accounts" />
+    <fragment
+        android:id="@+id/chartFragment"
+        android:name="com.jxareas.xpensor.core.ui.chart.ChartFragment"
+        android:label="fragment_chart"
+        tools:layout="@layout/fragment_chart" />
+    <fragment
+        android:id="@+id/converterFragment"
+        android:name="com.jxareas.xpensor.core.ui.converter.ConverterFragment"
+        android:label="fragment_converter"
+        tools:layout="@layout/fragment_converter" />
 </navigation>
