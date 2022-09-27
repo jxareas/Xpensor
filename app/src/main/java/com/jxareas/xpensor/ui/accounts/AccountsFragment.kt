@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.core.ui.converter
+package com.jxareas.xpensor.ui.accounts
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,24 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import com.jxareas.xpensor.R
 
-class ConverterFragment : Fragment() {
+class AccountsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ConverterFragment()
+        fun newInstance() = AccountsFragment()
     }
 
-    private lateinit var viewModel: ConverterViewModel
+    private lateinit var viewModel: AccountsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.fragment_converter, container, false)
+        return inflater.inflate(R.layout.fragment_accounts, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ConverterViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AccountsViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

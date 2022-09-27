@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.core.ui.converter
+package com.jxareas.xpensor.ui.converter
 
 import androidx.lifecycle.ViewModel
 

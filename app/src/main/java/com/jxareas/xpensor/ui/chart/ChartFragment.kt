@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.core.ui.chart
+package com.jxareas.xpensor.ui.chart
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

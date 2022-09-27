@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".core.ui.transactions.TransactionsFragment">
+    tools:context=".ui.transactions.TransactionsFragment">
 
     <TextView
         android:layout_width="match_parent"

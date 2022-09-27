@@ -1,12 +1,10 @@
-package com.jxareas.xpensor.core.ui.transactions
+package com.jxareas.xpensor.ui.transactions
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
 
 class TransactionsFragment : Fragment() {

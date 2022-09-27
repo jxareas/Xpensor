@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.core.ui.accounts
+package com.jxareas.xpensor.ui.accounts
 
 import androidx.lifecycle.ViewModel
 

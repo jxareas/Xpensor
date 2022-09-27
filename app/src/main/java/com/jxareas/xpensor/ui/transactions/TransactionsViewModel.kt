@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.core.ui.transactions
+package com.jxareas.xpensor.ui.transactions
 
 import androidx.lifecycle.ViewModel
 
