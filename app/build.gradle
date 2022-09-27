@@ -5,6 +5,7 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'dagger.hilt.android.plugin'
     id 'kotlinx-serialization'
+    id 'kotlin-parcelize'
 }
 android {
     compileSdk rootProject.COMPILE_SDK
