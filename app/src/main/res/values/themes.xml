@@ -10,13 +10,13 @@
         <item name="colorSecondaryVariant">@color/red</item>
         <item name="colorOnSecondary">@color/darker_gray</item>
         <item name="colorOnPrimarySurface">@color/light_gray</item>
-        <item name="colorControlHighlight">@color/dark_blue</item>
+        <item name="colorControlHighlight">@color/indigo_dark</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <!-- Customize your theme here. -->
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
-        <item name="bottomNavigationStyle">@style/Widget.TechHub.BottomNavigationView</item>
+        <item name="bottomNavigationStyle">@style/Widget.Xpensor.BottomNavigationView</item>
     </style>
 
     <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
