@@ -1,20 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Xpensor" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Xpensor" parent="Theme.Material3.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dark_blue</item>
-        <item name="colorPrimaryVariant">@color/dark_blue</item>
+        <item name="colorPrimaryVariant">@color/dark_black</item>
         <item name="colorOnPrimary">@color/light_gray</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/orange_red</item>
         <item name="colorSecondaryVariant">@color/red</item>
         <item name="colorOnSecondary">@color/darker_gray</item>
         <item name="colorOnPrimarySurface">@color/light_gray</item>
+        <item name="colorControlHighlight">@color/dark_blue</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <!-- Customize your theme here. -->
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
+        <item name="bottomNavigationStyle">@style/Widget.TechHub.BottomNavigationView</item>
     </style>
 
     <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">

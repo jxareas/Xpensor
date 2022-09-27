@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.TechHub.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">?attr/colorControlHighlight</item>
+    </style>
+
+    <style name="Widget.TechHub.BottomNavigationView" parent="@style/Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">
+            @style/Widget.TechHub.BottomNavigationView.ActiveIndicator
+        </item>
+        <item name="backgroundTint">?attr/colorPrimaryVariant</item>
+        <item name="colorSecondaryContainer">?attr/colorSecondaryContainer</item>
+        <item name="labelVisibilityMode">selected</item>
+        <item name="itemIconTint">?attr/colorOnPrimary</item>
+        <item name="itemTextColor">?attr/colorOnPrimary</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.TechHub.BottomNavigation</item>
+    </style>
+
+
+</resources>

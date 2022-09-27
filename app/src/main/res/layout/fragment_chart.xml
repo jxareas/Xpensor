@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".core.ui.transactions.TransactionsFragment">
+    tools:context=".core.ui.chart.ChartFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Transaction Fragment" />
+        android:text="Chart Fragment" />
 
 </FrameLayout>
