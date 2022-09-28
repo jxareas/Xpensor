@@ -1,7 +1,15 @@
 package com.jxareas.xpensor.ui.accounts
 
 import androidx.lifecycle.ViewModel
+import com.jxareas.xpensor.domain.usecase.GetAccountsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AccountsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+@HiltViewModel
+class AccountsViewModel @Inject constructor(
+    private val getAccountsUseCase: GetAccountsUseCase,
+) : ViewModel() {
+
+
+
 }

@@ -4,9 +4,10 @@ import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.repository.AccountRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 @ViewModelScoped
-class GetAccountsUseCase(private val repository: AccountRepository) {
+class GetAccountsUseCase @Inject constructor(private val repository: AccountRepository) {
     operator fun invoke(): Flow<List<Account>> {
         return repository.getAccounts()
     }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.jxareas.xpensor.databinding.FragmentAccountsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,6 +15,8 @@ class AccountsFragment : Fragment() {
     private var _binding: FragmentAccountsBinding? = null
     private val binding: FragmentAccountsBinding
         get() = _binding!!
+
+    private val viewModel: AccountsViewModel by viewModels()
 
 
     override fun onCreateView(
