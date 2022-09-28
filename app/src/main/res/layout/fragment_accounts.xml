@@ -1,15 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.accounts.AccountsFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Accounts Fragment" />
+        style="@style/TextAppearance.Xpensor.Headline5"
+        android:id="@+id/text_view_accounts_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="@string/accounts"
+        android:textAllCaps="true"
+        android:textColor="?attr/colorOnPrimary"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        style="@style/TextAppearance.Xpensor.Body1"
+        android:id="@+id/text_view_full_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:textAllCaps="true"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_accounts_label"
+        app:layout_constraintEnd_toStartOf="@id/text_view_main_currency"
+        app:layout_constraintTop_toTopOf="@id/text_view_accounts_label"
+        tools:text="1 817,20" />
+
+    <TextView
+        style="@style/TextAppearance.Xpensor.Body1"
+        android:id="@+id/text_view_main_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:textAllCaps="true"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_full_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="USD" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_accounts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_accounts_label"
+        tools:itemCount="8"
+        tools:listitem="@layout/list_item_account" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
