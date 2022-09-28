@@ -15,23 +15,23 @@ interface TransactionDao {
 
     @Query("""
     SELECT transactions.id, transactions.note, transactions.amount, transactions.date,
-    transactions.time, categories.id AS categoryId, categories.name AS category_name, accounts.id AS accountId, 
-    accounts.name AS account_name, categories.icon, categories.iconColor    
+    transactions.time, categories.id AS category_id, categories.name AS category_name, accounts.id AS account_id, 
+    accounts.name AS account_name, categories.icon, categories.icon_color    
     FROM transactions 
-    JOIN accounts ON accounts.id = transactions.accountId 
-    JOIN categories ON categories.id = transactions.categoryId 
+    JOIN accounts ON accounts.id = transactions.account_id 
+    JOIN categories ON categories.id = transactions.category_id 
     WHERE date >= :from AND date <= :to ORDER BY date ASC, time ASC
     """)
     fun getTransactionViews(from: LocalDate, to: LocalDate): Flow<List<TransactionView>>
 
     @Query("""
     SELECT transactions.id, transactions.note, transactions.amount, transactions.date, transactions.time, 
-    categories.id AS categoryId, categories.name AS category_name, accounts.id AS accountId, 
-    accounts.name AS account_name, categories.icon, categories.iconColor
+    categories.id AS category_id, categories.name AS category_name, accounts.id AS account_id, 
+    accounts.name AS account_name, categories.icon, categories.icon_color
     FROM transactions
-    JOIN accounts ON accounts.id = transactions.accountId 
-    JOIN categories ON categories.id = transactions.categoryId
-    WHERE date >= :from AND date <= :to AND accountId = :id ORDER BY date ASC, time ASC
+    JOIN accounts ON accounts.id = transactions.account_id 
+    JOIN categories ON categories.id = transactions.category_id
+    WHERE date >= :from AND date <= :to AND account_id = :id ORDER BY date ASC, time ASC
     """)
     fun getTransactionViewsForAccount(
         from: LocalDate,
@@ -51,7 +51,7 @@ interface TransactionDao {
     @Query("""
     SELECT date, SUM(amount) AS amount_per_day  
     FROM transactions 
-    WHERE date >= :from AND date <= :to AND accountId = :id
+    WHERE date >= :from AND date <= :to AND account_id = :id
     GROUP BY date
     ORDER BY date ASC
     """)

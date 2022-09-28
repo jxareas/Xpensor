@@ -1,5 +1,6 @@
 package com.jxareas.xpensor.data.local.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -9,5 +10,6 @@ data class CategoryEntity(
     val id: Int? = null,
     val name: String,
     val icon: Int,
-    val iconColor: String
+    @ColumnInfo(name = "icon_color")
+    val iconColor: String,
 )

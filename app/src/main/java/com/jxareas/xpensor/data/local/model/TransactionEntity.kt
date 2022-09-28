@@ -1,5 +1,6 @@
 package com.jxareas.xpensor.data.local.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
@@ -33,6 +34,8 @@ data class TransactionEntity(
     val amount: Double,
     val date: LocalDate = getCurrentLocalDate(),
     val time: LocalTime = getCurrentLocalTime(),
+    @ColumnInfo(name="account_id")
     val accountId: Int,
+    @ColumnInfo(name="category_id")
     val categoryId: Int
 )

@@ -100,7 +100,8 @@ dependencies {
 
     // ROOM
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // Preferences
     implementation "androidx.preference:preference:$preference_version"
