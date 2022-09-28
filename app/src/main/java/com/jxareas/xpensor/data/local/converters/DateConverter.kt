@@ -2,9 +2,8 @@ package com.jxareas.xpensor.data.local.converters
 
 import androidx.room.TypeConverter
 import java.time.LocalDate
-import java.time.LocalTime
 
-class DateTimeConverters {
+class DateConverter {
 
     @TypeConverter
     fun fromLocalDate(date: LocalDate): String {
@@ -16,13 +15,4 @@ class DateTimeConverters {
         return LocalDate.parse(data)
     }
 
-    @TypeConverter
-    fun fromLocalTime(time: LocalTime): String {
-        return time.toString()
-    }
-
-    @TypeConverter
-    fun toLocalTime(data: String): LocalTime {
-        return LocalTime.parse(data)
-    }
 }

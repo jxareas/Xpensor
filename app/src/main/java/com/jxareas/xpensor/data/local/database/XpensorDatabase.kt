@@ -3,7 +3,8 @@ package com.jxareas.xpensor.data.local.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.jxareas.xpensor.data.local.converters.DateTimeConverters
+import com.jxareas.xpensor.data.local.converters.DateConverter
+import com.jxareas.xpensor.data.local.converters.TimeConverter
 import com.jxareas.xpensor.data.local.dao.AccountsDao
 import com.jxareas.xpensor.data.local.dao.CategoriesDao
 import com.jxareas.xpensor.data.local.dao.TransactionsDao
@@ -17,7 +18,7 @@ import com.jxareas.xpensor.data.local.entity.Transaction
     version = DATABASE_VERSION,
     exportSchema = true
 )
-@TypeConverters(DateTimeConverters::class)
+@TypeConverters(TimeConverter::class, DateConverter::class)
 abstract class XpensorDatabase : RoomDatabase() {
 
     abstract val accountsDao: AccountsDao
