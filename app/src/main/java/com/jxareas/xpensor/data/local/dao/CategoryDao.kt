@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 @Dao
-interface CategoriesDao {
+interface CategoryDao {
 
     @Query("""
     SELECT id, name, icon, iconColor, ifnull((SELECT SUM(amount) FROM transactions

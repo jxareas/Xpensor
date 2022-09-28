@@ -4,14 +4,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jxareas.xpensor.data.local.entity.Transaction
+import com.jxareas.xpensor.data.local.model.TransactionEntity
 import com.jxareas.xpensor.data.local.views.DayInfoView
 import com.jxareas.xpensor.data.local.views.TransactionView
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 @Dao
-interface TransactionsDao {
+interface TransactionDao {
 
     @Query("""
     SELECT transactions.id, transactions.note, transactions.amount, transactions.date,
@@ -62,7 +62,7 @@ interface TransactionsDao {
     ): Flow<List<DayInfoView>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTransaction(transaction: Transaction)
+    suspend fun insertTransaction(transaction: TransactionEntity)
 
     @Query("DELETE FROM transactions WHERE id = :id")
     suspend fun deleteTransactionById(id: Int)

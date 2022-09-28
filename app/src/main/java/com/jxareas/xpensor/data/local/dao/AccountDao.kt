@@ -6,27 +6,27 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.jxareas.xpensor.data.local.entity.Account
+import com.jxareas.xpensor.data.local.model.AccountEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AccountsDao {
+interface AccountDao {
 
     @Query("SELECT * FROM accounts")
-    fun getAccounts(): Flow<List<Account>>
+    fun getAccounts(): Flow<List<AccountEntity>>
 
     @Query("SELECT * FROM accounts WHERE id = :id")
-    suspend fun getAccountById(id: Int): Account?
+    suspend fun getAccountById(id: Int): AccountEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAccount(account: Account)
+    suspend fun insertAccount(account: AccountEntity)
 
     @Update
-    suspend fun updateAccount(account: Account)
+    suspend fun updateAccount(account: AccountEntity)
 
     @Query("UPDATE accounts SET amount = :amount WHERE id = :id")
     suspend fun updateAccountAmount(id: Int, amount: Double)
 
     @Delete
-    suspend fun deleteAccount(account: Account)
+    suspend fun deleteAccount(account: AccountEntity)
 }

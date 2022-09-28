@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.data.local.entity
+package com.jxareas.xpensor.data.local.model
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "accounts")
-data class Account(
+data class AccountEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val name: String,
