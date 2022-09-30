@@ -2,6 +2,13 @@
     <string name="app_name">Xpensor</string>
     <string name="transactions">Transactions</string>
     <string name="chart">Chart</string>
+    <string name="amount">Amount</string>
     <string name="accounts">Accounts</string>
     <string name="converter">Converter</string>
+    <string name="connection_error">Check your internet connection</string>
+    <string name="add_transaction_button">Add transaction button</string>
+    <string name="convert">Convert</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="currency_converter">Currency Converter</string>
 </resources>

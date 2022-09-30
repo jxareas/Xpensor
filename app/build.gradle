@@ -7,6 +7,11 @@ plugins {
     id 'kotlinx-serialization'
     id 'kotlin-parcelize'
 }
+
+def apikeyPropertiesFile = rootProject.file("local.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdk rootProject.COMPILE_SDK
 
@@ -17,6 +22,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField("String", "CURRENCY_API_KEY", apikeyProperties['CURRENCY_API_KEY'])
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -109,6 +115,13 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$ok_http3_logging_version"
+    // Moshi Converter
+    implementation "com.squareup.retrofit2:converter-moshi:$moshi_converter"
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi:$moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+
 
     // Gson
     implementation "com.google.code.gson:gson:$gson_version"

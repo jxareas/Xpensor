@@ -1,15 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.converter.ConverterFragment">
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="30dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="30dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="227dp" />
+
+    <Spinner
+        android:id="@+id/spinner_from"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="18dp"
+        android:entries="@array/currency_values"
+        app:layout_constraintBottom_toBottomOf="@+id/amount_text_field"
+        app:layout_constraintEnd_toStartOf="@+id/swap_button"
+        app:layout_constraintStart_toEndOf="@+id/amount_text_field"
+        app:layout_constraintTop_toTopOf="@+id/amount_text_field" />
+
+    <Spinner
+        android:id="@+id/spinner_to"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="36dp"
+        android:entries="@array/currency_values"
+        app:layout_constraintEnd_toStartOf="@+id/swap_button"
+        app:layout_constraintStart_toEndOf="@+id/result_text"
+        app:layout_constraintTop_toBottomOf="@+id/amount_text_field" />
+
+    <ImageButton
+        android:id="@+id/swap_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_swap"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner_to"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+        app:layout_constraintTop_toTopOf="@+id/amount_text_field" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/amount_text_field"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/amount"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/TextAppearance.Xpensor.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="7"
+            tools:text="232.12" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-            android:text="Converter Fragment" />
+        android:id="@+id/result_text"
+        style="@style/TextAppearance.Xpensor.Body1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/amount_text_field"
+        tools:text="372.15" />
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/result_text"
+        app:layout_constraintStart_toStartOf="@+id/result_text"
+        app:layout_constraintTop_toTopOf="@+id/result_text" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_transaction_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/add_transaction_button"
+        android:src="@drawable/ic_add"
+        android:visibility="gone"
+        app:fabCustomSize="48dp"
+        app:layout_constraintBottom_toBottomOf="@id/convert_button"
+        app:layout_constraintEnd_toStartOf="@id/convert_button"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toTopOf="@id/convert_button"
+        app:tint="?attr/colorOnPrimarySurface" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/convert_button"
+        style="@style/TextAppearance.Xpensor.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:text="@string/convert"
+        android:textColor="?attr/colorOnPrimarySurface"
+        app:icon="@drawable/ic_currency_converter"
+        app:iconTint="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_to" />
+
+    <TextView
+        style="@style/TextAppearance.Xpensor.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/from"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_from"
+        app:layout_constraintStart_toStartOf="@+id/spinner_from" />
+
+    <TextView
+        style="@style/TextAppearance.Xpensor.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/to"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_to"
+        app:layout_constraintStart_toStartOf="@+id/spinner_to" />
+
+    <TextView
+        style="@style/TextAppearance.Xpensor.Headline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:text="@string/currency_converter"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_top"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
