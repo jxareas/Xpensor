@@ -7,18 +7,18 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 @Dao
-interface CategoriesDao {
+interface CategoryDao {
 
     @Query("""
-    SELECT id, name, icon, iconColor, ifnull((SELECT SUM(amount) FROM transactions
-    WHERE categories.id = categoryId AND date >= :from AND date <= :to), 0) 
+    SELECT id, name, icon, icon_color, ifnull((SELECT SUM(amount) FROM transactions
+    WHERE categories.id = category_id AND date >= :from AND date <= :to), 0) 
     AS category_amount FROM categories GROUP BY id
     """)
     fun getCategoryViews(from: LocalDate, to: LocalDate): Flow<List<CategoryView>>
 
     @Query("""
-    SELECT id, name, icon, iconColor, ifnull((SELECT SUM(amount) FROM transactions
-    WHERE categories.id = categoryId AND date >= :from AND date <= :to AND accountId = :id), 0)
+    SELECT id, name, icon, icon_color, ifnull((SELECT SUM(amount) FROM transactions
+    WHERE categories.id = category_id AND date >= :from AND date <= :to AND account_id = :id), 0)
     AS category_amount FROM categories GROUP BY id
     """)
     fun getCategoryViewsForAccount(

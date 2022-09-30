@@ -4,16 +4,19 @@
     <style name="TextAppearance.Xpensor.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
         <item name="fontFamily">@font/lato_bold</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">40sp</item>
     </style>
 
     <style name="TextAppearance.Xpensor.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
         <item name="fontFamily">@font/lato_bold</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <style name="TextAppearance.Xpensor.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
         <item name="fontFamily">@font/lato_bold</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <style name="TextAppearance.Xpensor.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
@@ -21,11 +24,13 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="lineHeight">40sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="TextAppearance.Xpensor.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="fontFamily">@font/lato_bold</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextAppearance.Xpensor.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
@@ -75,6 +80,7 @@
     <style name="TextAppearance.Xpensor.BottomNavigation" parent="TextAppearance.Xpensor.Caption">
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/lato</item>
         <item name="android:letterSpacing">0.01</item>
     </style>
 

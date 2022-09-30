@@ -1,5 +1,6 @@
-package com.jxareas.xpensor.data.local.entity
+package com.jxareas.xpensor.data.local.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
@@ -13,26 +14,28 @@ import java.time.LocalTime
     tableName = "transactions",
     foreignKeys = [
         ForeignKey(
-            entity = Category::class,
+            entity = CategoryEntity::class,
             parentColumns = ["id"],
             childColumns = ["category_id"],
             onDelete = CASCADE
         ),
         ForeignKey(
-            entity = Account::class,
+            entity = AccountEntity::class,
             parentColumns = ["id"],
             childColumns = ["account_id"],
             onDelete = CASCADE
         )
     ]
 )
-data class Transaction(
+data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val note: String,
     val amount: Double,
     val date: LocalDate = getCurrentLocalDate(),
     val time: LocalTime = getCurrentLocalTime(),
+    @ColumnInfo(name="account_id")
     val accountId: Int,
+    @ColumnInfo(name="category_id")
     val categoryId: Int
 )

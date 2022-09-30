@@ -1,32 +1,46 @@
 package com.jxareas.xpensor.ui.accounts
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jxareas.xpensor.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.jxareas.xpensor.databinding.FragmentAccountsBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
+@AndroidEntryPoint
 class AccountsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = AccountsFragment()
-    }
+    private var _binding: FragmentAccountsBinding? = null
+    private val binding: FragmentAccountsBinding
+        get() = _binding!!
 
-    private lateinit var viewModel: AccountsViewModel
+    private val viewModel: AccountsViewModel by viewModels()
+
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_accounts, container, false)
+    ): View {
+        _binding = FragmentAccountsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AccountsViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupCollectors()
+    }
+
+    private fun setupCollectors() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.accounts.collectLatest { newAccountList ->
+                // TODO: Do something with the list of accounts
+            }
+        }
     }
 
 }

@@ -4,34 +4,34 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jxareas.xpensor.data.local.entity.Transaction
+import com.jxareas.xpensor.data.local.model.TransactionEntity
 import com.jxareas.xpensor.data.local.views.DayInfoView
 import com.jxareas.xpensor.data.local.views.TransactionView
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 @Dao
-interface TransactionsDao {
+interface TransactionDao {
 
     @Query("""
     SELECT transactions.id, transactions.note, transactions.amount, transactions.date,
-    transactions.time, categories.id AS categoryId, categories.name AS category_name, accounts.id AS accountId, 
-    accounts.name AS account_name, categories.icon, categories.iconColor    
+    transactions.time, categories.id AS category_id, categories.name AS category_name, accounts.id AS account_id, 
+    accounts.name AS account_name, categories.icon, categories.icon_color    
     FROM transactions 
-    JOIN accounts ON accounts.id = transactions.accountId 
-    JOIN categories ON categories.id = transactions.categoryId 
+    JOIN accounts ON accounts.id = transactions.account_id 
+    JOIN categories ON categories.id = transactions.category_id 
     WHERE date >= :from AND date <= :to ORDER BY date ASC, time ASC
     """)
     fun getTransactionViews(from: LocalDate, to: LocalDate): Flow<List<TransactionView>>
 
     @Query("""
     SELECT transactions.id, transactions.note, transactions.amount, transactions.date, transactions.time, 
-    categories.id AS categoryId, categories.name AS category_name, accounts.id AS accountId, 
-    accounts.name AS account_name, categories.icon, categories.iconColor
+    categories.id AS category_id, categories.name AS category_name, accounts.id AS account_id, 
+    accounts.name AS account_name, categories.icon, categories.icon_color
     FROM transactions
-    JOIN accounts ON accounts.id = transactions.accountId 
-    JOIN categories ON categories.id = transactions.categoryId
-    WHERE date >= :from AND date <= :to AND accountId = :id ORDER BY date ASC, time ASC
+    JOIN accounts ON accounts.id = transactions.account_id 
+    JOIN categories ON categories.id = transactions.category_id
+    WHERE date >= :from AND date <= :to AND account_id = :id ORDER BY date ASC, time ASC
     """)
     fun getTransactionViewsForAccount(
         from: LocalDate,
@@ -51,7 +51,7 @@ interface TransactionsDao {
     @Query("""
     SELECT date, SUM(amount) AS amount_per_day  
     FROM transactions 
-    WHERE date >= :from AND date <= :to AND accountId = :id
+    WHERE date >= :from AND date <= :to AND account_id = :id
     GROUP BY date
     ORDER BY date ASC
     """)
@@ -62,7 +62,7 @@ interface TransactionsDao {
     ): Flow<List<DayInfoView>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTransaction(transaction: Transaction)
+    suspend fun insertTransaction(transaction: TransactionEntity)
 
     @Query("DELETE FROM transactions WHERE id = :id")
     suspend fun deleteTransactionById(id: Int)
