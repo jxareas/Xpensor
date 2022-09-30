@@ -7,6 +7,7 @@ buildscript {
         TARGET_SDK = 32
 
         kotlin_version = "1.6.10"
+        fragment_ktx = "1.5.3"
         kotlin_coroutines_version = "1.6.0"
         kotlin_serialization_version = "1.2.2"
         kotlin_serialization_converter_version = "0.8.0"
