@@ -21,10 +21,12 @@ interface ConverterModule {
     fun bindConverterRepository(repository: ConverterRepositoryImpl): ConverterRepository
 
     companion object {
+
         @Provides
         @Singleton
         fun provideConverterService(retrofit: Retrofit): ConverterService =
             retrofit.create()
+
     }
 
 

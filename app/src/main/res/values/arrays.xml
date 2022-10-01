@@ -14,10 +14,18 @@
     <string-array name="currency_entries">
         <item>United States Dollar - USD</item>
         <item>Euro - EUR</item>
+        <item>Nicaraguan Cordoba - NIO</item>
+        <item>Costa Rican Colon - CRC</item>
+        <item>Pound Sterling - GBP</item>
+        <item>Japanese Yen - JPY</item>
     </string-array>
 
     <string-array name="currency_values">
         <item>USD</item>
         <item>EUR</item>
+        <item>NIO</item>
+        <item>CRC</item>
+        <item>GBP</item>
+        <item>JPY</item>
     </string-array>
 </resources>

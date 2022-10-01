@@ -1,12 +1,15 @@
 package com.jxareas.xpensor.di.modules
 
 import com.jxareas.xpensor.data.api.constants.ApiConstants
+import com.jxareas.xpensor.data.api.interceptor.AuthenticationInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -22,11 +25,27 @@ class NetworkModule {
     )
 
     @Provides
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+
+    @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit =
+    fun provideHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient.Builder()
+            .addInterceptor(AuthenticationInterceptor)
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .addConverterFactory(moshi)
             .baseUrl(ApiConstants.CURRENCY_API_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(moshi)
             .build()
 
 

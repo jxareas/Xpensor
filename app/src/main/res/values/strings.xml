@@ -8,6 +8,7 @@
     <string name="connection_error">Check your internet connection</string>
     <string name="add_transaction_button">Add transaction button</string>
     <string name="convert">Convert</string>
+    <string name="enter_amount_error">The amount entered is incorrect or not entered at all.</string>
     <string name="from">From:</string>
     <string name="to">To:</string>
     <string name="currency_converter">Currency Converter</string>
