@@ -23,10 +23,10 @@ class AccountsViewModel @Inject constructor(
     private var getAccountsJob: Job? = null
 
     init {
-        getAccounts()
+        launchGetAccountsJob()
     }
 
-    private fun getAccounts() {
+    private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
             .onEach { accounts ->

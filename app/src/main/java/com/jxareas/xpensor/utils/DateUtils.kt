@@ -7,10 +7,13 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZoneOffset
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import kotlin.math.absoluteValue
 
 object DateUtils {
+
+    val DEFAULT_LOCAL_DATE = "2000-01-01".asLocalDate()
 
     fun Double.toAmountFormat(withMinus: Boolean): String {
         return DecimalFormat(if (withMinus || this < 0) "—######.##" else "######.##").format(this.absoluteValue)

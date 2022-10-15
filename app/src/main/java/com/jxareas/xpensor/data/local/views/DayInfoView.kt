@@ -9,5 +9,5 @@ data class DayInfoView(
     @ColumnInfo(name = "date")
     val transactionDate: LocalDate,
     @ColumnInfo(name = "amount_per_day")
-    val amountPerDay: Double
+    val amountPerDay: Double,
 )
