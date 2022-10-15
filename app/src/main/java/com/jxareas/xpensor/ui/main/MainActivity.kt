@@ -1,20 +1,26 @@
-package com.jxareas.xpensor.ui
+package com.jxareas.xpensor.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.jxareas.xpensor.NavGraphDirections
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.ActivityMainBinding
+import com.jxareas.xpensor.ui.main.event.MainActivityEvent
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: MainActivityViewModel by viewModels()
 
     private val navController: NavController by lazy {
         val navHost =
@@ -33,6 +39,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupNavigation()
+        setupListeners()
+        setupEventCollector()
+    }
+
+    private fun setupListeners() = binding.run {
+        buttonSettings.setOnClickListener { viewModel.onSettingsButtonClick() }
+        toolbarInfoBox.setOnClickListener {
+            viewModel.onSelectAccountButtonClick()
+        }
+    }
+
+    private fun setupEventCollector() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.events.collectLatest { event ->
+                when (event) {
+                    is MainActivityEvent.OpenTheSettingsScreen ->
+                        navController.navigate(NavGraphDirections.actionGlobalSettingsActivity())
+                    is MainActivityEvent.OpenTheSelectAccountDialog -> {
+                        // TODO: Handle open the select account dialog fragment}
+                    }
+                }
+
+
+            }
+        }
     }
 
     private fun setupNavigation() {

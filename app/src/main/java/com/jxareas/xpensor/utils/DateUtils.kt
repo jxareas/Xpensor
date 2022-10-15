@@ -15,6 +15,9 @@ object DateUtils {
 
     val DEFAULT_LOCAL_DATE = "2000-01-01".asLocalDate()
 
+    val defaultDateRange: DateRange =
+        DateUtils.getCurrentLocalDate() to DateUtils.getCurrentLocalDate()
+
     fun Double.toAmountFormat(withMinus: Boolean): String {
         return DecimalFormat(if (withMinus || this < 0) "—######.##" else "######.##").format(this.absoluteValue)
     }
