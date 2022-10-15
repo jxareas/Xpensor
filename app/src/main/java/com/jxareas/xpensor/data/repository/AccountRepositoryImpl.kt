@@ -19,8 +19,8 @@ class AccountRepositoryImpl @Inject constructor(
             listOfAccounts.map(mapper::toDomain)
         }
 
-    override suspend fun getAccountById(id: Int): Account? =
-        dao.getAccountById(id)?.let(mapper::toDomain)
+    override suspend fun getAccountById(accountId: Int): Account? =
+        dao.getAccountById(accountId)?.let(mapper::toDomain)
 
     override suspend fun insertAccount(account: Account) =
         dao.insertAccount(mapper.fromDomain(account))
@@ -28,8 +28,8 @@ class AccountRepositoryImpl @Inject constructor(
     override suspend fun updateAccount(account: Account) =
         dao.updateAccount(mapper.fromDomain(account))
 
-    override suspend fun updateAccountAmount(id: Int, amount: Double) =
-        dao.updateAccountAmount(id, amount)
+    override suspend fun updateAccountAmount(accountId: Int, amount: Double) =
+        dao.updateAccountAmount(accountId, amount)
 
     override suspend fun deleteAccount(account: Account) =
         dao.deleteAccount(mapper.fromDomain(account))
