@@ -16,11 +16,11 @@ class AccountsViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root), Binder<Account> {
 
-    override fun bind(listItem: Account) = with(binding) {
-        textViewName.text = listItem.name
-        textViewAmount.text = listItem.amount.toAmountFormat(withMinus = false)
+    override fun bind(item: Account) = with(binding) {
+        textViewName.text = item.name
+        textViewAmount.text = item.amount.toAmountFormat(withMinus = false)
         textViewCurrency.text = preferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY)
-        iconBackground.setTint(listItem.color)
+        iconBackground.setTint(item.color)
     }
 
 }
