@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_item_account_width">58dp</dimen>
+    <dimen name="list_item_account_height">43dp</dimen>
+    <dimen name="pie_chart_width">224dp</dimen>
+    <dimen name="pie_chart_height">224dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_high">48dp</dimen>
+</resources>
