@@ -7,8 +7,8 @@
     tools:context=".ui.accounts.AccountsFragment">
 
     <TextView
-        style="@style/TextAppearance.Xpensor.Headline5"
         android:id="@+id/text_view_accounts_label"
+        style="@style/TextAppearance.Xpensor.Headline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="12dp"
@@ -20,8 +20,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        style="@style/TextAppearance.Xpensor.Body1"
         android:id="@+id/text_view_full_amount"
+        style="@style/TextAppearance.Xpensor.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="6dp"
@@ -34,8 +34,8 @@
         tools:text="1 817,20" />
 
     <TextView
-        style="@style/TextAppearance.Xpensor.Body1"
         android:id="@+id/text_view_main_currency"
+        style="@style/TextAppearance.Xpensor.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -53,6 +53,7 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

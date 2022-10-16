@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        app:defaultValue="default"
+        app:entries="@array/theme_entries"
+        app:entryValues="@array/theme_values"
+        app:icon="@drawable/ic_theme"
+        app:key="theme"
+        app:title="@string/theme"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        app:defaultValue="USD"
+        app:entries="@array/currency_entries"
+        app:entryValues="@array/currency_values"
+        app:icon="@drawable/ic_currency"
+        app:key="currency"
+        app:title="@string/displayed_currency"
+        app:useSimpleSummaryProvider="true" />
+
+    <Preference
+        app:icon="@drawable/ic_password"
+        app:key="reset_pin"
+        app:summary="@string/reset_pin_message"
+        app:title="Reset PIN" />
+
+</PreferenceScreen>

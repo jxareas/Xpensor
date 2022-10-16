@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.jxareas.xpensor.databinding.FragmentAccountsBinding
+import com.jxareas.xpensor.ui.accounts.adapter.AccountsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountsFragment : Fragment() {
@@ -19,6 +21,9 @@ class AccountsFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: AccountsViewModel by viewModels()
+
+    @Inject
+    lateinit var accountsListAdapter: AccountsListAdapter
 
 
     override fun onCreateView(
@@ -32,13 +37,18 @@ class AccountsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
         setupCollectors()
+    }
+
+    private fun setupRecyclerView() = binding.recyclerViewAccounts.run {
+        adapter = accountsListAdapter
     }
 
     private fun setupCollectors() {
         lifecycleScope.launchWhenStarted {
             viewModel.accounts.collectLatest { newAccountList ->
-                // TODO: Do something with the list of accounts
+                accountsListAdapter.submitList(newAccountList)
             }
         }
     }

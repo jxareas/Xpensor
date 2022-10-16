@@ -1,12 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Xpensor" parent="Theme.Material3.DayNight">
+    <style name="Theme.Xpensor" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dark_blue</item>
         <item name="colorPrimaryVariant">@color/dark_black</item>
         <item name="colorOnPrimary">@color/dark_black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/orange_red</item>
+        <item name="colorSecondary">@color/indigo_dark</item>
         <item name="colorSecondaryVariant">@color/red</item>
         <item name="colorOnSecondary">@color/darker_gray</item>
         <item name="colorOnPrimarySurface">@color/light_gray</item>

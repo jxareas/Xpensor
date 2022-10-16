@@ -24,4 +24,12 @@
         android:name="com.jxareas.xpensor.ui.converter.ConverterFragment"
         android:label="fragment_converter"
         tools:layout="@layout/fragment_converter" />
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.jxareas.xpensor.ui.settings.SettingsActivity"
+        android:label="SettingsActivity"
+        tools:layout="@layout/settings_activity" />
+    <action
+        android:id="@+id/action_global_settingsActivity"
+        app:destination="@id/settingsActivity" />
 </navigation>

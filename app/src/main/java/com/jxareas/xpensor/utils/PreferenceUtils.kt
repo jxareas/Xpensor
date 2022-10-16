@@ -2,7 +2,7 @@ package com.jxareas.xpensor.utils
 
 object PreferenceUtils {
 
-    const val MAIN_COLOR = "#ffee423e"
+    const val MAIN_COLOR = "#1b2838"
     const val MAIN_CURRENCY = "USD"
 
     const val THEME_PREFERENCE_KEY = "theme"
@@ -15,6 +15,8 @@ object PreferenceUtils {
 
     const val AUTH_CODE_PREFERENCE_KEY = "auth_code"
     const val FIRST_TIME_PREFERENCE_KEY = "first_time"
+
+
 
 
 }
