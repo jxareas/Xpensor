@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/dark_black</item>
         <item name="colorOnPrimary">@color/dark_black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/orange_red</item>
+        <item name="colorSecondary">@color/indigo_dark</item>
         <item name="colorSecondaryVariant">@color/red</item>
         <item name="colorOnSecondary">@color/darker_gray</item>
         <item name="colorOnPrimarySurface">@color/light_gray</item>

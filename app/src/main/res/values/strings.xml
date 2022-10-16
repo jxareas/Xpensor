@@ -30,4 +30,8 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="settings">Settings</string>
     <string name="all_accounts">All accounts</string>
+    <string name="displayed_currency">Displayed Currency</string>
+    <string name="reset_pin_message">Click twice to reset the PIN and set a new one</string>
+    <string name="reset_pin_message_repeat">Click to reset the PIN and set a new one</string>
+    <string name="theme">Theme</string>
 </resources>
