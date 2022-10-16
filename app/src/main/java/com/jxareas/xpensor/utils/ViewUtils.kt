@@ -15,10 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
 
-fun AppCompatDelegate.setNightMode(onSelectedTheme: () -> Int) =
-    AppCompatDelegate.setDefaultNightMode(
-        onSelectedTheme()
-    )
 
 fun ImageView.setTint(value: String?) {
     DrawableCompat.setTint(this.drawable, Color.parseColor(value ?: MAIN_COLOR))

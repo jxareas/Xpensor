@@ -1,15 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.chart.ChartFragment">
+    tools:context="com.jxareas.xpensor.ui.chart.ChartFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Chart Fragment" />
+    <include
+        android:id="@+id/category1"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/category2"
+        app:layout_constraintEnd_toEndOf="@+id/category5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@+id/category5"
+        app:layout_constraintTop_toTopOf="@+id/category2"
+        app:layout_constraintVertical_chainStyle="spread" />
 
-</FrameLayout>
+    <include
+        android:id="@+id/category2"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/chart"
+        app:layout_constraintEnd_toStartOf="@+id/category3"
+        app:layout_constraintStart_toEndOf="@+id/category1"
+        app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+    <include
+        android:id="@+id/category3"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_high"
+        app:layout_constraintBottom_toTopOf="@+id/chart"
+        app:layout_constraintEnd_toStartOf="@+id/category4"
+        app:layout_constraintStart_toEndOf="@+id/category2"
+        app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+    <include
+        android:id="@+id/category4"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/category3"
+        app:layout_constraintEnd_toEndOf="@+id/category6"
+        app:layout_constraintStart_toStartOf="@+id/category6"
+        app:layout_constraintTop_toTopOf="@+id/category3"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <include
+        android:id="@+id/category5"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/category7"
+        app:layout_constraintEnd_toStartOf="@+id/chart"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/category1" />
+
+    <include
+        android:id="@+id/category7"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/category9"
+        app:layout_constraintEnd_toStartOf="@+id/chart"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/category5" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_width="@dimen/pie_chart_width"
+        android:layout_height="@dimen/pie_chart_height"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="@id/guideline_top">
+
+    </com.github.mikephil.charting.charts.PieChart>
+
+    <include
+        android:id="@+id/category6"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/category8"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/chart"
+        app:layout_constraintTop_toBottomOf="@+id/category4" />
+
+    <include
+        android:id="@+id/category8"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/category12"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/chart"
+        app:layout_constraintTop_toBottomOf="@+id/category6" />
+
+    <include
+        android:id="@+id/category9"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/category10"
+        app:layout_constraintEnd_toEndOf="@+id/category7"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@+id/category7"
+        app:layout_constraintTop_toTopOf="@+id/category10" />
+
+    <include
+        android:id="@+id/category10"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_high"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/category11"
+        app:layout_constraintStart_toEndOf="@+id/category9"
+        app:layout_constraintTop_toBottomOf="@+id/chart" />
+
+    <include
+        android:id="@+id/category11"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/category12"
+        app:layout_constraintStart_toEndOf="@+id/category10"
+        app:layout_constraintTop_toBottomOf="@+id/chart" />
+
+    <include
+        android:id="@+id/category12"
+        layout="@layout/list_item_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/category11"
+        app:layout_constraintEnd_toEndOf="@+id/category8"
+        app:layout_constraintStart_toStartOf="@+id/category8"
+        app:layout_constraintTop_toTopOf="@+id/category11" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_begin="@dimen/margin_small"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_end="@dimen/margin_small"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/margin_small"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/margin_small"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
