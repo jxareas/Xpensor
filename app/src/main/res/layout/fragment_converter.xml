@@ -156,7 +156,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
         android:text="@string/currency_converter"
-        android:textColor="?attr/colorOnSecondary"
+        android:textColor="?attr/colorPrimaryVariant"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline_top"
