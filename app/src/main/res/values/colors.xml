@@ -21,6 +21,9 @@
     <color name="orange_red">#ffee423e</color>
     <color name="pink">#ffe91e63</color>
 
+
+    <color name="polished_white">#F0F8FF</color>
+    <color name="anti_flash_white">#F4F6F9</color>
     <color name="xpensor_blue">#43afff</color>
     <color name="dark_blue">#1b2838</color>
     <color name="dark_blue_variant">#203354</color>

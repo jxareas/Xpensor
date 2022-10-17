@@ -8,13 +8,14 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryVariant"
         android:minHeight="64dp"
-        android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/settings" />
+        app:title="@string/settings"
+        app:titleTextAppearance="@style/TextAppearance.Xpensor.Headline3" />
 
     <FrameLayout
         android:id="@+id/settings"

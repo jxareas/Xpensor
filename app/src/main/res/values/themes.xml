@@ -9,6 +9,8 @@
         <item name="colorSecondary">@color/xpensor_blue</item>
         <item name="colorSecondaryVariant">@color/red</item>
         <item name="colorOnSecondary">@color/xpensor_blue</item>
+
+        <item name="android:colorBackground">@color/anti_flash_white</item>
         <item name="colorOnPrimarySurface">@color/white</item>
         <item name="colorControlHighlight">@color/xpensor_blue</item>
         <!-- Status bar color. -->
