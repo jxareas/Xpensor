@@ -147,4 +147,7 @@ dependencies {
 
     // MPAndroidChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // Splash Screen API
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 }
