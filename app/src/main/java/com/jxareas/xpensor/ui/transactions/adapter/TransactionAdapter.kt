@@ -14,9 +14,9 @@ import com.jxareas.xpensor.utils.Binder
 import com.jxareas.xpensor.utils.invoke
 import javax.inject.Inject
 
-class TransactionCardAdapter @Inject constructor(
+class TransactionAdapter @Inject constructor(
     private val preferences: SharedPreferences,
-) : ListAdapter<Any, TransactionCardAdapter.ViewHolder>(
+) : ListAdapter<Any, TransactionAdapter.ViewHolder>(
     AsyncDifferConfig.Builder(TransactionDiffCallback).build()
 ) {
     abstract class ViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root),

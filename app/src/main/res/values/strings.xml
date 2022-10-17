@@ -34,4 +34,5 @@
     <string name="reset_pin_message">Click twice to reset the PIN and set a new one</string>
     <string name="reset_pin_message_repeat">Click to reset the PIN and set a new one</string>
     <string name="theme">Theme</string>
+    <string name="no_transactions">No Transactions</string>
 </resources>

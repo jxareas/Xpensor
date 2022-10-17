@@ -10,7 +10,7 @@ import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_CURRENCY
 class DayInformationViewHolder(
     private val binding: ListItemDayInformationBinding,
     private val preferences: SharedPreferences,
-) : TransactionCardAdapter.ViewHolder(binding) {
+) : TransactionAdapter.ViewHolder(binding) {
 
 
     override fun bind(item: Any) {

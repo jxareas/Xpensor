@@ -12,7 +12,7 @@ import com.jxareas.xpensor.utils.setTint
 class TransactionViewHolder(
     private val binding: CardItemTransactionBinding,
     private val preferences: SharedPreferences,
-) : TransactionCardAdapter.ViewHolder(binding) {
+) : TransactionAdapter.ViewHolder(binding) {
 
     override fun bind(item: Any) {
         val transactionView = item as TransactionView
