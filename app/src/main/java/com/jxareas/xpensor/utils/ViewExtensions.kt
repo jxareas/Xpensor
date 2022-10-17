@@ -1,12 +1,14 @@
 package com.jxareas.xpensor.utils
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.IntegerRes
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.DialogFragmentNavigator
@@ -33,6 +35,9 @@ private val mapOfDrawables = mapOf(
     10 to R.drawable.ic_restaurant,
     11 to R.drawable.ic_services
 )
+
+fun Resources.getLong(@IntegerRes integerRes : Int) : Long =
+    getInteger(integerRes).toLong()
 
 fun ImageView.setIcon(id: Int) {
     this.setImageResource(mapOfDrawables[id] ?: R.drawable.ic_image_error)

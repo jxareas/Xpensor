@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.transition.MaterialFade
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.FragmentConverterBinding
 import com.jxareas.xpensor.ui.converter.event.CurrencyConverterEvent
