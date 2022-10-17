@@ -1,6 +1,6 @@
 package com.jxareas.xpensor.domain.repository
 
-import com.jxareas.xpensor.data.local.views.DayInfoView
+import com.jxareas.xpensor.data.local.views.DayInformationView
 import com.jxareas.xpensor.data.local.views.TransactionView
 import com.jxareas.xpensor.domain.model.Transaction
 import kotlinx.coroutines.flow.Flow
@@ -16,13 +16,13 @@ interface TransactionRepository {
         id: Int,
     ): Flow<List<TransactionView>>
 
-    fun getTransactionAmountsPerDay(from: LocalDate, to: LocalDate): Flow<List<DayInfoView>>
+    fun getTransactionAmountsPerDay(from: LocalDate, to: LocalDate): Flow<List<DayInformationView>>
 
     fun getTransactionAmountsPerDayForAccount(
         from: LocalDate,
         to: LocalDate,
         transactionId: Int,
-    ): Flow<List<DayInfoView>>
+    ): Flow<List<DayInformationView>>
 
     suspend fun insertTransaction(transaction: Transaction)
 

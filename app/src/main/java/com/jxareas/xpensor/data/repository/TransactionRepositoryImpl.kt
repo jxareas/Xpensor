@@ -2,7 +2,7 @@ package com.jxareas.xpensor.data.repository
 
 import com.jxareas.xpensor.data.local.dao.TransactionDao
 import com.jxareas.xpensor.data.local.model.TransactionEntity
-import com.jxareas.xpensor.data.local.views.DayInfoView
+import com.jxareas.xpensor.data.local.views.DayInformationView
 import com.jxareas.xpensor.data.local.views.TransactionView
 import com.jxareas.xpensor.domain.mapper.DomainMapper
 import com.jxareas.xpensor.domain.model.Transaction
@@ -29,14 +29,14 @@ class TransactionRepositoryImpl @Inject constructor(
     override fun getTransactionAmountsPerDay(
         from: LocalDate,
         to: LocalDate,
-    ): Flow<List<DayInfoView>> =
+    ): Flow<List<DayInformationView>> =
         dao.getTransactionAmountsPerDay(from, to)
 
     override fun getTransactionAmountsPerDayForAccount(
         from: LocalDate,
         to: LocalDate,
         transactionId: Int,
-    ): Flow<List<DayInfoView>> =
+    ): Flow<List<DayInformationView>> =
         dao.getTransactionAmountsPerDayForAccount(from, to, transactionId)
 
     override suspend fun insertTransaction(transaction: Transaction) =

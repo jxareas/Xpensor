@@ -1,5 +1,6 @@
 package com.jxareas.xpensor.utils
 
-interface Binder<T> {
+@FunctionalInterface
+fun interface Binder<T> {
     fun bind(item : T)
 }
