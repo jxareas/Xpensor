@@ -13,8 +13,7 @@ import com.jxareas.xpensor.utils.setTint
 class AccountsViewHolder(
     private val preferences: SharedPreferences,
     private val binding: ListItemAccountBinding,
-) :
-    RecyclerView.ViewHolder(binding.root), Binder<Account> {
+) : RecyclerView.ViewHolder(binding.root), Binder<Account> {
 
     override fun bind(item: Account) = with(binding) {
         textViewName.text = item.name

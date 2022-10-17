@@ -5,7 +5,7 @@ import androidx.room.Entity
 import java.time.LocalDate
 
 @Entity
-data class DayInfoView(
+data class DayInformationView(
     @ColumnInfo(name = "date")
     val transactionDate: LocalDate,
     @ColumnInfo(name = "amount_per_day")
