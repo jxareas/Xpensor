@@ -3,16 +3,16 @@
     <style name="Theme.Xpensor" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dark_black</item>
-        <item name="colorPrimaryVariant">@color/dark_black</item>
+        <item name="colorPrimaryVariant">@color/black_matte</item>
         <item name="colorOnPrimary">@color/light_gray</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/orange_red</item>
+        <item name="colorSecondary">@color/light_blue_gray</item>
         <item name="colorSecondaryVariant">@color/red</item>
         <item name="colorOnSecondary">@color/darker_gray</item>
         <item name="colorOnPrimarySurface">@color/light_gray</item>
-        <item name="colorControlHighlight">@color/dark_gray</item>
+        <item name="colorControlHighlight">@color/light_blue_gray</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <!-- Customize your theme here. -->
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>

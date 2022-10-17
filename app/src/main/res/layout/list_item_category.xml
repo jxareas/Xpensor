@@ -16,7 +16,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
         android:gravity="center"
-        android:textColor="?attr/colorOnSecondary"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/icon_background"
         app:layout_constraintEnd_toEndOf="parent"
