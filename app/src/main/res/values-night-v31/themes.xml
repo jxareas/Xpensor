@@ -1,27 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
+    <!-- Base application theme. -->
     <style name="Theme.Xpensor" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/xpensor_blue</item>
-        <item name="colorPrimaryVariant">@color/dark_blue_variant</item>
-        <item name="colorOnPrimary">@color/dark_black</item>
+        <item name="colorPrimary">@color/dark_black</item>
+        <item name="colorPrimaryVariant">@color/dark_black</item>
+        <item name="colorOnPrimary">@color/light_gray</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/xpensor_blue</item>
+        <item name="colorSecondary">@color/orange_red</item>
         <item name="colorSecondaryVariant">@color/red</item>
-        <item name="colorOnSecondary">@color/xpensor_blue</item>
-
-        <item name="android:colorBackground">@color/anti_flash_white</item>
-        <item name="colorOnPrimarySurface">@color/white</item>
-        <item name="colorControlHighlight">@color/xpensor_blue</item>
+        <item name="colorOnSecondary">@color/darker_gray</item>
+        <item name="colorOnPrimarySurface">@color/light_gray</item>
+        <item name="colorControlHighlight">@color/dark_gray</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <!-- Customize your theme here. -->
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
         <item name="bottomNavigationStyle">@style/Widget.Xpensor.BottomNavigationView</item>
 
         <item name="android:windowSplashScreenBackground">@color/black</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/xpensor_blue_logo</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/xpensor_logo</item>
+    </style>
+
+    <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorOnPrimary">?attr/colorOnPrimarySurface</item>
     </style>
 </resources>

@@ -25,7 +25,6 @@ class AccountsFragment : Fragment() {
     @Inject
     lateinit var accountsListAdapter: AccountsListAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

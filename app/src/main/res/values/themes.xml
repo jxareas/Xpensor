@@ -19,6 +19,7 @@
         <!-- Customize your theme here. -->
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
         <item name="bottomNavigationStyle">@style/Widget.Xpensor.BottomNavigationView</item>
+
     </style>
 
     <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">

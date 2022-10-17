@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="material_motion_duration_long_1">300</integer>
+    <integer name="material_motion_duration_long_2">350</integer>
+    <integer name="material_motion_duration_medium_1">200</integer>
+    <integer name="material_motion_duration_medium_2">250</integer>
+    <integer name="material_motion_duration_short_1">75</integer>
+    <integer name="material_motion_duration_short_2">150</integer>
+    <integer name="xpensor_splash_screen_duration">1000</integer>
+</resources>
