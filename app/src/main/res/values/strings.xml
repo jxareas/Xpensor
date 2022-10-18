@@ -11,6 +11,7 @@
     <string name="enter_amount_error">The amount entered is incorrect or not entered at all.</string>
     <string name="from">From:</string>
     <string name="to">To:</string>
+    <string name="all_time">All time</string>
     <string name="currency_converter">Currency Converter</string>
     <string name="title_activity_settings">SettingsActivity</string>
 

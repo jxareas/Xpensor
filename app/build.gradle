@@ -58,7 +58,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_ktx"
 
     // Desugaring
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     // Testing Dependencies
     testImplementation 'junit:junit:4.13.2'

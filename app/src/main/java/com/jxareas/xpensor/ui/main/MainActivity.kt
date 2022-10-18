@@ -17,9 +17,12 @@ import com.jxareas.xpensor.NavGraphDirections
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.ActivityMainBinding
 import com.jxareas.xpensor.ui.main.event.MainActivityEvent
+import com.jxareas.xpensor.utils.DateUtils.getCurrentLocalDate
 import com.jxareas.xpensor.utils.getLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -64,12 +67,23 @@ class MainActivity : AppCompatActivity() {
                 binding.toolbarTitle.text = currentAccount?.name ?: getString(R.string.all_accounts)
             }
         }
-
+        val datePattern = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+        lifecycleScope.launchWhenStarted {
+            viewModel.selectedDateRange.collectLatest { currentDateRange ->
+                binding.toolbarSubtitle.text =
+                    if (currentDateRange.first == null && currentDateRange.second == null)
+                        getString(R.string.all_time)
+                    else if (currentDateRange.second == null)
+                        "${currentDateRange.first?.format(datePattern)} - ${getCurrentLocalDate().format(datePattern)}"
+                    else
+                        currentDateRange.first?.format(datePattern)
+            }
+        }
     }
 
     private fun setupActionBar() {
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun animateSplashScreen(
