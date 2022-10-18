@@ -13,7 +13,11 @@
         android:id="@+id/accountsFragment"
         android:name="com.jxareas.xpensor.ui.accounts.AccountsFragment"
         android:label="fragment_accounts"
-        tools:layout="@layout/fragment_accounts" />
+        tools:layout="@layout/fragment_accounts" >
+        <action
+            android:id="@+id/action_accountsFragment_to_addAccountFragment"
+            app:destination="@id/addAccountFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chartFragment"
         android:name="com.jxareas.xpensor.ui.chart.ChartFragment"
@@ -32,4 +36,22 @@
     <action
         android:id="@+id/action_global_settingsActivity"
         app:destination="@id/settingsActivity" />
+    <fragment
+        android:id="@+id/addAccountFragment"
+        android:name="com.jxareas.xpensor.ui.accounts.actions.add.AddAccountFragment"
+        android:label="@string/adding"
+        tools:layout="@layout/fragment_add_account" >
+        <action
+            android:id="@+id/action_account_add_fragment_to_accounts_fragment"
+            app:destination="@id/accountsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/transactionsFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/editAccountFragment"
+        android:name="com.jxareas.xpensor.ui.accounts.actions.edit.EditAccountFragment"
+        android:label="fragment_edit_account"
+        tools:layout="@layout/fragment_edit_account" />
 </navigation>

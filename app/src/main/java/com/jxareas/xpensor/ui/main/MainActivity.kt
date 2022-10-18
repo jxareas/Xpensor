@@ -12,6 +12,8 @@ import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.jxareas.xpensor.NavGraphDirections
 import com.jxareas.xpensor.R
@@ -27,7 +29,7 @@ import java.time.format.FormatStyle
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding private set
 
     private val viewModel: MainActivityViewModel by viewModels()
 
@@ -135,13 +137,36 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         binding.bottomNavigation.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, AppBarConfiguration(topLevelDestinationIds))
 
         lifecycleScope.launchWhenResumed {
-            navController.addOnDestinationChangedListener { _, navDestination, _ ->
-                if (navDestination.id in topLevelDestinationIds)
+            navController.addOnDestinationChangedListener { _, currentDestination, _ ->
+
+                val isFragmentWithoutBars = when (currentDestination.id) {
+                    R.id.addAccountFragment -> true
+                    R.id.editAccountFragment -> true
+                    else -> false
+                }
+
+                changeNavigationVisibility(if (isFragmentWithoutBars) View.GONE else View.VISIBLE)
+                supportActionBar?.setDisplayShowTitleEnabled(isFragmentWithoutBars)
+
+                if (currentDestination.id in topLevelDestinationIds)
                     binding.bottomNavigation.visibility = View.VISIBLE
                 else binding.bottomNavigation.visibility = View.GONE
             }
         }
     }
+
+    private fun changeNavigationVisibility(visibility: Int) {
+        with(binding) {
+            bottomNavigation.visibility = visibility
+            buttonSettings.visibility = visibility
+            toolbarInfoBox.visibility = visibility
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean =
+        navController.navigateUp() || super.onSupportNavigateUp()
+
 }
