@@ -47,11 +47,29 @@ class MainActivity : AppCompatActivity() {
             val animationDuration = resources.getLong(R.integer.xpensor_splash_screen_duration)
             animateSplashScreen(splashScreenViewProvider, animationDuration)
         }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setupActionBar()
         setupNavigation()
         setupListeners()
+        setupCollectors()
         setupEventCollector()
+    }
+
+    private fun setupCollectors() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.selectedAccount.collectLatest { currentAccount ->
+                binding.toolbarTitle.text = currentAccount?.name ?: getString(R.string.all_accounts)
+            }
+        }
+
+    }
+
+    private fun setupActionBar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
     }
 
     private fun animateSplashScreen(
@@ -82,9 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupListeners() = binding.run {
         buttonSettings.setOnClickListener { viewModel.onSettingsButtonClick() }
-        toolbarInfoBox.setOnClickListener {
-            viewModel.onSelectAccountButtonClick()
-        }
+        toolbarInfoBox.setOnClickListener { viewModel.onSelectAccountButtonClick() }
     }
 
     private fun setupEventCollector() {
