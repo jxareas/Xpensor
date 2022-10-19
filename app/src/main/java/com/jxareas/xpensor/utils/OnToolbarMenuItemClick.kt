@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.ui.menu
+package com.jxareas.xpensor.utils
 
 @FunctionalInterface
 fun interface OnToolbarMenuItemClick {

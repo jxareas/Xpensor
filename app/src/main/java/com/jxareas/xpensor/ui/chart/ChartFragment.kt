@@ -18,7 +18,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.FragmentChartBinding
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
-import com.jxareas.xpensor.ui.menu.SelectDateMenu
+import com.jxareas.xpensor.ui.date.menu.SelectDateMenu
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
 import com.jxareas.xpensor.utils.getThemeColor

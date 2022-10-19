@@ -41,4 +41,8 @@
     <string name="adding">Adding</string>
     <string name="new_account">New Account</string>
     <string name="select_date">Select Date</string>
+    <string name="today">Today</string>
+    <string name="week">This week</string>
+    <string name="month">This month</string>
+    <string name="year">This year</string>
 </resources>

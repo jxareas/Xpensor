@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
-import com.jxareas.xpensor.ui.menu.SelectDateMenu
+import com.jxareas.xpensor.ui.date.menu.SelectDateMenu
 import com.jxareas.xpensor.ui.transactions.adapter.TransactionAdapter
 import com.jxareas.xpensor.ui.transactions.state.TransactionState
 import dagger.hilt.android.AndroidEntryPoint
