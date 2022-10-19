@@ -10,12 +10,9 @@ import android.view.ViewGroup
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Lifecycle
-import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.FragmentAddAccountBinding
-import com.jxareas.xpensor.utils.getLong
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,14 +34,6 @@ class AddAccountFragment : Fragment() {
                 else -> false
             }
 
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-            interpolator = FastOutSlowInInterpolator()
-            duration = resources.getLong(R.integer.material_motion_duration_long_2)
-        }
     }
 
     override fun onCreateView(
