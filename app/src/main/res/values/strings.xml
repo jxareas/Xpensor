@@ -39,4 +39,6 @@
     <string name="add">"Add "</string>
     <string name="apply">Apply</string>
     <string name="adding">Adding</string>
+    <string name="new_account">New Account</string>
+    <string name="select_date">Select Date</string>
 </resources>

@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/addAccountFragment"
         android:name="com.jxareas.xpensor.ui.accounts.actions.add.AddAccountFragment"
-        android:label="@string/adding"
+        android:label="@string/new_account"
         tools:layout="@layout/fragment_add_account" >
         <action
             android:id="@+id/action_account_add_fragment_to_accounts_fragment"
