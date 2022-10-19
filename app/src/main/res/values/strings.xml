@@ -11,6 +11,7 @@
     <string name="enter_amount_error">The amount entered is incorrect or not entered at all.</string>
     <string name="from">From:</string>
     <string name="to">To:</string>
+    <string name="all_time">All time</string>
     <string name="currency_converter">Currency Converter</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
@@ -35,4 +36,7 @@
     <string name="reset_pin_message_repeat">Click to reset the PIN and set a new one</string>
     <string name="theme">Theme</string>
     <string name="no_transactions">No Transactions</string>
+    <string name="add">"Add "</string>
+    <string name="apply">Apply</string>
+    <string name="adding">Adding</string>
 </resources>

@@ -154,8 +154,8 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_version"
 
     // MPAndroidChart
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation "com.github.PhilJay:MPAndroidChart:$mp_android_chart_version"
 
     // Splash Screen API
-    implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation "androidx.core:core-splashscreen:$splash_screen_version"
 }
