@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
@@ -16,6 +18,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.FragmentChartBinding
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
+import com.jxareas.xpensor.ui.menu.SelectDateMenu
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
 import com.jxareas.xpensor.utils.getThemeColor
@@ -44,7 +47,15 @@ class ChartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupMenu()
         setupCollectors()
+    }
+
+    private fun setupMenu() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(SelectDateMenu {
+            // TODO : Handle on click by the viewmodel
+        }, viewLifecycleOwner, Lifecycle.State.STARTED)
     }
 
     private fun setupCollectors() {

@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
+import com.jxareas.xpensor.ui.menu.SelectDateMenu
 import com.jxareas.xpensor.ui.transactions.adapter.TransactionAdapter
 import com.jxareas.xpensor.ui.transactions.state.TransactionState
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +40,15 @@ class TransactionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupDate()
         setupCollectors()
+    }
+
+    private fun setupDate() {
+        val menuHost : MenuHost = requireActivity()
+        menuHost.addMenuProvider(SelectDateMenu {
+            // TODO : Handle on click by the viewmodel
+        }, viewLifecycleOwner, Lifecycle.State.STARTED)
     }
 
     private fun setupCollectors() {
