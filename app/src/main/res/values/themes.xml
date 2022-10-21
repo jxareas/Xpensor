@@ -25,4 +25,5 @@
     <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
         <item name="colorOnPrimary">?attr/colorOnPrimarySurface</item>
     </style>
+
 </resources>

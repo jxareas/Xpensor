@@ -1,10 +1,11 @@
-package com.jxareas.xpensor.ui.menu
+package com.jxareas.xpensor.ui.accounts.menu
 
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.view.MenuProvider
 import com.jxareas.xpensor.R
+import com.jxareas.xpensor.utils.OnToolbarMenuItemClick
 
 
 class AddAccountMenu(private val onItemClicked: OnToolbarMenuItemClick) : MenuProvider {

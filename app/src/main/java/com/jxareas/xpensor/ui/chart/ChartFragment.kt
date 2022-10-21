@@ -11,14 +11,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.FragmentChartBinding
+import com.jxareas.xpensor.ui.chart.events.ChartEvent
+import com.jxareas.xpensor.ui.date.menu.SelectDateMenu
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
-import com.jxareas.xpensor.ui.menu.SelectDateMenu
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
 import com.jxareas.xpensor.utils.getThemeColor
@@ -49,12 +51,29 @@ class ChartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupMenu()
         setupCollectors()
+        setupEventCollector()
+    }
+
+    private fun setupEventCollector() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.events.collectLatest { event ->
+                when (event) {
+                    is ChartEvent.DateSelected ->
+                        navigateToSelectDateDialogFragment()
+                }
+            }
+        }
+    }
+
+    private fun navigateToSelectDateDialogFragment() {
+        val direction = ChartFragmentDirections.actionChartFragmentToDateSelectorDialogFragment()
+        findNavController().navigate(direction)
     }
 
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(SelectDateMenu {
-            // TODO : Handle on click by the viewmodel
+            viewModel.onSelectedDateClick()
         }, viewLifecycleOwner, Lifecycle.State.STARTED)
     }
 

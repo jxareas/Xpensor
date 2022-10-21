@@ -74,7 +74,7 @@ class TransactionsViewModel @Inject constructor(
 
     fun onSelectedDateClick() {
         viewModelScope.launch {
-            _events.emit(TransactionEvent.SelectDate)
+            _events.emit(TransactionEvent.DateSelected)
         }
     }
 

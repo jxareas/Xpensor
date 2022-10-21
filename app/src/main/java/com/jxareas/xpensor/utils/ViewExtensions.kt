@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.annotation.IntegerRes
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
@@ -20,6 +22,8 @@ import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 private val mapOfDrawables = mapOf(
     0 to R.drawable.ic_family,
@@ -36,7 +40,7 @@ private val mapOfDrawables = mapOf(
     11 to R.drawable.ic_services
 )
 
-fun Resources.getLong(@IntegerRes integerRes : Int) : Long =
+fun Resources.getLong(@IntegerRes integerRes: Int): Long =
     getInteger(integerRes).toLong()
 
 fun ImageView.setIcon(id: Int) {
@@ -51,7 +55,7 @@ fun Fragment.getThemeColor(color: Int): Int {
 
 fun ListItemCategoryBinding.setCategoryAttributes(
     category: CategoryView,
-    currency: String?
+    currency: String?,
 ) {
     this.name.text = category.name
     this.icon.setIcon(category.icon)

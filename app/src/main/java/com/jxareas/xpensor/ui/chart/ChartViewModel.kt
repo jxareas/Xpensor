@@ -6,6 +6,7 @@ import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.ui.chart.events.ChartEvent
+import com.jxareas.xpensor.utils.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -43,6 +44,10 @@ class ChartViewModel @Inject constructor(
             getCategoriesUseCase(_selectedDateRange.value, _selectedAccount.value)
                 .onEach { categories -> _categories.value = categories }
                 .launchIn(viewModelScope)
+    }
+
+    fun onSelectedDateClick() = launchScoped {
+        _events.emit(ChartEvent.DateSelected)
     }
 
 

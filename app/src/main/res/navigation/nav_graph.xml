@@ -8,7 +8,12 @@
         android:id="@+id/transactionsFragment"
         android:name="com.jxareas.xpensor.ui.transactions.TransactionsFragment"
         android:label="Transactions"
-        tools:layout="@layout/fragment_transactions" />
+        tools:layout="@layout/fragment_transactions" >
+
+        <action
+            android:id="@+id/action_transactionsFragment_to_dateSelectorDialogFragment"
+            app:destination="@id/dateSelectorDialogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountsFragment"
         android:name="com.jxareas.xpensor.ui.accounts.AccountsFragment"
@@ -26,7 +31,11 @@
         android:id="@+id/chartFragment"
         android:name="com.jxareas.xpensor.ui.chart.ChartFragment"
         android:label="fragment_chart"
-        tools:layout="@layout/fragment_chart" />
+        tools:layout="@layout/fragment_chart" >
+        <action
+            android:id="@+id/action_chartFragment_to_dateSelectorDialogFragment"
+            app:destination="@id/dateSelectorDialogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/converterFragment"
         android:name="com.jxareas.xpensor.ui.converter.ConverterFragment"
@@ -58,4 +67,9 @@
         android:name="com.jxareas.xpensor.ui.accounts.actions.edit.EditAccountFragment"
         android:label="fragment_edit_account"
         tools:layout="@layout/fragment_edit_account" />
+    <dialog
+        android:id="@+id/dateSelectorDialogFragment"
+        android:name="com.jxareas.xpensor.ui.date.DateSelectorDialogFragment"
+        android:label="dialog_fragment_date_selector"
+        tools:layout="@layout/dialog_fragment_date_selector" />
 </navigation>

@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:backgroundTint="?attr/colorPrimary"
         android:contentDescription="@string/add_transaction_button"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -25,4 +25,26 @@
     <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
         <item name="colorOnPrimary">?attr/colorOnPrimarySurface</item>
     </style>
+
+    <style name="DateDialogItemStyle">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="drawableTint">?attr/colorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="CardViewWithBottomCorners" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_with_bottom</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_with_bottom" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">10dp</item>
+        <item name="cornerSizeBottomLeft">10dp</item>
+    </style>
 </resources>
