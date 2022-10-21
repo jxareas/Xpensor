@@ -7,8 +7,9 @@
     android:background="@drawable/dialog_shape"
     tools:context="com.jxareas.xpensor.ui.date.DateSelectorDialogFragment">
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view_select_date"
+        style="@style/CardViewWithTopCorners"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:foreground="?attr/selectableItemBackgroundBorderless"
@@ -21,9 +22,9 @@
             android:text="@string/select_date"
             app:drawableStartCompat="@drawable/ic_date_range" />
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view_today"
         android:layout_width="160dp"
         android:layout_height="80dp"
@@ -37,9 +38,9 @@
             android:text="@string/today"
             app:drawableStartCompat="@drawable/ic_today" />
 
-    </com.google.android.material.card.MaterialCardView>
-    
-    <com.google.android.material.card.MaterialCardView
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view_week"
         android:layout_width="160dp"
         android:layout_height="80dp"
@@ -53,9 +54,9 @@
             android:text="@string/week"
             app:drawableStartCompat="@drawable/ic_week" />
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view_month"
         android:layout_width="160dp"
         android:layout_height="80dp"
@@ -69,9 +70,9 @@
             android:text="@string/month"
             app:drawableStartCompat="@drawable/ic_month" />
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view_year"
         android:layout_width="160dp"
         android:layout_height="80dp"
@@ -85,9 +86,9 @@
             android:text="@string/year"
             app:drawableStartCompat="@drawable/ic_year" />
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_view_all_time"
         style="@style/CardViewWithBottomCorners"
         android:layout_width="0dp"
@@ -102,6 +103,6 @@
             android:text="@string/all_time"
             app:drawableStartCompat="@drawable/ic_infinity" />
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

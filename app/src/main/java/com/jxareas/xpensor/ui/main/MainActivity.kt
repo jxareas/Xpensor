@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         get() = setOf(R.id.converterFragment,
             R.id.accountsFragment,
             R.id.transactionsFragment,
+            R.id.dateSelectorDialogFragment,
             R.id.chartFragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +77,9 @@ class MainActivity : AppCompatActivity() {
                     if (currentDateRange.first == null && currentDateRange.second == null)
                         getString(R.string.all_time)
                     else if (currentDateRange.second == null)
-                        "${currentDateRange.first?.format(datePattern)} - ${getCurrentLocalDate().format(datePattern)}"
+                        "${currentDateRange.first?.format(datePattern)} - ${
+                            getCurrentLocalDate().format(datePattern)
+                        }"
                     else
                         currentDateRange.first?.format(datePattern)
             }
