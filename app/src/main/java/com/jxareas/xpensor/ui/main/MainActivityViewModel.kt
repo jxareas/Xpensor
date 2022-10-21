@@ -1,6 +1,7 @@
 package com.jxareas.xpensor.ui.main
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.domain.model.Account
@@ -9,6 +10,7 @@ import com.jxareas.xpensor.ui.main.event.MainActivityEvent
 import com.jxareas.xpensor.utils.DateUtils
 import com.jxareas.xpensor.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_CURRENCY
+import com.jxareas.xpensor.utils.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -72,10 +74,9 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
-    fun onUpdateCurrentDateRange(begin: LocalDate?, end: LocalDate?) {
-        viewModelScope.launch {
-            _selectedDateRange.value = begin to end
-        }
+    fun onUpdateCurrentDateRange(begin: LocalDate?, end: LocalDate?) = launchScoped {
+        _selectedDateRange.value = begin to end
+        Log.d("DATE RANGE CHANGED", _selectedDateRange.value.toString())
     }
 
 
