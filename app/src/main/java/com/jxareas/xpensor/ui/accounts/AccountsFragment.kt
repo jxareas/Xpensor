@@ -11,9 +11,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.jxareas.xpensor.databinding.FragmentAccountsBinding
+import com.jxareas.xpensor.ui.accounts.actions.menu.AddAccountMenu
 import com.jxareas.xpensor.ui.accounts.adapter.AccountsListAdapter
 import com.jxareas.xpensor.ui.accounts.events.AccountEvent
-import com.jxareas.xpensor.ui.accounts.menu.AddAccountMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject

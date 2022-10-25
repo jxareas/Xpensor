@@ -24,11 +24,11 @@ class AddAccountFragment : Fragment() {
 
     private val addNewAccountMenu = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) =
-            menuInflater.inflate(R.menu.update_menu, menu)
+            menuInflater.inflate(R.menu.apply_changes_menu, menu)
 
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
             when (menuItem.itemId) {
-                R.id.apply -> {
+                R.id.apply_changes -> {
                     true
                 }
                 else -> false

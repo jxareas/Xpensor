@@ -11,8 +11,6 @@ import android.widget.Toast
 import androidx.annotation.IntegerRes
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
@@ -22,8 +20,12 @@ import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+
+
+fun getImageViewTint(imageView: ImageView): String {
+    val colorInt = imageView.imageTintList?.defaultColor
+    return if (colorInt != null) String.format("#%06X", 0xFFFFFF and colorInt) else MAIN_COLOR
+}
 
 private val mapOfDrawables = mapOf(
     0 to R.drawable.ic_family,

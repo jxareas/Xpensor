@@ -45,4 +45,7 @@
     <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
+    <string name="color_filter">Select Color Filter</string>
+    <string name="name">Name</string>
+    <string name="color_selected">Color Selected</string>
 </resources>
