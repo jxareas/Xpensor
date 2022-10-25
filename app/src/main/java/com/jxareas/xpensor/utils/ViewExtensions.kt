@@ -27,6 +27,10 @@ fun getImageViewTint(imageView: ImageView): String {
     return if (colorInt != null) String.format("#%06X", 0xFFFFFF and colorInt) else MAIN_COLOR
 }
 
+fun showToast(context: Context?, text: String) {
+    Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+}
+
 private val mapOfDrawables = mapOf(
     0 to R.drawable.ic_family,
     1 to R.drawable.ic_finance,

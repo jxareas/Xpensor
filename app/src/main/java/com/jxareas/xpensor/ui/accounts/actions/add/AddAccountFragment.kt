@@ -2,18 +2,25 @@ package com.jxareas.xpensor.ui.accounts.actions.add
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.FragmentAddAccountBinding
+import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.ui.accounts.actions.add.events.AddAccountEvent
+import com.jxareas.xpensor.ui.accounts.actions.menu.ApplyChangesMenu
+import com.jxareas.xpensor.utils.PreferenceUtils
+import com.jxareas.xpensor.utils.setTint
+import com.jxareas.xpensor.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class AddAccountFragment : Fragment() {
@@ -22,19 +29,7 @@ class AddAccountFragment : Fragment() {
     private val binding: FragmentAddAccountBinding
         get() = _binding!!
 
-    private val addNewAccountMenu = object : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) =
-            menuInflater.inflate(R.menu.apply_changes_menu, menu)
-
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
-            when (menuItem.itemId) {
-                R.id.apply_changes -> {
-                    true
-                }
-                else -> false
-            }
-
-    }
+    private val viewModel: AddAccountViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,10 +43,64 @@ class AddAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupMenu()
+        setupListeners()
+        setupEventCollector()
     }
+
+    private fun setupEventCollector() {
+        var color = PreferenceUtils.MAIN_COLOR
+        lifecycleScope.launchWhenStarted {
+            viewModel.events.collectLatest { addAccountEvent ->
+                when (addAccountEvent) {
+                    is AddAccountEvent.CreateNewAccount -> {
+                        val name = binding.textInputLayoutName.editText?.text.toString().trim()
+                        if (name.isEmpty()) {
+                            showToast(requireContext(),
+                                getString(R.string.account_empty_name_error))
+                        } else {
+                            val amount =
+                                binding.textInputLayoutMoneyAmount.editText?.text.toString()
+                                    .toDoubleOrNull() ?: 0.0
+
+                            val account =
+                                Account(name = name, amount = amount, color = color, id = 0)
+                            viewModel.addAccount(account).also { findNavController().navigateUp() }
+                        }
+                    }
+                    is AddAccountEvent.SelectAccountColor -> {
+                        binding.selectedColor.setTint(addAccountEvent.color)
+                        color = addAccountEvent.color
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun setupListeners() = binding.run {
+        color0.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color1.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color2.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color3.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color4.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color5.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color6.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color7.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color8.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color9.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color10.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color11.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color12.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color13.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color14.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+        color15.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
+    }
+
 
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(addNewAccountMenu, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        menuHost.addMenuProvider(ApplyChangesMenu {
+            viewModel.onApplyChangesButtonClick()
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 }

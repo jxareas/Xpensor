@@ -16,38 +16,54 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameTextField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/text_input_layout_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="@string/name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="@dimen/margin_standard"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_sign_in"
+            app:startIconDrawable="@drawable/ic_name">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_full_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLength="20" />
+                android:hint="@string/account"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/amountTextField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/text_input_layout_money_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="@string/amount"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="@dimen/margin_small"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_sign_in"
+            app:startIconDrawable="@drawable/ic_money">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_money_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:maxLength="12" />
+                android:hint="@string/amount"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/amountTextField"-->
+        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginBottom="12dp"-->
+        <!--            android:hint="@string/amount"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:startIconDrawable="@drawable/ic_money">-->
+
+        <!--            <com.google.android.material.textfield.TextInputEditText-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:inputType="numberDecimal"-->
+        <!--                android:maxLength="12" />-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
     </LinearLayout>
 
@@ -66,6 +82,7 @@
             style="@style/TextAppearance.Xpensor.Headline2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_standard"
             android:gravity="center"
             android:padding="4dp"
             android:text="@string/color_filter"
@@ -75,12 +92,14 @@
         <View
             android:layout_width="250dp"
             android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_small"
             android:background="@color/dark_gray"
             android:padding="4dp" />
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_small">
 
             <ImageView
                 android:id="@+id/color0"
