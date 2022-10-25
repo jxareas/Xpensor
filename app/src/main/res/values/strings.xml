@@ -50,4 +50,6 @@
     <string name="color_selected">Color Selected</string>
     <string name="account_empty_name_error">The name field is empty</string>
     <string name="account">Account</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
