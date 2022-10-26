@@ -26,6 +26,9 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_accountsFragment_to_accountActionsBottomSheetFragment"
+            app:destination="@id/accountActionsBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/chartFragment"
@@ -49,6 +52,9 @@
     <action
         android:id="@+id/action_global_settingsActivity"
         app:destination="@id/settingsActivity" />
+    <action
+        android:id="@+id/action_global_accountActions"
+        app:destination="@id/accountActionsBottomSheetFragment" />
     <fragment
         android:id="@+id/addAccountFragment"
         android:name="com.jxareas.xpensor.ui.accounts.actions.add.AddAccountFragment"
@@ -65,11 +71,8 @@
     <fragment
         android:id="@+id/editAccountFragment"
         android:name="com.jxareas.xpensor.ui.accounts.actions.edit.EditAccountFragment"
-        android:label="fragment_edit_account"
+        android:label="@string/edit"
         tools:layout="@layout/fragment_edit_account" />
-    <action
-        android:id="@+id/action_global_accountActionsBottomSheet"
-        app:destination="@id/accountActionsBottomSheetFragment" />
     <dialog
         android:id="@+id/dateSelectorDialogFragment"
         android:name="com.jxareas.xpensor.ui.date.DateSelectorDialogFragment"
@@ -79,5 +82,15 @@
         android:id="@+id/accountActionsBottomSheetFragment"
         android:name="com.jxareas.xpensor.ui.accounts.actions.AccountActionsBottomSheetFragment"
         android:label="AccountActionsBottomSheetFragment"
-        tools:layout="@layout/fragment_account_actions_bottom_sheet" />
+        tools:layout="@layout/fragment_account_actions_bottom_sheet">
+        <argument
+            android:name="selectedAccount"
+            app:argType="com.jxareas.xpensor.domain.model.Account" />
+        <argument
+            android:name="numberOfAccounts"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_accountActionsBottomSheetFragment_to_editAccountFragment"
+            app:destination="@id/editAccountFragment" />
+    </dialog>
 </navigation>

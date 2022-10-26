@@ -18,14 +18,18 @@ class AccountsListAdapter @Inject constructor(
 ) : ListAdapter<Account, AccountsViewHolder>(
     AsyncDifferConfig.Builder(AccountDiffCallback).build()
 ) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountsViewHolder =
         AccountsViewHolder(preferences,
             parent invoke ListItemAccountBinding::inflate).apply {
-                itemView.setOnClickListener { rootView ->
-                    val direction = NavGraphDirections.actionGlobalAccountActionsBottomSheet()
-                    Navigation.findNavController(rootView).navigate(direction)
-                }
+            val account by lazy { currentList[bindingAdapterPosition] }
+            val itemCount by lazy { currentList.size }
+            itemView.setOnClickListener { rootView ->
+                val direction = NavGraphDirections.actionGlobalAccountActions(account, itemCount)
+                Navigation.findNavController(rootView).navigate(direction)
+            }
         }
+
 
     override fun onBindViewHolder(holder: AccountsViewHolder, position: Int) =
         holder.bind(currentList[position])

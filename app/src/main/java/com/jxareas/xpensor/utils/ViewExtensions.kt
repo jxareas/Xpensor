@@ -22,6 +22,12 @@ import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
 
 
+internal inline infix operator fun <reified VB : ViewBinding> ViewGroup.invoke(
+    crossinline bindingInflater: LayoutInflater.(parent: ViewGroup, attachToParent: Boolean) -> VB,
+): VB = LayoutInflater.from(context).let { layoutInflater ->
+    bindingInflater.invoke(layoutInflater, this, false)
+}
+
 fun getImageViewTint(imageView: ImageView): String {
     val colorInt = imageView.imageTintList?.defaultColor
     return if (colorInt != null) String.format("#%06X", 0xFFFFFF and colorInt) else MAIN_COLOR
@@ -78,12 +84,6 @@ fun ListItemCategoryBinding.setCategoryAttributes(
 
 fun ImageView.setTint(value: String?) {
     DrawableCompat.setTint(this.drawable, Color.parseColor(value ?: MAIN_COLOR))
-}
-
-internal inline infix operator fun <reified T : ViewBinding> ViewGroup.invoke(
-    crossinline bindingInflater: LayoutInflater.(parent: ViewGroup, attachToParent: Boolean) -> T,
-): T = LayoutInflater.from(context).let { layoutInflater ->
-    bindingInflater.invoke(layoutInflater, this, false)
 }
 
 fun Fragment.getCurrentDestination() =
