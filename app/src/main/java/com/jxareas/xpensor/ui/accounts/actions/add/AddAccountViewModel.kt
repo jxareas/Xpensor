@@ -2,7 +2,6 @@ package com.jxareas.xpensor.ui.accounts.actions.add
 
 import android.widget.ImageView
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.AddAccountUseCase
 import com.jxareas.xpensor.ui.accounts.actions.add.events.AddAccountEvent
@@ -11,7 +10,6 @@ import com.jxareas.xpensor.utils.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,11 +27,10 @@ class AddAccountViewModel @Inject constructor(
         _events.emit(AddAccountEvent.CreateNewAccount)
     }
 
-    fun onSelectColorButtonClick(image: ImageView) {
-        viewModelScope.launch {
-            val color = getImageViewTint(image)
-            _events.emit(AddAccountEvent.SelectAccountColor(color))
-        }
+    fun onSelectColorButtonClick(image: ImageView) = launchScoped {
+        val color = getImageViewTint(image)
+        _events.emit(AddAccountEvent.SelectAccountColor(color))
     }
+
 
 }

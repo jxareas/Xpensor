@@ -1,9 +1,11 @@
 package com.jxareas.xpensor.ui.accounts.actions.edit
 
+import android.widget.ImageView
 import androidx.lifecycle.ViewModel
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.UpdateAccountUseCase
 import com.jxareas.xpensor.ui.accounts.actions.edit.events.EditAccountEvent
+import com.jxareas.xpensor.utils.getImageViewTint
 import com.jxareas.xpensor.utils.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,5 +26,11 @@ class EditAccountViewModel @Inject constructor(
     fun onApplyChanges() = launchScoped {
         _events.emit(EditAccountEvent.UpdateAccount)
     }
+
+    fun onSelectColorButtonClick(image: ImageView) = launchScoped {
+        val color = getImageViewTint(image)
+        _events.emit(EditAccountEvent.UpdateCurrentColor(color))
+    }
+
 
 }
