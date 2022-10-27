@@ -9,4 +9,8 @@ data class Account(
     val name: String,
     val amount: Double = 0.0,
     val color: String
-) : Domain, Parcelable
+) : Domain, Parcelable {
+    companion object {
+        const val EMPTY_ID = 0
+    }
+}

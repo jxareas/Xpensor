@@ -8,9 +8,11 @@ import android.widget.ImageView
 import androidx.core.view.MenuHost
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.FragmentAddAccountBinding
 import com.jxareas.xpensor.domain.model.Account
@@ -30,6 +32,16 @@ class AddAccountFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: AddAccountViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
+            interpolator = FastOutSlowInInterpolator()
+        }
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
+            interpolator = FastOutSlowInInterpolator()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,7 +75,7 @@ class AddAccountFragment : Fragment() {
                                     .toDoubleOrNull() ?: 0.0
 
                             val account =
-                                Account(name = name, amount = amount, color = color, id = 0)
+                                Account(name = name, amount = amount, color = color, id = Account.EMPTY_ID)
                             viewModel.addAccount(account).also { findNavController().navigateUp() }
                         }
                     }

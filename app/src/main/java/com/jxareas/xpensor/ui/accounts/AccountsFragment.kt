@@ -36,6 +36,9 @@ class AccountsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+            interpolator = FastOutSlowInInterpolator()
+        }
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
             interpolator = FastOutSlowInInterpolator()
         }
