@@ -11,7 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.jxareas.xpensor.databinding.FragmentAccountActionsBottomSheetBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.jxareas.xpensor.R
+import com.jxareas.xpensor.databinding.BottomSheetAccountActionsBinding
 import com.jxareas.xpensor.ui.accounts.actions.events.AccountActionsEvent
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
@@ -19,23 +21,23 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class AccountActionsBottomSheetFragment : BottomSheetDialogFragment() {
+class AccountActionsBottomSheet : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentAccountActionsBottomSheetBinding? = null
-    private val binding: FragmentAccountActionsBottomSheetBinding
+    private var _binding: BottomSheetAccountActionsBinding? = null
+    private val binding: BottomSheetAccountActionsBinding
         get() = _binding!!
 
     private val viewModel: AccountActionsViewModel by viewModels()
     private val mainViewModel: MainActivityViewModel by activityViewModels()
 
-    private val args by navArgs<AccountActionsBottomSheetFragmentArgs>()
+    private val args by navArgs<AccountActionsBottomSheetArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentAccountActionsBottomSheetBinding.inflate(inflater, container, false)
+        _binding = BottomSheetAccountActionsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,6 +50,7 @@ class AccountActionsBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setupListeners() = binding.run {
         editButton.setOnClickListener { viewModel.onEditAccount(args.selectedAccount) }
+        deleteButton.setOnClickListener { viewModel.onDeleteAccount(args.selectedAccount) }
     }
 
     private fun setupEventCollector() {
@@ -55,15 +58,20 @@ class AccountActionsBottomSheetFragment : BottomSheetDialogFragment() {
             viewModel.events.collectLatest { event ->
                 when (event) {
                     is AccountActionsEvent.DeleteAccount -> {
-                        // TODO : Add DeleteAccount Event Handler
+                        if (args.selectedAccount == mainViewModel.selectedAccount.value) {
+                            mainViewModel.onUpdateCurrentAccount(null)
+                        }
+                        viewModel.removeAccount(args.selectedAccount)
+                        dismiss()
+
                     }
                     is AccountActionsEvent.ShowDeleteAccountDialog -> {
-                        // TODO : Add ShowDeleteAccountDialog Event Handler
+                        buildAlertDialog().show()
                     }
                     is AccountActionsEvent.NavigateToEditAccountsScreen -> {
                         val editAccountDirection =
-                            AccountActionsBottomSheetFragmentDirections
-                                .actionAccountActionsBottomSheetFragmentToEditAccountFragment()
+                            AccountActionsBottomSheetDirections
+                                .actionAccountActionsBottomSheetFragmentToEditAccountFragment(args.selectedAccount)
                         findNavController().navigate(editAccountDirection)
                     }
                 }
@@ -71,6 +79,22 @@ class AccountActionsBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
+    private fun buildAlertDialog() = MaterialAlertDialogBuilder(requireContext())
+        .setIcon(R.drawable.ic_warning)
+        .setTitle(getString(R.string.delete_account_alert_title))
+        .setMessage(getString(R.string.delete_account_alert_message))
+        .setPositiveButton(getString(R.string.confirm)) { _, _ ->
+            viewModel.onDeleteAccountConfirmation()
+        }
+        .setNegativeButton(getString(R.string.cancel)) { _, _ ->
+            this@AccountActionsBottomSheet.dismiss()
+
+        }
+        .setOnCancelListener {
+            this@AccountActionsBottomSheet.dismiss()
+        }
+        .create()
 
     private fun setupViewAppearance() {
         val account = args.selectedAccount

@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_standard"
+            android:transitionGroup="true"
             app:layout_constraintTop_toBottomOf="@+id/text_view_sign_in"
             app:startIconDrawable="@drawable/ic_name">
 
@@ -36,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
+            android:transitionGroup="true"
             app:layout_constraintTop_toBottomOf="@+id/text_view_sign_in"
             app:startIconDrawable="@drawable/ic_money">
 

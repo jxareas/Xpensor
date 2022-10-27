@@ -1,6 +1,5 @@
 package com.jxareas.xpensor.ui.accounts.actions
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.DeleteAccountUseCase
@@ -13,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountActionsViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val deleteAccountUseCase: DeleteAccountUseCase,
 ) : ViewModel() {
 
