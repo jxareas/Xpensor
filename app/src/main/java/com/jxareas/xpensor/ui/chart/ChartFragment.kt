@@ -149,4 +149,8 @@ class ChartFragment : Fragment() {
             category12.setCategoryAttributes(categories[11], currency)
         }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

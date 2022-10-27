@@ -103,4 +103,9 @@ class AddAccountFragment : Fragment() {
             viewModel.onApplyChangesButtonClick()
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

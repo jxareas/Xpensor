@@ -106,5 +106,9 @@ class DateSelectorDialogFragment : DialogFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }
