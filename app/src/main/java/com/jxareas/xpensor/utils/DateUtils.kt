@@ -18,9 +18,8 @@ object DateUtils {
     val defaultDateRange: DateRange =
         getCurrentLocalDate() to getCurrentLocalDate()
 
-    fun Double.toAmountFormat(withMinus: Boolean): String {
-        return DecimalFormat(if (withMinus || this < 0) "—######.##" else "######.##").format(this.absoluteValue)
-    }
+    fun Double.toAmountFormat(withMinus: Boolean): String =
+        DecimalFormat(if (withMinus || this < 0) "—######.##" else "######.##").format(this.absoluteValue)
 
     fun getCurrentLocalDate(): LocalDate = LocalDate.parse(
         SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())

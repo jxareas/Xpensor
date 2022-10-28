@@ -1,8 +1,16 @@
 package com.jxareas.xpensor.domain.model
 
-class Account(
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Account(
     val id: Int,
     val name: String,
     val amount: Double = 0.0,
     val color: String
-) : Domain
+) : Domain, Parcelable {
+    companion object {
+        const val EMPTY_ID = 0
+    }
+}

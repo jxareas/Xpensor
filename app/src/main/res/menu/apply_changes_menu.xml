@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/apply"
+        android:id="@+id/apply_changes"
         android:icon="@drawable/ic_apply"
         android:title="@string/apply"
         app:showAsAction="ifRoom" />

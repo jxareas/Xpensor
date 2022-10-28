@@ -45,4 +45,15 @@
     <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
+    <string name="color_filter">Select Color Filter</string>
+    <string name="name">Name</string>
+    <string name="color_selected">Color Selected</string>
+    <string name="account_empty_name_error">The name field is empty</string>
+    <string name="account">Account</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="confirm">Confirm</string>
+    <string name="delete_account_alert_title">Are you sure you want to delete this account?</string>
+    <string name="delete_account_alert_message">All transactions from this account will be deleted.</string>
+    <string name="cancel">Cancel</string>
 </resources>

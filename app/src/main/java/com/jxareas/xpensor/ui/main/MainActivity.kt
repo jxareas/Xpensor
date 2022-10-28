@@ -95,11 +95,12 @@ class MainActivity : AppCompatActivity() {
         provider: SplashScreenViewProvider,
         animationDuration: Long,
     ) {
+
         val onSplashScreenRemovedAnimator = ObjectAnimator.ofFloat(
             provider.view,
             View.TRANSLATION_Y,
             0f,
-            -provider.view.height.toFloat()
+            -provider.view.height.toFloat(),
         ).apply {
             interpolator = AnticipateOvershootInterpolator()
             duration = animationDuration - 200L
@@ -108,8 +109,8 @@ class MainActivity : AppCompatActivity() {
 
         provider.iconView
             .animate()
-            .setInterpolator(AnticipateOvershootInterpolator())
             .setDuration(animationDuration)
+            .setInterpolator(AnticipateOvershootInterpolator())
             .rotation(720f)
             .withEndAction { onSplashScreenRemovedAnimator.start() }
             .start()
