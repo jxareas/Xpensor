@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_transactionsFragment_to_dateSelectorDialogFragment"
             app:destination="@id/dateSelectorDialogFragment" />
+        <action
+            android:id="@+id/action_transactionsFragment_to_selectCategoryBottomSheet"
+            app:destination="@id/selectCategoryBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/accountsFragment"
@@ -96,5 +99,37 @@
         <action
             android:id="@+id/action_accountActionsBottomSheetFragment_to_editAccountFragment"
             app:destination="@id/editAccountFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/selectCategoryBottomSheet"
+        android:name="com.jxareas.xpensor.ui.transactions.actions.category.SelectCategoryBottomSheet"
+        android:label="bottom_sheet_select_category"
+        tools:layout="@layout/bottom_sheet_select_category" >
+        <action
+            android:id="@+id/action_selectCategoryBottomSheet_to_addTransactionBottomSheet"
+            app:destination="@id/addTransactionBottomSheet" />
+        <argument
+            android:name="selectedAccount"
+            app:argType="com.jxareas.xpensor.domain.model.Account" />
+        <argument
+            android:name="amount"
+            android:defaultValue="0.0"
+            app:argType="float" />
+    </dialog>
+    <dialog
+        android:id="@+id/addTransactionBottomSheet"
+        android:name="com.jxareas.xpensor.ui.transactions.actions.add.AddTransactionBottomSheet"
+        android:label="bottom_sheet_add_transaction"
+        tools:layout="@layout/bottom_sheet_add_transaction" >
+        <argument
+            android:name="selectedAccount"
+            app:argType="com.jxareas.xpensor.domain.model.Account" />
+        <argument
+            android:name="selectedCategory"
+            app:argType="com.jxareas.xpensor.data.local.views.CategoryView" />
+        <argument
+            android:name="amount"
+            android:defaultValue="0.0"
+            app:argType="float" />
     </dialog>
 </navigation>

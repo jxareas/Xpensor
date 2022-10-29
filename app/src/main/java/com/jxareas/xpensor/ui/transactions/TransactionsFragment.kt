@@ -61,6 +61,7 @@ class TransactionsFragment : Fragment() {
         }
     }
 
+
     private fun navigateToSelectDialogFragment() {
         val direction = TransactionsFragmentDirections
             .actionTransactionsFragmentToDateSelectorDialogFragment()

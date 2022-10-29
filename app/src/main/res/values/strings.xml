@@ -56,4 +56,8 @@
     <string name="delete_account_alert_title">Are you sure you want to delete this account?</string>
     <string name="delete_account_alert_message">All transactions from this account will be deleted.</string>
     <string name="cancel">Cancel</string>
+    <string name="expense">Expense</string>
+    <string name="description">Description</string>
+    <string name="to_category">To category</string>
+    <string name="from_account">From account</string>
 </resources>
