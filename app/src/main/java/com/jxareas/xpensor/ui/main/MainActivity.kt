@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             R.id.accountsFragment,
             R.id.transactionsFragment,
             R.id.dateSelectorDialogFragment,
+            R.id.selectCategoryBottomSheet,
             R.id.chartFragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {

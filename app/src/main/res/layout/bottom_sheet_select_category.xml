@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/margin_standard"
     tools:context="com.jxareas.xpensor.ui.transactions.actions.category.SelectCategoryBottomSheet">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,7 +66,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/grid_of_categories"
+        android:id="@+id/recycler_view_categories"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
