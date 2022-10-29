@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.jxareas.xpensor.databinding.BottomSheetSelectCategoryBinding
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.ui.transactions.actions.category.adapter.CategoryAdapter
+import com.jxareas.xpensor.ui.transactions.actions.category.event.SelectCategoryEvent
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -47,10 +49,30 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
         setupView()
         setupRecyclerView()
         setupCollectors()
+        setupEventCollector()
+    }
+
+    private fun setupEventCollector() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.events.collectLatest { event ->
+                when (event) {
+                    is SelectCategoryEvent.SelectCategory -> {
+                        val direction =
+                            SelectCategoryBottomSheetDirections
+                                .actionSelectCategoryBottomSheetToAddTransactionBottomSheet(event.account,
+                                    event.category, args.amount)
+                        findNavController().navigate(direction)
+                    }
+                }
+            }
+        }
     }
 
     private fun setupRecyclerView() = binding.recyclerViewCategories.run {
         adapter = categoryAdapter
+        categoryAdapter.setOnClickListener(CategoryAdapter.OnClickListener { category ->
+            viewModel.selectCategoryClick(args.selectedAccount, category)
+        })
     }
 
     private fun setupCollectors() {

@@ -129,7 +129,6 @@
             app:argType="com.jxareas.xpensor.data.local.views.CategoryView" />
         <argument
             android:name="amount"
-            android:defaultValue="0.0"
             app:argType="float" />
     </dialog>
 </navigation>
