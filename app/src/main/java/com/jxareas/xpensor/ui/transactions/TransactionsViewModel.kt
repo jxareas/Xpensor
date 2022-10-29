@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.data.local.views.TransactionView
 import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.usecase.DeleteTransactionUseCase
 import com.jxareas.xpensor.domain.usecase.GetTransactionsUseCase
 import com.jxareas.xpensor.domain.usecase.GetTransactionsWithDayUseCase
-import com.jxareas.xpensor.domain.usecase.UpdateTransactionUseCase
 import com.jxareas.xpensor.ui.transactions.event.TransactionEvent
 import com.jxareas.xpensor.ui.transactions.state.TransactionState
 import com.jxareas.xpensor.utils.DateRange
@@ -26,7 +26,7 @@ import javax.inject.Inject
 class TransactionsViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getTransactionsWithDayUseCase: GetTransactionsWithDayUseCase,
-    private val updateTransactionUseCase: UpdateTransactionUseCase,
+    private val deleteTransactionUseCase: DeleteTransactionUseCase,
 ) : ViewModel() {
 
     private val _transactionState = MutableStateFlow<TransactionState>(TransactionState.Idle)
@@ -59,8 +59,8 @@ class TransactionsViewModel @Inject constructor(
             }.launchIn(viewModelScope)
     }
 
-    suspend fun onTransactionUpdate(transaction: TransactionView) =
-        updateTransactionUseCase(transaction)
+    suspend fun onDeleteTransaction(transaction: TransactionView) =
+        deleteTransactionUseCase(transaction)
 
     fun onDateRangeUpdate(from: LocalDate? = null, to: LocalDate? = null) {
         _selectedDateRange.value = from to to
@@ -90,7 +90,7 @@ class TransactionsViewModel @Inject constructor(
         }
     }
 
-    fun onDeleteConfirmationButtonClick(transaction: TransactionView) {
+    fun onDeleteTransactionConfirm(transaction: TransactionView) {
         viewModelScope.launch {
             _events.emit(TransactionEvent.DeleteTransaction(transaction))
         }

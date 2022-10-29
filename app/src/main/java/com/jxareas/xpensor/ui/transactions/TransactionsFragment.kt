@@ -7,12 +7,18 @@ import android.view.ViewGroup
 import androidx.core.view.MenuHost
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.jxareas.xpensor.R
+import com.jxareas.xpensor.data.local.views.TransactionView
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
+import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.ui.date.menu.SelectDateMenu
+import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.ui.transactions.adapter.TransactionAdapter
 import com.jxareas.xpensor.ui.transactions.event.TransactionEvent
 import com.jxareas.xpensor.ui.transactions.state.TransactionState
@@ -28,9 +34,12 @@ class TransactionsFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: TransactionsViewModel by viewModels()
+    private val mainViewModel: MainActivityViewModel by activityViewModels()
 
     @Inject
     lateinit var transactionAdapter: TransactionAdapter
+
+    private var isAlertShowing = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +52,16 @@ class TransactionsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupDate()
+        setupListeners()
         setupCollectors()
         setupEventCollector()
+    }
+
+    private fun setupListeners() = binding.run {
+        buttonNewTransaction.setOnClickListener {
+            val account = mainViewModel.selectedAccount.value ?: mainViewModel.accounts.value[0]
+            viewModel.onAddTransactionClick(account)
+        }
     }
 
     private fun setupEventCollector() {
@@ -53,12 +70,38 @@ class TransactionsFragment : Fragment() {
                 when (event) {
                     is TransactionEvent.DateSelected ->
                         navigateToSelectDialogFragment()
-                    else -> {
-                        // TODO : Add other Event Handlers
-                    }
+                    is TransactionEvent.OpenTheAddTransactionSheet ->
+                        navigateToAddTransactionSheet(event.account)
+                    is TransactionEvent.DeleteTransaction ->
+                        viewModel.onDeleteTransaction(event.transaction)
+                    is TransactionEvent.ShowTheDeleteTransactionDialog ->
+                        if (!isAlertShowing) showAlertDialog(event.transaction)
                 }
             }
         }
+    }
+
+    private fun showAlertDialog(transaction: TransactionView) =
+        MaterialAlertDialogBuilder(requireContext())
+            .setIcon(R.drawable.ic_warning)
+            .setTitle(R.string.delete_transaction_alert_title)
+            .setMessage("From: ${transaction.categoryName}\nTo: ${transaction.accountName}\nAmount: ${transaction.amount}")
+            .setPositiveButton(getString(R.string.confirm)) { _, _ ->
+                viewModel.onDeleteTransactionConfirm(transaction)
+                isAlertShowing = false
+            }
+            .setNegativeButton(getString(R.string.cancel)) { _, _ ->
+                isAlertShowing = false
+            }
+            .setOnCancelListener { isAlertShowing = false }
+            .create()
+            .show()
+            .also { isAlertShowing = true }
+
+    private fun navigateToAddTransactionSheet(account: Account) {
+        val direction = TransactionsFragmentDirections
+            .actionTransactionsFragmentToSelectCategoryBottomSheet(account)
+        findNavController().navigate(direction)
     }
 
 
