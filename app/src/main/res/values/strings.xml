@@ -61,4 +61,5 @@
     <string name="to_category">To category</string>
     <string name="from_account">From account</string>
     <string name="delete_transaction_alert_title">Are you sure you want to delete this transaction?</string>
+    <string name="enter_expense_error">Error when entering transaction</string>
 </resources>
