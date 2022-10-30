@@ -38,7 +38,7 @@
             android:layout_marginStart="12dp"
             android:ellipsize="start"
             android:singleLine="true"
-            android:textColor="?attr/colorOnSecondary"
+            android:textColor="?attr/colorSecondary"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/icon_background"
             app:layout_constraintTop_toTopOf="@+id/icon_background"
