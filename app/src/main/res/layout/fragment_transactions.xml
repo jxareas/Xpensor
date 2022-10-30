@@ -22,7 +22,7 @@
         tools:listitem="@layout/card_item_transaction" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/new_transaction_button"
+        android:id="@+id/button_new_transaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

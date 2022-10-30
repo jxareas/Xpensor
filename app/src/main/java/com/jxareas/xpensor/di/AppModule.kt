@@ -25,8 +25,6 @@ object AppModule {
             app.applicationContext,
             XpensorDatabase::class.java,
             XpensorDatabase.DATABASE_NAME
-        )
-            .fallbackToDestructiveMigration()
-            .createFromAsset("database/xpensor.db").build()
+        ).createFromAsset("database/xpensor.db").build()
     }
 }

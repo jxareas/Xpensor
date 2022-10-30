@@ -107,6 +107,7 @@
             android:id="@+id/delete_button"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:visibility="invisible"
             android:layout_marginEnd="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintBottom_toBottomOf="parent"

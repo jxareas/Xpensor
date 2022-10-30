@@ -113,7 +113,7 @@ class AddAccountFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(ApplyChangesMenu {
             viewModel.onApplyChangesButtonClick()
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        }, viewLifecycleOwner, Lifecycle.State.STARTED)
     }
 
     override fun onDestroyView() {
