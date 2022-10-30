@@ -140,7 +140,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/apply_button"
+        android:id="@+id/button_apply_changes"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_margin="16dp"
@@ -154,10 +154,10 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/apply_button"
-        app:layout_constraintEnd_toEndOf="@id/apply_button"
-        app:layout_constraintStart_toStartOf="@id/apply_button"
-        app:layout_constraintTop_toTopOf="@id/apply_button"
+        app:layout_constraintBottom_toBottomOf="@id/button_apply_changes"
+        app:layout_constraintEnd_toEndOf="@id/button_apply_changes"
+        app:layout_constraintStart_toStartOf="@id/button_apply_changes"
+        app:layout_constraintTop_toTopOf="@id/button_apply_changes"
         app:srcCompat="@drawable/ic_apply" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

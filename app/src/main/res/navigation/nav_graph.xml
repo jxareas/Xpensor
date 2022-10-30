@@ -75,7 +75,7 @@
         android:id="@+id/editAccountFragment"
         android:name="com.jxareas.xpensor.ui.accounts.actions.edit.EditAccountFragment"
         android:label="@string/edit"
-        tools:layout="@layout/fragment_edit_account" >
+        tools:layout="@layout/fragment_edit_account">
         <argument
             android:name="editableAccount"
             app:argType="com.jxareas.xpensor.domain.model.Account" />
@@ -104,7 +104,7 @@
         android:id="@+id/selectCategoryBottomSheet"
         android:name="com.jxareas.xpensor.ui.transactions.actions.category.SelectCategoryBottomSheet"
         android:label="bottom_sheet_select_category"
-        tools:layout="@layout/bottom_sheet_select_category" >
+        tools:layout="@layout/bottom_sheet_select_category">
         <action
             android:id="@+id/action_selectCategoryBottomSheet_to_addTransactionBottomSheet"
             app:destination="@id/addTransactionBottomSheet" />
@@ -120,7 +120,7 @@
         android:id="@+id/addTransactionBottomSheet"
         android:name="com.jxareas.xpensor.ui.transactions.actions.add.AddTransactionBottomSheet"
         android:label="bottom_sheet_add_transaction"
-        tools:layout="@layout/bottom_sheet_add_transaction" >
+        tools:layout="@layout/bottom_sheet_add_transaction">
         <argument
             android:name="selectedAccount"
             app:argType="com.jxareas.xpensor.domain.model.Account" />
@@ -130,5 +130,10 @@
         <argument
             android:name="amount"
             app:argType="float" />
+        <action
+            android:id="@+id/action_addTransactionBottomSheet_to_transactionsFragment"
+            app:destination="@id/transactionsFragment"
+            app:popUpTo="@id/transactionsFragment"
+            app:popUpToInclusive="true" />
     </dialog>
 </navigation>

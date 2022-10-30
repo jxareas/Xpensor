@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.jxareas.xpensor.R
@@ -41,7 +42,12 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
+        setupListeners()
         setupEventCollector()
+    }
+
+    private fun setupListeners() = binding.run {
+        buttonApplyChanges.setOnClickListener { viewModel.onApplyChanges() }
     }
 
     private fun setupEventCollector() {
@@ -68,11 +74,19 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                             )
 
                             viewModel.onAddTransaction(transaction)
+                            navigateBackToTransactionFragment()
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun navigateBackToTransactionFragment() {
+        val direction =
+            AddTransactionBottomSheetDirections
+                .actionAddTransactionBottomSheetToTransactionsFragment()
+        findNavController().navigate(direction)
     }
 
     private fun setupView() = binding.run {
