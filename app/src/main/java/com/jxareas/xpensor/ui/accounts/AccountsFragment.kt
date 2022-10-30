@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
@@ -41,12 +42,12 @@ class AccountsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
             interpolator = AnticipateOvershootInterpolator()
-            duration = resources.getLong(R.integer.material_motion_duration_medium_2)
+            duration = resources.getLong(R.integer.material_motion_duration_long_1)
             setPathMotion(MaterialArcMotion())
         }
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
             interpolator = AnticipateOvershootInterpolator()
-            duration = resources.getLong(R.integer.material_motion_duration_medium_2)
+            duration = resources.getLong(R.integer.material_motion_duration_long_1)
             setPathMotion(MaterialArcMotion())
         }
     }
@@ -95,6 +96,9 @@ class AccountsFragment : Fragment() {
 
     private fun setupRecyclerView() = binding.recyclerViewAccounts.run {
         adapter = accountsListAdapter
+        addItemDecoration(
+            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        )
     }
 
     private fun setupCollectors() {

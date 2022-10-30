@@ -4,15 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnticipateOvershootInterpolator
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.transition.MaterialArcMotion
+import com.google.android.material.transition.MaterialFade
+import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.FragmentConverterBinding
 import com.jxareas.xpensor.ui.converter.event.CurrencyConverterEvent
 import com.jxareas.xpensor.ui.converter.state.ConversionState
 import com.jxareas.xpensor.utils.getCurrentDestination
+import com.jxareas.xpensor.utils.getLong
 import com.jxareas.xpensor.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -25,6 +30,21 @@ class ConverterFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: ConverterViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+            interpolator = AnticipateOvershootInterpolator()
+            duration = resources.getLong(R.integer.material_motion_duration_long_1)
+            setPathMotion(MaterialArcMotion())
+        }
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+            interpolator = AnticipateOvershootInterpolator()
+            duration = resources.getLong(R.integer.material_motion_duration_long_1)
+            setPathMotion(MaterialArcMotion())
+        }
+        exitTransition = MaterialFade()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,7 +95,7 @@ class ConverterFragment : Fragment() {
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { currencyConverterEvent ->
-                when(currencyConverterEvent) {
+                when (currencyConverterEvent) {
                     is CurrencyConverterEvent.Convert -> handleConvertEvent()
                     is CurrencyConverterEvent.Swap -> handleSwapEvent()
                     is CurrencyConverterEvent.OpenTheAddTransactionSheet -> handleOpenTransactionSheetEvent()
