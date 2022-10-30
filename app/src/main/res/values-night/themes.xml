@@ -19,13 +19,9 @@
         <item name="bottomNavigationStyle">@style/Widget.Xpensor.BottomNavigationView</item>
     </style>
 
-    <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
-        <item name="colorOnPrimary">?attr/colorOnPrimarySurface</item>
-    </style>
-
     <style name="DateDialogItemStyle">
-        <item name="android:textColor">?attr/colorPrimary</item>
-        <item name="drawableTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="drawableTint">?attr/colorOnPrimary</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
@@ -43,5 +39,14 @@
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">10dp</item>
         <item name="cornerSizeBottomLeft">10dp</item>
+    </style>
+
+    <style name="MaterialCalendarTheme" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorOnPrimary">?attr/colorOnPrimarySurface</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DialogPickerButtonText</item>
+        <item name="buttonBarNegativeButtonStyle">@style/DialogPickerButtonText</item>
+    </style>
+    <style name="DialogPickerButtonText" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 </resources>

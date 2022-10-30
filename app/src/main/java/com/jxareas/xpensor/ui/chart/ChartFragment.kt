@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnticipateOvershootInterpolator
 import androidx.core.view.MenuHost
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -16,6 +18,9 @@ import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.google.android.material.transition.MaterialArcMotion
+import com.google.android.material.transition.MaterialSharedAxis
+import com.jxareas.xpensor.R
 import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.FragmentChartBinding
 import com.jxareas.xpensor.ui.chart.events.ChartEvent
@@ -23,6 +28,7 @@ import com.jxareas.xpensor.ui.date.menu.SelectDateMenu
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
+import com.jxareas.xpensor.utils.getLong
 import com.jxareas.xpensor.utils.getThemeColor
 import com.jxareas.xpensor.utils.setCategoryAttributes
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +44,20 @@ class ChartFragment : Fragment() {
     private val viewModel: ChartViewModel by viewModels()
     private val mainViewModel: MainActivityViewModel by activityViewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+            interpolator = AnticipateOvershootInterpolator()
+            duration = resources.getLong(R.integer.material_motion_duration_long_1)
+            setPathMotion(MaterialArcMotion())
+        }
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+            interpolator = AnticipateOvershootInterpolator()
+            duration = resources.getLong(R.integer.material_motion_duration_long_1)
+            setPathMotion(MaterialArcMotion())
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,6 +69,9 @@ class ChartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition().also {
+            view.doOnPreDraw { startPostponedEnterTransition() }
+        }
         setupMenu()
         setupCollectors()
         setupEventCollector()
@@ -78,7 +101,7 @@ class ChartFragment : Fragment() {
     }
 
     private fun setupCollectors() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.categories.collectLatest { newCategories ->
                 updateChartData(newCategories)
             }
@@ -129,7 +152,7 @@ class ChartFragment : Fragment() {
             }
 
             binding.chart.invalidate()
-            binding.chart.animateY(1000, Easing.EaseInOutQuad)
+            binding.chart.animateY(1000, Easing.EaseInOutCirc)
         }
     }
 

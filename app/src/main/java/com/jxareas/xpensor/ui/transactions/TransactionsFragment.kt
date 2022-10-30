@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnticipateOvershootInterpolator
 import androidx.core.view.MenuHost
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,6 +18,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.MaterialArcMotion
+import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.data.local.views.TransactionView
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
@@ -25,6 +29,7 @@ import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.ui.transactions.adapter.TransactionAdapter
 import com.jxareas.xpensor.ui.transactions.event.TransactionEvent
 import com.jxareas.xpensor.ui.transactions.state.TransactionState
+import com.jxareas.xpensor.utils.getLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -44,6 +49,21 @@ class TransactionsFragment : Fragment() {
 
     private var isAlertShowing = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+            interpolator = AnticipateOvershootInterpolator()
+            duration = resources.getLong(R.integer.material_motion_duration_long_1)
+            setPathMotion(MaterialArcMotion())
+        }
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+            interpolator = AnticipateOvershootInterpolator()
+            duration = resources.getLong(R.integer.material_motion_duration_long_1)
+            setPathMotion(MaterialArcMotion())
+        }
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -54,6 +74,9 @@ class TransactionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition().also {
+            view.doOnPreDraw { startPostponedEnterTransition() }
+        }
         setupDate()
         setupRecyclerView()
         setupListeners()

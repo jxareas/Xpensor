@@ -46,4 +46,9 @@
         <item name="cornerSizeBottomRight">10dp</item>
         <item name="cornerSizeBottomLeft">10dp</item>
     </style>
+
+    <style name="MaterialCalendarTheme" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorOnPrimary">?attr/colorOnPrimarySurface</item>
+    </style>
+
 </resources>
