@@ -14,6 +14,7 @@ import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.BottomSheetAddTransactionBinding
 import com.jxareas.xpensor.domain.model.Transaction
 import com.jxareas.xpensor.ui.transactions.actions.add.event.AddTransactionEvent
+import com.jxareas.xpensor.ui.transactions.actions.add.state.AddTransactionState
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.setIcon
 import com.jxareas.xpensor.utils.showToast
@@ -43,7 +44,21 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupView()
         setupListeners()
+        setupCollectors()
         setupEventCollector()
+    }
+
+    private fun setupCollectors() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.transactionState.collectLatest { state ->
+                when (state) {
+                    is AddTransactionState.ValidTransaction -> navigateBackToTransactionFragment()
+                    is AddTransactionState.InvalidTransaction -> showToast(requireContext(),
+                        "Invalid Transaction")
+
+                }
+            }
+        }
     }
 
     private fun setupListeners() = binding.run {
