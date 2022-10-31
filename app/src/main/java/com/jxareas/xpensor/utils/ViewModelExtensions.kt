@@ -8,4 +8,6 @@ import kotlinx.coroutines.launch
 internal fun ViewModel.launchScoped(
     coroutineScope: CoroutineScope = viewModelScope,
     onLaunch: suspend CoroutineScope.() -> Unit,
-) = Unit.also { coroutineScope.launch(block = onLaunch) }
+) = Unit.also {
+    coroutineScope.launch(block = onLaunch)
+}

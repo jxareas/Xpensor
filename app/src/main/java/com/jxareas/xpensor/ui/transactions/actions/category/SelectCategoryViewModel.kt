@@ -7,6 +7,7 @@ import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.ui.transactions.actions.category.event.SelectCategoryEvent
+import com.jxareas.xpensor.utils.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,7 +16,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -58,10 +58,8 @@ class SelectCategoryViewModel @Inject constructor(
         launchGetCategoriesJob()
     }
 
-    fun selectCategoryClick(account: Account, categoryView: CategoryView) {
-        viewModelScope.launch {
-            _events.emit(SelectCategoryEvent.SelectCategory(account, categoryView))
-        }
+    fun selectCategoryClick(account: Account, categoryView: CategoryView) = launchScoped {
+        _events.emit(SelectCategoryEvent.SelectCategory(account, categoryView))
     }
 
 }

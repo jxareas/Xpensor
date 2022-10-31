@@ -1,7 +1,6 @@
 package com.jxareas.xpensor.ui.main
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.domain.model.Account
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -57,26 +55,22 @@ class MainActivityViewModel @Inject constructor(
     fun getCurrency() =
         sharedPreferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY) ?: MAIN_CURRENCY
 
-    fun onSettingsButtonClick() =
-        viewModelScope.launch {
-            _events.emit(MainActivityEvent.OpenTheSettingsScreen)
-        }
-
-    fun onSelectAccountButtonClick() {
-        viewModelScope.launch {
-            _events.emit(MainActivityEvent.OpenTheSelectAccountDialog)
-        }
+    fun onSettingsButtonClick() = launchScoped {
+        _events.emit(MainActivityEvent.OpenTheSettingsScreen)
     }
 
-    fun onUpdateCurrentAccount(account: Account?) {
-        viewModelScope.launch {
-            _selectedAccount.value = account
-        }
+    fun onSelectAccountButtonClick() = launchScoped {
+        _events.emit(MainActivityEvent.OpenTheSelectAccountDialog)
     }
+
+
+    fun onUpdateCurrentAccount(account: Account?) = launchScoped {
+        _selectedAccount.value = account
+    }
+
 
     fun onUpdateCurrentDateRange(begin: LocalDate?, end: LocalDate?) = launchScoped {
         _selectedDateRange.value = begin to end
-        Log.d("DATE RANGE CHANGED", _selectedDateRange.value.toString())
     }
 
 
