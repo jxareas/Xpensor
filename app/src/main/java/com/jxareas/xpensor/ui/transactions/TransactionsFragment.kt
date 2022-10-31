@@ -1,7 +1,6 @@
 package com.jxareas.xpensor.ui.transactions
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -159,7 +158,6 @@ class TransactionsFragment : Fragment() {
 
         lifecycleScope.launchWhenStarted {
             viewModel.transactionState.collectLatest { state ->
-                Log.d("SOMETHING", state.toString())
                 when (state) {
                     is TransactionState.Ready -> {
                         binding.progressBar.isVisible = false

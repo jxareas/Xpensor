@@ -3,6 +3,7 @@ package com.jxareas.xpensor.ui.main
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnticipateOvershootInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -47,6 +48,10 @@ class MainActivity : AppCompatActivity() {
             R.id.selectCategoryBottomSheet,
             R.id.addTransactionBottomSheet,
             R.id.chartFragment)
+
+    private companion object {
+        const val SPLASH_ICON_VIEW_ANIMATION_SCALE = 0.2f
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +101,7 @@ class MainActivity : AppCompatActivity() {
     private fun animateSplashScreen(
         provider: SplashScreenViewProvider,
         animationDuration: Long,
-    ) {
+    ) = provider.iconView.animate().let { iconViewPropertyAnimator ->
 
         val onSplashScreenRemovedAnimator = ObjectAnimator.ofFloat(
             provider.view,
@@ -105,20 +110,30 @@ class MainActivity : AppCompatActivity() {
             -provider.view.height.toFloat(),
         ).apply {
             interpolator = AnticipateOvershootInterpolator()
-            duration = animationDuration - 200L
+            duration = animationDuration
             doOnEnd { provider.remove() }
         }
 
-        provider.iconView
-            .animate()
+        val reverseIconAnimation: () -> Unit = {
+            iconViewPropertyAnimator
+                .setDuration(animationDuration)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .rotation(-2 * animationDuration.toFloat())
+                .scaleXBy(-SPLASH_ICON_VIEW_ANIMATION_SCALE)
+                .scaleYBy(-SPLASH_ICON_VIEW_ANIMATION_SCALE)
+                .withStartAction { onSplashScreenRemovedAnimator.start() }
+        }
+
+        iconViewPropertyAnimator
             .setDuration(animationDuration)
             .setInterpolator(AnticipateOvershootInterpolator())
-            .rotation(720f)
-            .withEndAction { onSplashScreenRemovedAnimator.start() }
+            .rotation(2 * animationDuration.toFloat())
+            .scaleXBy(SPLASH_ICON_VIEW_ANIMATION_SCALE)
+            .scaleYBy(SPLASH_ICON_VIEW_ANIMATION_SCALE)
+            .withEndAction(reverseIconAnimation)
             .start()
 
     }
-
 
     private fun setupListeners() = binding.run {
         buttonSettings.setOnClickListener { viewModel.onSettingsButtonClick() }

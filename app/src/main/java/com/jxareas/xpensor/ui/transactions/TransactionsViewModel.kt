@@ -10,6 +10,7 @@ import com.jxareas.xpensor.domain.usecase.GetTransactionsWithDayUseCase
 import com.jxareas.xpensor.ui.transactions.event.TransactionEvent
 import com.jxareas.xpensor.ui.transactions.state.TransactionState
 import com.jxareas.xpensor.utils.DateRange
+import com.jxareas.xpensor.utils.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,7 +19,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -72,28 +72,23 @@ class TransactionsViewModel @Inject constructor(
         launchGetTransactionsJob()
     }
 
-    fun onSelectedDateClick() {
-        viewModelScope.launch {
-            _events.emit(TransactionEvent.DateSelected)
-        }
+    fun onSelectedDateClick() = launchScoped {
+        _events.emit(TransactionEvent.DateSelected)
     }
 
-    fun onAddTransactionClick(account: Account) {
-        viewModelScope.launch {
-            _events.emit(TransactionEvent.OpenTheAddTransactionSheet(account))
-        }
+
+    fun onAddTransactionClick(account: Account) = launchScoped {
+        _events.emit(TransactionEvent.OpenTheAddTransactionSheet(account))
     }
 
-    fun onDeleteButtonClick(transaction: TransactionView) {
-        viewModelScope.launch {
-            _events.emit(TransactionEvent.ShowTheDeleteTransactionDialog(transaction))
-        }
+
+    fun onDeleteButtonClick(transaction: TransactionView) = launchScoped {
+        _events.emit(TransactionEvent.ShowTheDeleteTransactionDialog(transaction))
     }
 
-    fun onDeleteTransactionConfirm(transaction: TransactionView) {
-        viewModelScope.launch {
-            _events.emit(TransactionEvent.DeleteTransaction(transaction))
-        }
+
+    fun onDeleteTransactionConfirm(transaction: TransactionView) = launchScoped {
+        _events.emit(TransactionEvent.DeleteTransaction(transaction))
     }
 
 

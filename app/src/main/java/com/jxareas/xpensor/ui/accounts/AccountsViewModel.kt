@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.GetAccountsUseCase
 import com.jxareas.xpensor.ui.accounts.events.AccountEvent
+import com.jxareas.xpensor.utils.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,7 +14,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,10 +33,8 @@ class AccountsViewModel @Inject constructor(
         launchGetAccountsJob()
     }
 
-    fun onAddNewAccountButtonClick() {
-        viewModelScope.launch {
-            _events.emit(AccountEvent.NavigateToAddAccountScreen)
-        }
+    fun onAddNewAccountButtonClick() = launchScoped {
+        _events.emit(AccountEvent.NavigateToAddAccountScreen)
     }
 
     private fun launchGetAccountsJob() {
