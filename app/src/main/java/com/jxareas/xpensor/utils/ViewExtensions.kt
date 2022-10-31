@@ -15,11 +15,25 @@ import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
+
+
+fun Fragment.showSnackbar(
+    errorMessage: String,
+    dismissMessage: String = getString(R.string.dismiss),
+    length: Int = Snackbar.LENGTH_LONG,
+) = view?.let { rootView ->
+    Snackbar.make(rootView, errorMessage, length)
+        .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+        .setAction(dismissMessage) {
+        }
+        .show()
+}
 
 
 internal inline infix operator fun <reified VB : ViewBinding> ViewGroup.invoke(

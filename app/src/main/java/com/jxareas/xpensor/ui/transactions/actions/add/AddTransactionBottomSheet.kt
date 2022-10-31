@@ -17,7 +17,7 @@ import com.jxareas.xpensor.ui.transactions.actions.add.event.AddTransactionEvent
 import com.jxareas.xpensor.ui.transactions.actions.add.state.AddTransactionState
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.setIcon
-import com.jxareas.xpensor.utils.showToast
+import com.jxareas.xpensor.utils.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -53,8 +53,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
             viewModel.transactionState.collectLatest { state ->
                 when (state) {
                     is AddTransactionState.ValidTransaction -> navigateBackToTransactionFragment()
-                    is AddTransactionState.InvalidTransaction -> showToast(requireContext(),
-                        "Invalid Transaction")
+                    is AddTransactionState.InvalidTransaction -> showInvalidTransactionSnackbar()
 
                 }
             }
@@ -76,7 +75,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                             binding.textInputLayoutExpense.editText?.text.toString()
                                 .toDoubleOrNull()
                         if (amount == null || amount <= 0)
-                            showToast(context, getString(R.string.enter_expense_error))
+                            showInvalidInputSnackbar()
                         else {
                             val note =
                                 binding.textInputLayoutDescription.editText?.text.toString()
@@ -89,13 +88,18 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                             )
 
                             viewModel.onAddTransaction(transaction)
-                            navigateBackToTransactionFragment()
                         }
                     }
                 }
             }
         }
     }
+
+    private fun showInvalidTransactionSnackbar() =
+        showSnackbar(errorMessage = getString(R.string.not_enough_funds))
+
+    private fun showInvalidInputSnackbar() =
+        showSnackbar(errorMessage = getString(R.string.enter_expense_error))
 
     private fun navigateBackToTransactionFragment() {
         val direction =
