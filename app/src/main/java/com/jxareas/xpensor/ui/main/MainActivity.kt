@@ -40,14 +40,19 @@ class MainActivity : AppCompatActivity() {
         navHost.navController
     }
 
+    private val nonFilterableFragmentIds: Set<Int>
+        get() = setOf(R.id.accountsFragment, R.id.converterFragment)
+
     private val topLevelDestinationIds: Set<Int>
         get() = setOf(R.id.converterFragment,
             R.id.accountsFragment,
             R.id.transactionsFragment,
             R.id.dateSelectorDialogFragment,
+            R.id.accountFilterDialogFragment,
             R.id.selectCategoryBottomSheet,
             R.id.addTransactionBottomSheet,
             R.id.chartFragment)
+
 
     private companion object {
         const val SPLASH_ICON_VIEW_ANIMATION_SCALE = 0.2f
@@ -174,8 +179,16 @@ class MainActivity : AppCompatActivity() {
                 if (currentDestination.id in topLevelDestinationIds)
                     binding.bottomNavigation.visibility = View.VISIBLE
                 else binding.bottomNavigation.visibility = View.GONE
+                setupFilters(currentDestination.id)
             }
         }
+    }
+
+    private fun setupFilters(destinationId: Int) = binding.run {
+        val isNonFilterableFragment = destinationId in nonFilterableFragmentIds
+        moreButton.visibility = if (isNonFilterableFragment) View.GONE else View.VISIBLE
+        toolbarInfoBox.isEnabled = !isNonFilterableFragment
+
     }
 
     private fun changeNavigationVisibility(visibility: Int) {
