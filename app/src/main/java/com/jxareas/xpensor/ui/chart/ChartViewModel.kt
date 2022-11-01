@@ -50,5 +50,15 @@ class ChartViewModel @Inject constructor(
         _events.emit(ChartEvent.DateSelected)
     }
 
+    fun onUpdateSelectedDateRange(from: LocalDate? = null, to: LocalDate? = null) {
+        _selectedDateRange.value = from to to
+        launchGetCategoriesJob()
+    }
+
+    fun onUpdateSelectedAccount(account: Account? = null) {
+        _selectedAccount.value = account
+        launchGetCategoriesJob()
+    }
+
 
 }
