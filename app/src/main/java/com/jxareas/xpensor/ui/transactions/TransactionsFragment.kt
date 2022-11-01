@@ -173,6 +173,18 @@ class TransactionsFragment : Fragment() {
 
             }
         }
+
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.selectedDateRange.collectLatest { dateRange ->
+                viewModel.onUpdateSelectedDateRange(dateRange.first, dateRange.second)
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.selectedAccount.collectLatest { account ->
+                viewModel.onUpdateSelectedAccount(account)
+            }
+        }
     }
 
     override fun onDestroyView() {
