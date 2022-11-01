@@ -64,7 +64,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
 
-    fun onUpdateCurrentAccount(account: Account?) = launchScoped {
+    fun onUpdateSelectedAccount(account: Account?) = launchScoped {
         _selectedAccount.value = account
     }
 

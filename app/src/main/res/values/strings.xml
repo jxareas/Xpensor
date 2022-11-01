@@ -64,4 +64,5 @@
     <string name="enter_expense_error">Enter a valid expense number.</string>
     <string name="not_enough_funds">Selected account has insufficient funds for this transaction.</string>
     <string name="dismiss">Dismiss</string>
+    <string name="filter_account">Filter account</string>
 </resources>

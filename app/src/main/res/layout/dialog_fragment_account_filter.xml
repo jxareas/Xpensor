@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_shape"
+    tools:context="com.jxareas.xpensor.ui.accounts.actions.filter.AccountFilterDialogFragment">
+
+    <TextView
+        android:id="@+id/select_account_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="@string/filter_account"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/all_accounts_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_shape"
+        android:padding="4dp"
+        app:layout_constraintBottom_toTopOf="@id/all_accounts_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/all_accounts_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:foreground="?selectableItemBackgroundBorderless"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/select_account_label">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minWidth="300dp"
+            android:padding="12dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <ImageView
+                android:id="@+id/all_accounts_icon_color"
+                android:layout_width="58dp"
+                android:layout_height="43dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_rectangle" />
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/all_accounts_icon_color"
+                app:layout_constraintEnd_toEndOf="@id/all_accounts_icon_color"
+                app:layout_constraintStart_toStartOf="@id/all_accounts_icon_color"
+                app:layout_constraintTop_toTopOf="@id/all_accounts_icon_color"
+                app:srcCompat="@drawable/ic_bank" />
+
+            <TextView
+                android:id="@+id/all_accounts_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/all_accounts"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/all_accounts_icon_color"
+                app:layout_constraintTop_toTopOf="@+id/all_accounts_icon_color" />
+
+            <TextView
+                android:id="@+id/all_accounts_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:textAllCaps="true"
+                android:textColor="@color/blue_green"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/all_accounts_icon_color"
+                app:layout_constraintStart_toEndOf="@id/all_accounts_icon_color"
+                app:layout_constraintTop_toBottomOf="@id/all_accounts_label"
+                tools:text="1 817,20" />
+
+            <TextView
+                android:id="@+id/all_accounts_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAllCaps="true"
+                android:textColor="@color/blue_green"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/all_accounts_amount"
+                app:layout_constraintStart_toEndOf="@id/all_accounts_amount"
+                tools:text="BYN" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_shape"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/all_accounts_item" />
+
+    <TextView
+        android:id="@+id/accounts_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/accounts"
+        android:textAllCaps="true"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/all_accounts_item" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_accounts"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:minWidth="300dp"
+        android:overScrollMode="never"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHeight_max="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/accounts_label"
+        tools:itemCount="6"
+        tools:listitem="@layout/list_item_account" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

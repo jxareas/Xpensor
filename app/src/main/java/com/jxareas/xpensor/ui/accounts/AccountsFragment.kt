@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialSharedAxis
+import com.jxareas.xpensor.NavGraphDirections
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.FragmentAccountsBinding
 import com.jxareas.xpensor.ui.accounts.actions.menu.AddAccountMenu
@@ -81,6 +82,13 @@ class AccountsFragment : Fragment() {
                             AccountsFragmentDirections.actionAccountsFragmentToAddAccountFragment()
                         findNavController().navigate(addAccountFragmentAction)
                     }
+                    is AccountEvent.OpenTheAccountBottomSheet -> {
+                        val totalNumberOfAccounts = viewModel.accounts.value.size
+                        val openAccountBottomSheetAction =
+                            NavGraphDirections.actionGlobalAccountActions(event.account,
+                                totalNumberOfAccounts)
+                        findNavController().navigate(openAccountBottomSheetAction)
+                    }
                 }
             }
         }
@@ -98,6 +106,12 @@ class AccountsFragment : Fragment() {
         adapter = accountsListAdapter
         addItemDecoration(
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        )
+
+        accountsListAdapter.setOnClickListener(
+            AccountsListAdapter.OnClickListener { account ->
+                viewModel.onAccountSelected(account)
+            }
         )
     }
 
