@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.IntegerRes
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.jxareas.xpensor.R
@@ -22,6 +24,19 @@ import com.jxareas.xpensor.databinding.ListItemCategoryBinding
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
 
+fun Fragment.getDivider(context: Context) = DividerItemDecoration(
+    context,
+    DividerItemDecoration.VERTICAL
+).apply {
+    setDrawable(
+        requireNotNull(
+            ContextCompat.getDrawable(
+                context,
+                R.drawable.divider_layer
+            )
+        )
+    )
+}
 
 fun Fragment.showSnackbar(
     errorMessage: String,

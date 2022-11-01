@@ -136,4 +136,13 @@
             app:popUpTo="@id/transactionsFragment"
             app:popUpToInclusive="true" />
     </dialog>
+    <dialog
+        android:id="@+id/accountFilterDialogFragment"
+        android:name="com.jxareas.xpensor.ui.accounts.actions.filter.AccountFilterDialogFragment"
+        android:label="dialog_fragment_account_filter"
+        tools:layout="@layout/dialog_fragment_account_filter" />
+    <action
+        android:id="@+id/action_global_accountFilterDialog"
+        app:destination="@id/accountFilterDialogFragment" />
+
 </navigation>

@@ -146,9 +146,8 @@ class MainActivity : AppCompatActivity() {
                 when (event) {
                     is MainActivityEvent.OpenTheSettingsScreen ->
                         navController.navigate(NavGraphDirections.actionGlobalSettingsActivity())
-                    is MainActivityEvent.OpenTheSelectAccountDialog -> {
-                        // TODO: Handle open the select account dialog fragment}
-                    }
+                    is MainActivityEvent.OpenTheSelectAccountDialog ->
+                        navController.navigate(NavGraphDirections.actionGlobalAccountFilterDialog())
                 }
 
 
