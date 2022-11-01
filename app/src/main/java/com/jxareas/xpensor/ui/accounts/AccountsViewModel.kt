@@ -37,6 +37,10 @@ class AccountsViewModel @Inject constructor(
         _events.emit(AccountEvent.NavigateToAddAccountScreen)
     }
 
+    fun onAccountSelected(account: Account) = launchScoped {
+        _events.emit(AccountEvent.OpenTheAccountBottomSheet(account))
+    }
+
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()

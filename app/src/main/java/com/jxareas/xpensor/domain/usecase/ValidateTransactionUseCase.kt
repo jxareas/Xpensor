@@ -13,7 +13,7 @@ class ValidateTransactionUseCase @Inject constructor(
     suspend operator fun invoke(transaction: Transaction) =
         accountRepository.getAccountById(transaction.accountId).let { account ->
             if (account != null)
-                return account.amount > transaction.amount
+                account.amount > transaction.amount
             else false
         }
 

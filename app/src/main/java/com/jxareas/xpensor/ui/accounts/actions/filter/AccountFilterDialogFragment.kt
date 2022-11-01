@@ -55,7 +55,7 @@ class AccountFilterDialogFragment : DialogFragment() {
             viewModel.events.collectLatest { event ->
                 when (event) {
                     is AccountFilterEvent.SelectAccount ->
-                        mainViewModel.onUpdateSelectedAccount(event.account)
+                        mainViewModel.onUpdateSelectedAccount(event.account).also { dismiss() }
                 }
             }
         }
@@ -84,6 +84,12 @@ class AccountFilterDialogFragment : DialogFragment() {
         adapter = accountsListAdapter
         layoutManager = LinearLayoutManager(requireContext())
         addItemDecoration(getDivider(requireContext()))
+
+        accountsListAdapter.setOnClickListener(
+            AccountsListAdapter.OnClickListener { account ->
+                viewModel.onAccountSelected(account)
+            }
+        )
     }
 
     override fun onDestroyView() {

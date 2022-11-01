@@ -2,10 +2,8 @@ package com.jxareas.xpensor.ui.accounts.adapter
 
 import android.content.SharedPreferences
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
-import com.jxareas.xpensor.NavGraphDirections
 import com.jxareas.xpensor.databinding.ListItemAccountBinding
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.utils.invoke
@@ -19,16 +17,24 @@ class AccountsListAdapter @Inject constructor(
     AsyncDifferConfig.Builder(AccountDiffCallback).build()
 ) {
 
+    private var onClickListener: AccountsListAdapter.OnClickListener? = null
+
+    class OnClickListener(val clickListener: (account: Account) -> Unit) {
+        fun onClick(account: Account) = clickListener(account)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountsViewHolder =
         AccountsViewHolder(preferences,
             parent invoke ListItemAccountBinding::inflate).apply {
             val account by lazy { currentList[bindingAdapterPosition] }
-            val itemCount by lazy { currentList.size }
             itemView.setOnClickListener { rootView ->
-                val direction = NavGraphDirections.actionGlobalAccountActions(account, itemCount)
-                Navigation.findNavController(rootView).navigate(direction)
+                onClickListener?.onClick(account)
             }
         }
+
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
 
 
     override fun onBindViewHolder(holder: AccountsViewHolder, position: Int) =
