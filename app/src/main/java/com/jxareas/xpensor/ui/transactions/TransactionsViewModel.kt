@@ -62,12 +62,12 @@ class TransactionsViewModel @Inject constructor(
     suspend fun onDeleteTransaction(transaction: TransactionView) =
         deleteTransactionUseCase(transaction)
 
-    fun onDateRangeUpdate(from: LocalDate? = null, to: LocalDate? = null) {
+    fun onUpdateSelectedDateRange(from: LocalDate? = null, to: LocalDate? = null) {
         _selectedDateRange.value = from to to
         launchGetTransactionsJob()
     }
 
-    fun onAccountUpdate(account: Account? = null) {
+    fun onUpdateSelectedAccount(account: Account? = null) {
         _selectedAccount.value = account
         launchGetTransactionsJob()
     }
