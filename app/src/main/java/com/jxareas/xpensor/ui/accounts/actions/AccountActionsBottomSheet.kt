@@ -59,7 +59,7 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
                 when (event) {
                     is AccountActionsEvent.DeleteAccount -> {
                         if (args.selectedAccount == mainViewModel.selectedAccount.value) {
-                            mainViewModel.onUpdateCurrentAccount(null)
+                            mainViewModel.onUpdateSelectedAccount(null)
                         }
                         viewModel.removeAccount(args.selectedAccount)
                         dismiss()

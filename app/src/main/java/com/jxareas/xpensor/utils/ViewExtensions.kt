@@ -50,7 +50,6 @@ fun Fragment.showSnackbar(
         .show()
 }
 
-
 internal inline infix operator fun <reified VB : ViewBinding> ViewGroup.invoke(
     crossinline bindingInflater: LayoutInflater.(parent: ViewGroup, attachToParent: Boolean) -> VB,
 ): VB = LayoutInflater.from(context).let { layoutInflater ->
