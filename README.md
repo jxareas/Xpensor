@@ -1,8 +1,40 @@
+<br />
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="./readme/logo/blue.svg" alt="Logo" width="80" height="80">
+  </a>
+
 <h1 align = "center">
 <b><i>Xpensor</i></b>
 </h1>
 
-A Local Expense Tracker App created in order to demonstrate the use of modern Android Development Practices, Android Architecture Components, Material Theming & Animations.
+  <p align="center">
+    A Local Expense Tracker for Android
+    <br />
+    <a href="#-screenshots-">Screenshots</a>
+    ·
+    <a href="#-architecture-">Architecture</a>
+    ·
+     <a href="#-technologies-">Technologies</a>
+    ·
+    <a href="#-license-">License</a>
+  </p>
+</div>
+
+
+Xpensor is a Local Expense Tracker App created in order to demonstrate the use of modern Android Development Practices, Android Architecture Components, Material Theming & Animations.
+
+As of now, this project still has certain functionalities being worked on, althought its backbone is already set up.
+
+## 🕹️ UI/UX 🕹️
+
+This app providers a clean and simple Material-based Visual Feedback via Dialogs, Snackbars, Toasts and Bottom Sheets. It also enhances the user interfaces by providing visual cues to the user via animations, which are exaggerated to an extent, as this is an experimental app.
+
+Some of the APIs and Motion Patterns used all around this app are [*ObjectAnimator*](https://developer.android.com/reference/android/animation/ObjectAnimator), [*ViewPropertyAnimator*](https://developer.android.com/reference/android/view/ViewPropertyAnimator) and [*Material Motion Transition Patterns*](https://m2.material.io/design/motion/the-motion-system.html#transition-patterns).
+
+Bottom Items	|	Settings Menu	|	Date Selector Dialog | Expense Bottom Sheet	|
+:------:|:---------------------:|:-----------------------------:|:-------------:|
+![](./readme/gifs/top_destination_transition.gif)  |  ![](./readme/gifs/transition.gif)  |  ![](./readme/gifs/date_selector_dialog.gif)  |  ![](./readme/gifs/bottom_sheet.gif)
 
 ## 📷 Screenshots 📷
 
@@ -16,12 +48,6 @@ A Local Expense Tracker App created in order to demonstrate the use of modern An
 | ![](./readme/images/account_filter.png)  | ![](./readme/images/date_filter.png)  | ![](./readme/images/settings.png)  | 
 | ![](./readme/images/account_filter_dark.png)  | ![](./readme/images/date_filter_dark.png)  | ![](./readme/images/settings_dark.png)  | 
 
-## 🕹️ Animations 🕹️
-
-Bottom Items	|	Settings Menu	|	Date Selector Dialog | Expense Bottom Sheet	|
-:------:|:---------------------:|:-----------------------------:|:-------------:|
-![](./readme/gifs/top_destination_transition.gif)  |  ![](./readme/gifs/transition.gif)  |  ![](./readme/gifs/date_selector_dialog.gif)  |  ![](./readme/gifs/bottom_sheet.gif)
-
 
 ## 🛠 Architecture 🛠
 
@@ -33,7 +59,7 @@ The architecture used in this project is that of Clean Architecture, sticking to
 
 **3. Data:** Dispenses data to the app, which can be local (SQLLite Database) or remote (API).
 
-![clean_architecture](./images/clean_architecture.png)
+![clean_architecture](./readme/images/clean_architecture.png)
 
 
 ## ⚙️ Technologies ⚙️
@@ -73,3 +99,29 @@ Some common Software Design Patterns that can be found in this project and are o
 **Jon Areas**, [*@jxareas*](https://github.com/jxareas).
 
 "Constantly learning but trying to do the best I can."
+
+## 📜 License 📜
+
+```
+MIT License
+
+Copyright (c) 2022 Jonathan Areas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
