@@ -8,13 +8,19 @@ A Local Expense Tracker App created in order to demonstrate the use of modern An
 
 | Accounts List  | Expenses | Expenses Chart | 
 | ------------- | ------------- |  ------------- |
-| ![](./images/accounts.png)  | ![](./images/transactions.png)  | ![](./images/chart.png)  | 
-| ![](./images/accounts_dark.png)  | ![](./images/transactions_dark.png)  | ![](./images/chart_dark.png)  | 
+| ![](./readme/images/accounts.png)  | ![](./readme/images/transactions.png)  | ![](./readme/images/chart.png)  | 
+| ![](./readme/images/accounts_dark.png)  | ![](./readme/images/transactions_dark.png)  | ![](./readme/images/chart_dark.png)  | 
 
 | Account Filter  | Date Selector | Settings | 
 | ------------- | ------------- |  ------------- |
-| ![](./images/account_filter.png)  | ![](./images/date_filter.png)  | ![](./images/settings.png)  | 
-| ![](./images/account_filter_dark.png)  | ![](./images/date_filter_dark.png)  | ![](./images/settings_dark.png)  | 
+| ![](./readme/images/account_filter.png)  | ![](./readme/images/date_filter.png)  | ![](./readme/images/settings.png)  | 
+| ![](./readme/images/account_filter_dark.png)  | ![](./readme/images/date_filter_dark.png)  | ![](./readme/images/settings_dark.png)  | 
+
+## 🕹️ Animations 🕹️
+
+Bottom Items	|	Settings Menu	|	Date Selector Dialog | Expense Bottom Sheet	|
+:------:|:---------------------:|:-----------------------------:|:-------------:|
+![](./readme/gifs/top_destination_transition.gif)  |  ![](./readme/gifs/transition.gif)  |  ![](./readme/gifs/date_selector_dialog.gif)  |  ![](./readme/gifs/bottom_sheet.gif)
 
 
 ## 🛠 Architecture 🛠
@@ -44,6 +50,7 @@ This project uses many popular libraries and tools in the Android ecosystem:
 * **Preferences:**:  Build interactive settings screens, without needing to handle interacting with device storage or managing the user interface.
 * **Navigation**: Implement navigation and transactions between fragments.
 * **Moshi**: Converts data used by an application to a format that can be transferred over a network or stored in a database or a file.
+* **DiffUtil:**  Improving RecyclerView's performance when handling list updates.
 * **Lifecycle**: Perform actions in response to a change in the lifecycle status of another component.
 * **ViewModel**: Designed to manage and store UI related data in a lifecycle conscious way.
 * **ViewBinding**: Allows you to more easily write code that interacts with views.
