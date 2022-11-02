@@ -50,12 +50,6 @@ fun Fragment.showSnackbar(
         .show()
 }
 
-internal inline infix operator fun <reified VB : ViewBinding> ViewGroup.invoke(
-    crossinline bindingInflater: LayoutInflater.(parent: ViewGroup, attachToParent: Boolean) -> VB,
-): VB = LayoutInflater.from(context).let { layoutInflater ->
-    bindingInflater.invoke(layoutInflater, this, false)
-}
-
 fun getImageViewTint(imageView: ImageView): String {
     val colorInt = imageView.imageTintList?.defaultColor
     return if (colorInt != null) String.format("#%06X", 0xFFFFFF and colorInt) else MAIN_COLOR

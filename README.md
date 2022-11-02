@@ -38,6 +38,8 @@ Bottom Items	|	Settings Menu	|	Date Selector Dialog | Expense Bottom Sheet	|
 
 ## 📷 Screenshots 📷
 
+This Project uses [**Material 3**](https://m3.material.io/), the latest version of Google's open source design system known as *Material Design*. It also supports [Dark Theme](https://developer.android.com/develop/ui/views/theming/darktheme), as evidendeced by the screenshots below:
+
 | Accounts List  | Expenses | Expenses Chart | 
 | ------------- | ------------- |  ------------- |
 | ![](./readme/images/accounts.png)  | ![](./readme/images/transactions.png)  | ![](./readme/images/chart.png)  | 
@@ -53,7 +55,7 @@ Bottom Items	|	Settings Menu	|	Date Selector Dialog | Expense Bottom Sheet	|
 
 The architecture used in this project is that of Clean Architecture, sticking to the following layers:
 
-**1. Presentation:** It's the layer that interacts with the UI. In the Android ecosystems, this refers to Activities, Fragments and their respectives ViewModels.
+**1. Presentation:** It's the layer that interacts with the UI. In the Android ecosystem, this refers to Activities, Fragments and their respective ViewModels.
 
 **2. Domain:** Contains the business logic of the application, composed primarily by the Use Cases and the Domain Model.
 
@@ -98,7 +100,7 @@ Some common Software Design Patterns that can be found in this project and are o
 
 **Jon Areas**, [*@jxareas*](https://github.com/jxareas).
 
-"Constantly learning but trying to do the best I can."
+"Constantly learning but trying to do things the best I can."
 
 ## 📜 License 📜
 
