@@ -65,4 +65,8 @@
     <string name="not_enough_funds">Selected account has insufficient funds for this transaction.</string>
     <string name="dismiss">Dismiss</string>
     <string name="filter_account">Filter account</string>
+    <string name="text_about_license_title"><![CDATA[Attributions & License]]></string>
+    <string name="text_about_license">Licensed under the MIT License</string>
+    <string name="text_about_visit_title">Github Repository</string>
+    <string name="text_about_visit_url"><u>https://github.com/jxareas/Xpensor</u></string>
 </resources>
