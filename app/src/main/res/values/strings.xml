@@ -65,4 +65,6 @@
     <string name="not_enough_funds">Selected account has insufficient funds for this transaction.</string>
     <string name="dismiss">Dismiss</string>
     <string name="filter_account">Filter account</string>
+    <string name="enter_the_pin">Enter your pin</string>
+    <string name="forgot_code">Forgot Code</string>
 </resources>

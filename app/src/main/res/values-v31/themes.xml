@@ -51,4 +51,13 @@
         <item name="colorOnPrimary">?attr/colorOnPrimarySurface</item>
     </style>
 
+    <style name="AuthStyle">
+        <item name="android:tint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:background">?android:selectableItemBackgroundBorderless</item>
+        <item name="android:layout_width">84dp</item>
+        <item name="android:layout_height">84dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">48dp</item>
+    </style>
+
 </resources>
