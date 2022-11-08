@@ -24,6 +24,12 @@ import com.jxareas.xpensor.databinding.ListItemCategoryBinding
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
 
+internal inline infix operator fun <reified VB : ViewBinding> ViewGroup.invoke(
+    crossinline bindingInflater: LayoutInflater.(parent: ViewGroup, attachToParent: Boolean) -> VB,
+): VB = LayoutInflater.from(context).let inflaterScoped@{ layoutInflater ->
+    bindingInflater.invoke(layoutInflater, this, false)
+}
+
 fun Fragment.getDivider(context: Context) = DividerItemDecoration(
     context,
     DividerItemDecoration.VERTICAL
