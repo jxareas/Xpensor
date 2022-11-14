@@ -18,6 +18,7 @@
 
     <TextView
         android:id="@+id/text_view_enter_pin"
+        style="@style/TextAppearance.Xpensor.Headline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -179,8 +180,8 @@
         app:layout_constraintTop_toBottomOf="@+id/number_8" />
 
     <ImageButton
-        style="@style/AuthStyle"
         android:id="@+id/button_backspace"
+        style="@style/AuthStyle"
         android:layout_marginTop="20dp"
         android:src="@drawable/ic_backspace"
         app:layout_constraintEnd_toEndOf="@+id/number_9"
