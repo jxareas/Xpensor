@@ -27,7 +27,7 @@ class AccountsListAdapter @Inject constructor(
         AccountsViewHolder(preferences,
             parent invoke ListItemAccountBinding::inflate).apply {
             val account by lazy { currentList[bindingAdapterPosition] }
-            itemView.setOnClickListener { rootView ->
+            itemView.setOnClickListener {
                 onClickListener?.onClick(account)
             }
         }

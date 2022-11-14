@@ -4,16 +4,16 @@ import android.content.SharedPreferences
 import androidx.recyclerview.widget.RecyclerView
 import com.jxareas.xpensor.databinding.ListItemAccountBinding
 import com.jxareas.xpensor.domain.model.Account
-import com.jxareas.xpensor.utils.Binder
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
+import com.jxareas.xpensor.utils.OnBindViewHolder
 import com.jxareas.xpensor.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_CURRENCY
-import com.jxareas.xpensor.utils.setTint
+import com.jxareas.xpensor.utils.extensions.setTint
 
 class AccountsViewHolder(
     private val preferences: SharedPreferences,
     private val binding: ListItemAccountBinding,
-) : RecyclerView.ViewHolder(binding.root), Binder<Account> {
+) : RecyclerView.ViewHolder(binding.root), OnBindViewHolder<Account> {
 
     override fun bind(item: Account) = with(binding) {
         textViewName.text = item.name

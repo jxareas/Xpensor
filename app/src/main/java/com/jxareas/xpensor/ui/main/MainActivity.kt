@@ -1,15 +1,9 @@
 package com.jxareas.xpensor.ui.main
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AnticipateOvershootInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.animation.doOnEnd
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -21,7 +15,6 @@ import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.ActivityMainBinding
 import com.jxareas.xpensor.ui.main.event.MainActivityEvent
 import com.jxareas.xpensor.utils.DateUtils.getCurrentLocalDate
-import com.jxareas.xpensor.utils.getLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import java.time.format.DateTimeFormatter
@@ -54,17 +47,8 @@ class MainActivity : AppCompatActivity() {
             R.id.chartFragment)
 
 
-    private companion object {
-        const val SPLASH_ICON_VIEW_ANIMATION_SCALE = 0.2f
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val splashScreen = installSplashScreen()
-        splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
-            val animationDuration = resources.getLong(R.integer.xpensor_splash_screen_duration)
-            animateSplashScreen(splashScreenViewProvider, animationDuration)
-        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -101,43 +85,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupActionBar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-    }
-
-    private fun animateSplashScreen(
-        provider: SplashScreenViewProvider,
-        animationDuration: Long,
-    ) = provider.iconView.animate().let { iconViewPropertyAnimator ->
-
-        val onSplashScreenRemovedAnimator = ObjectAnimator.ofFloat(
-            provider.view,
-            View.TRANSLATION_Y,
-            0f,
-            -provider.view.height.toFloat(),
-        ).apply {
-            interpolator = AnticipateOvershootInterpolator()
-            duration = animationDuration
-            doOnEnd { provider.remove() }
-        }
-
-        val reverseIconAnimation: () -> Unit = {
-            iconViewPropertyAnimator
-                .setDuration(animationDuration)
-                .setInterpolator(AccelerateDecelerateInterpolator())
-                .rotation(-2 * animationDuration.toFloat())
-                .scaleXBy(-SPLASH_ICON_VIEW_ANIMATION_SCALE)
-                .scaleYBy(-SPLASH_ICON_VIEW_ANIMATION_SCALE)
-                .withStartAction { onSplashScreenRemovedAnimator.start() }
-        }
-
-        iconViewPropertyAnimator
-            .setDuration(animationDuration)
-            .setInterpolator(AnticipateOvershootInterpolator())
-            .rotation(2 * animationDuration.toFloat())
-            .scaleXBy(SPLASH_ICON_VIEW_ANIMATION_SCALE)
-            .scaleYBy(SPLASH_ICON_VIEW_ANIMATION_SCALE)
-            .withEndAction(reverseIconAnimation)
-            .start()
-
     }
 
     private fun setupListeners() = binding.run {

@@ -10,7 +10,7 @@ import androidx.viewbinding.ViewBinding
 import com.jxareas.xpensor.data.local.views.TransactionView
 import com.jxareas.xpensor.databinding.CardItemTransactionBinding
 import com.jxareas.xpensor.databinding.ListItemDayInformationBinding
-import com.jxareas.xpensor.utils.Binder
+import com.jxareas.xpensor.utils.OnBindViewHolder
 import com.jxareas.xpensor.utils.invoke
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class TransactionAdapter @Inject constructor(
     AsyncDifferConfig.Builder(TransactionDiffCallback).build()
 ) {
     abstract class ViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root),
-        Binder<Any>
+        OnBindViewHolder<Any>
 
     companion object {
         private const val DAY_INFO_VIEW_TYPE = 0

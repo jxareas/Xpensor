@@ -14,6 +14,10 @@
     <string name="all_time">All time</string>
     <string name="currency_converter">Currency Converter</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="forgot_alert_title">Forgot your password?</string>
+    <string name="forgot_alert_message">You can restore access to the application only by erasing all data.</string>
+    <string name="erase_data_alert_title">Erase application data?</string>
+    <string name="erase_data_alert_message">Are you sure you want to do this? It will be impossible to restore the data. After deleting, the application will be closed.</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -65,4 +69,9 @@
     <string name="not_enough_funds">Selected account has insufficient funds for this transaction.</string>
     <string name="dismiss">Dismiss</string>
     <string name="filter_account">Filter account</string>
+    <string name="enter_the_pin">Enter your pin</string>
+    <string name="forgot_code">Forgot Code</string>
+    <string name="set_the_pin">Set your new PIN</string>
+    <string name="repeat_the_pin">Repeat the PIN</string>
+    <string name="ok">OK</string>
 </resources>
