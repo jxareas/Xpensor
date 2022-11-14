@@ -14,8 +14,8 @@ import com.jxareas.xpensor.ui.accounts.actions.filter.events.AccountFilterEvent
 import com.jxareas.xpensor.ui.accounts.adapter.AccountsListAdapter
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.utils.getDivider
-import com.jxareas.xpensor.utils.setTint
+import com.jxareas.xpensor.utils.extensions.getDivider
+import com.jxareas.xpensor.utils.extensions.setTint
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject

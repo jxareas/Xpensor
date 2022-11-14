@@ -21,9 +21,9 @@ import com.jxareas.xpensor.databinding.FragmentEditAccountBinding
 import com.jxareas.xpensor.ui.accounts.actions.edit.events.EditAccountEvent
 import com.jxareas.xpensor.ui.accounts.actions.menu.ApplyChangesMenu
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
+import com.jxareas.xpensor.utils.extensions.setTint
+import com.jxareas.xpensor.utils.extensions.toast
 import com.jxareas.xpensor.utils.getLong
-import com.jxareas.xpensor.utils.setTint
-import com.jxareas.xpensor.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -80,7 +80,7 @@ class EditAccountFragment : Fragment() {
                     is EditAccountEvent.UpdateAccount -> {
                         val name = binding.textInputLayoutName.editText?.text.toString().trim()
                         if (name.isEmpty()) {
-                            showToast(context, getString(R.string.account_empty_name_error))
+                            toast(context, getString(R.string.account_empty_name_error))
                         } else {
                             val amount =
                                 binding.textInputLayoutMoneyAmount.editText?.text.toString()

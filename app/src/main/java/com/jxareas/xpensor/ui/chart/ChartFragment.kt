@@ -28,8 +28,8 @@ import com.jxareas.xpensor.ui.date.menu.SelectDateMenu
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
+import com.jxareas.xpensor.utils.extensions.getThemeColor
 import com.jxareas.xpensor.utils.getLong
-import com.jxareas.xpensor.utils.getThemeColor
 import com.jxareas.xpensor.utils.setCategoryAttributes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

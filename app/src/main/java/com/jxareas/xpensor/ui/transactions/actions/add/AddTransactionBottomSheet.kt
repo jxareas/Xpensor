@@ -16,8 +16,8 @@ import com.jxareas.xpensor.domain.model.Transaction
 import com.jxareas.xpensor.ui.transactions.actions.add.event.AddTransactionEvent
 import com.jxareas.xpensor.ui.transactions.actions.add.state.AddTransactionState
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.utils.setIcon
-import com.jxareas.xpensor.utils.showSnackbar
+import com.jxareas.xpensor.utils.extensions.setIcon
+import com.jxareas.xpensor.utils.extensions.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

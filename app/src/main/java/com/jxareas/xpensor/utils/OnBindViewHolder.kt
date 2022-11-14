@@ -1,6 +1,6 @@
 package com.jxareas.xpensor.utils
 
 @FunctionalInterface
-fun interface Binder<T> {
+fun interface OnBindViewHolder<T> {
     fun bind(item : T)
 }

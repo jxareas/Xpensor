@@ -19,8 +19,8 @@ import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.ui.accounts.actions.add.events.AddAccountEvent
 import com.jxareas.xpensor.ui.accounts.actions.menu.ApplyChangesMenu
 import com.jxareas.xpensor.utils.PreferenceUtils
-import com.jxareas.xpensor.utils.setTint
-import com.jxareas.xpensor.utils.showToast
+import com.jxareas.xpensor.utils.extensions.setTint
+import com.jxareas.xpensor.utils.extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -67,7 +67,7 @@ class AddAccountFragment : Fragment() {
                     is AddAccountEvent.CreateNewAccount -> {
                         val name = binding.textInputLayoutName.editText?.text.toString().trim()
                         if (name.isEmpty()) {
-                            showToast(requireContext(),
+                            toast(requireContext(),
                                 getString(R.string.account_empty_name_error))
                         } else {
                             val amount =

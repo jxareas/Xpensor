@@ -6,8 +6,8 @@ import com.jxareas.xpensor.databinding.CardItemTransactionBinding
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_CURRENCY
-import com.jxareas.xpensor.utils.setIcon
-import com.jxareas.xpensor.utils.setTint
+import com.jxareas.xpensor.utils.extensions.setIcon
+import com.jxareas.xpensor.utils.extensions.setTint
 
 class TransactionViewHolder(
     private val binding: CardItemTransactionBinding,
