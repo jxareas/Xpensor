@@ -3,7 +3,7 @@ package com.jxareas.xpensor.ui.main
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 import com.jxareas.xpensor.domain.usecase.GetAccountsUseCase
 import com.jxareas.xpensor.ui.main.event.MainActivityEvent
 import com.jxareas.xpensor.utils.DateUtils
@@ -27,10 +27,10 @@ class MainActivityViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
-    private val _accounts = MutableStateFlow(emptyList<Account>())
+    private val _accounts = MutableStateFlow(emptyList<AccountWithDetails>())
     val accounts = _accounts.asStateFlow()
 
-    private val _selectedAccount = MutableStateFlow<Account?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountWithDetails?>(null)
     val selectedAccount = _selectedAccount.asStateFlow()
 
     private val _selectedDateRange = MutableStateFlow(DateUtils.defaultDateRange)
@@ -64,7 +64,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
 
-    fun onUpdateSelectedAccount(account: Account?) = launchScoped {
+    fun onUpdateSelectedAccount(account: AccountWithDetails?) = launchScoped {
         _selectedAccount.value = account
     }
 

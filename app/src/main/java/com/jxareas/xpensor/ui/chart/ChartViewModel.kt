@@ -3,7 +3,7 @@ package com.jxareas.xpensor.ui.chart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.data.local.views.CategoryView
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 import com.jxareas.xpensor.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.ui.chart.events.ChartEvent
 import com.jxareas.xpensor.utils.extensions.launchScoped
@@ -31,7 +31,7 @@ class ChartViewModel @Inject constructor(
 
     private var getCategoriesJob: Job? = null
 
-    private val _selectedAccount = MutableStateFlow<Account?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountWithDetails?>(null)
     private val _selectedDateRange = MutableStateFlow<Pair<LocalDate?, LocalDate?>>(null to null)
 
     init {
@@ -55,7 +55,7 @@ class ChartViewModel @Inject constructor(
         launchGetCategoriesJob()
     }
 
-    fun onUpdateSelectedAccount(account: Account? = null) {
+    fun onUpdateSelectedAccount(account: AccountWithDetails? = null) {
         _selectedAccount.value = account
         launchGetCategoriesJob()
     }

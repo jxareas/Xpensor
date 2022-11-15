@@ -1,20 +1,20 @@
 package com.jxareas.xpensor.ui.transactions.adapter
 
 import android.content.SharedPreferences
-import com.jxareas.xpensor.data.local.views.DayInformationView
 import com.jxareas.xpensor.databinding.ListItemDayInformationBinding
+import com.jxareas.xpensor.domain.model.TransactionsByDate
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_CURRENCY
 
-class DayInformationViewHolder(
+class TransactionsByDayViewHolder(
     private val binding: ListItemDayInformationBinding,
     private val preferences: SharedPreferences,
 ) : TransactionAdapter.ViewHolder(binding) {
 
 
     override fun bind(item: Any) {
-        val dayInfo = item as DayInformationView
+        val dayInfo = item as TransactionsByDate
 
         val dateValue = dayInfo.transactionDate
         val amountValue = dayInfo.amountPerDay

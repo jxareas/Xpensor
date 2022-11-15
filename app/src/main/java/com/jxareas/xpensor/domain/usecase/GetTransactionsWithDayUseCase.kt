@@ -1,7 +1,7 @@
 package com.jxareas.xpensor.domain.usecase
 
-import com.jxareas.xpensor.data.local.views.TransactionView
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
+import com.jxareas.xpensor.domain.model.TransactionWithDetails
 import com.jxareas.xpensor.domain.repository.TransactionRepository
 import com.jxareas.xpensor.utils.DateRange
 import com.jxareas.xpensor.utils.DateUtils
@@ -18,9 +18,9 @@ class GetTransactionsWithDayUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        transactions: List<TransactionView>,
+        transactions: List<TransactionWithDetails>,
         dateRange: DateRange,
-        account: Account?,
+        account: AccountWithDetails?,
     ): List<Any> {
         val minDate = dateRange.first ?: DateUtils.DEFAULT_LOCAL_DATE
         val maxDate = dateRange.second ?: DateUtils.getCurrentLocalDate()

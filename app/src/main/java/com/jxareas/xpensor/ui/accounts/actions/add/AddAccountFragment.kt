@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.FragmentAddAccountBinding
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 import com.jxareas.xpensor.ui.accounts.actions.add.events.AddAccountEvent
 import com.jxareas.xpensor.ui.accounts.actions.menu.ApplyChangesMenu
 import com.jxareas.xpensor.utils.PreferenceUtils
@@ -75,7 +75,7 @@ class AddAccountFragment : Fragment() {
                                     .toDoubleOrNull() ?: 0.0
 
                             val account =
-                                Account(name = name, amount = amount, color = color, id = Account.EMPTY_ID)
+                                AccountWithDetails(name = name, amount = amount, color = color, id = AccountWithDetails.EMPTY_ID)
                             viewModel.addAccount(account).also { findNavController().navigateUp() }
                         }
                     }

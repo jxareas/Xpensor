@@ -22,7 +22,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.data.local.views.TransactionView
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 import com.jxareas.xpensor.ui.date.menu.SelectDateMenu
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.ui.transactions.adapter.TransactionAdapter
@@ -134,7 +134,7 @@ class TransactionsFragment : Fragment() {
             .show()
             .also { isAlertShowing = true }
 
-    private fun navigateToAddTransactionSheet(account: Account) {
+    private fun navigateToAddTransactionSheet(account: AccountWithDetails) {
         val direction = TransactionsFragmentDirections
             .actionTransactionsFragmentToSelectCategoryBottomSheet(account)
         findNavController().navigate(direction)

@@ -2,7 +2,7 @@ package com.jxareas.xpensor.ui.accounts.actions.filter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 import com.jxareas.xpensor.domain.usecase.GetAccountsUseCase
 import com.jxareas.xpensor.ui.accounts.actions.filter.events.AccountFilterEvent
 import com.jxareas.xpensor.utils.extensions.launchScoped
@@ -21,7 +21,7 @@ class AccountFilterViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
 ) : ViewModel() {
 
-    private val _accounts = MutableStateFlow(emptyList<Account>())
+    private val _accounts = MutableStateFlow(emptyList<AccountWithDetails>())
     val accounts = _accounts.asStateFlow()
 
     private val _events = MutableSharedFlow<AccountFilterEvent>()
@@ -42,11 +42,11 @@ class AccountFilterViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun onAccountSelected(account: Account) = launchScoped {
+    fun onAccountSelected(account: AccountWithDetails) = launchScoped {
         _events.emit(AccountFilterEvent.SelectAccount(account))
     }
 
     fun getTotalAccountsAmount(): Double =
-        _accounts.value.sumOf(Account::amount)
+        _accounts.value.sumOf(AccountWithDetails::amount)
 
 }

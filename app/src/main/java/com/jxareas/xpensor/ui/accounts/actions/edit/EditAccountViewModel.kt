@@ -2,7 +2,7 @@ package com.jxareas.xpensor.ui.accounts.actions.edit
 
 import android.widget.ImageView
 import androidx.lifecycle.ViewModel
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 import com.jxareas.xpensor.domain.usecase.UpdateAccountUseCase
 import com.jxareas.xpensor.ui.accounts.actions.edit.events.EditAccountEvent
 import com.jxareas.xpensor.utils.extensions.getImageViewTint
@@ -20,7 +20,7 @@ class EditAccountViewModel @Inject constructor(
     private val _events = MutableSharedFlow<EditAccountEvent>()
     val events = _events.asSharedFlow()
 
-    suspend fun onAccountUpdate(account: Account) =
+    suspend fun onAccountUpdate(account: AccountWithDetails) =
         updateAccountUseCase(account)
 
     fun onApplyChanges() = launchScoped {

@@ -2,7 +2,7 @@ package com.jxareas.xpensor.ui.accounts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 import com.jxareas.xpensor.domain.usecase.GetAccountsUseCase
 import com.jxareas.xpensor.ui.accounts.events.AccountEvent
 import com.jxareas.xpensor.utils.extensions.launchScoped
@@ -21,7 +21,7 @@ class AccountsViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
 ) : ViewModel() {
 
-    private val _accounts = MutableStateFlow(emptyList<Account>())
+    private val _accounts = MutableStateFlow(emptyList<AccountWithDetails>())
     val accounts = _accounts.asStateFlow()
 
     private val _events = MutableSharedFlow<AccountEvent>()
@@ -37,7 +37,7 @@ class AccountsViewModel @Inject constructor(
         _events.emit(AccountEvent.NavigateToAddAccountScreen)
     }
 
-    fun onAccountSelected(account: Account) = launchScoped {
+    fun onAccountSelected(account: AccountWithDetails) = launchScoped {
         _events.emit(AccountEvent.OpenTheAccountBottomSheet(account))
     }
 

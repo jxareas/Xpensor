@@ -1,7 +1,7 @@
 package com.jxareas.xpensor.domain.usecase
 
 import com.jxareas.xpensor.data.local.views.CategoryView
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 import com.jxareas.xpensor.domain.repository.CategoryRepository
 import com.jxareas.xpensor.utils.DateRange
 import com.jxareas.xpensor.utils.DateUtils
@@ -14,7 +14,7 @@ class GetCategoriesUseCase @Inject constructor(
     private val repository: CategoryRepository,
 ) {
 
-    operator fun invoke(dateRange: DateRange, account: Account?):
+    operator fun invoke(dateRange: DateRange, account: AccountWithDetails?):
             Flow<List<CategoryView>> {
 
         val minDate = dateRange.first ?: DateUtils.DEFAULT_LOCAL_DATE
