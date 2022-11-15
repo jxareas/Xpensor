@@ -11,7 +11,7 @@ import com.jxareas.xpensor.data.local.views.TransactionView
 import com.jxareas.xpensor.databinding.CardItemTransactionBinding
 import com.jxareas.xpensor.databinding.ListItemDayInformationBinding
 import com.jxareas.xpensor.utils.OnBindViewHolder
-import com.jxareas.xpensor.utils.invoke
+import com.jxareas.xpensor.utils.extensions.invoke
 import javax.inject.Inject
 
 class TransactionAdapter @Inject constructor(

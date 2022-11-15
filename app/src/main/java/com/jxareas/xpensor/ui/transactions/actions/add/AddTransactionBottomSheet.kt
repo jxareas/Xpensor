@@ -61,7 +61,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun setupListeners() = binding.run {
-        buttonApplyChanges.setOnClickListener { viewModel.onApplyChanges() }
+        buttonAddTransaction.setOnClickListener { viewModel.onApplyChanges() }
     }
 
     private fun setupEventCollector() {

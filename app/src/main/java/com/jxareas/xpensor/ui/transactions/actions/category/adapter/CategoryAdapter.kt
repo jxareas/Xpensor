@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
-import com.jxareas.xpensor.utils.invoke
+import com.jxareas.xpensor.utils.extensions.invoke
 import javax.inject.Inject
 import javax.inject.Singleton
 

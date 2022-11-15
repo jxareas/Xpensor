@@ -6,7 +6,7 @@ import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.ui.chart.events.ChartEvent
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow

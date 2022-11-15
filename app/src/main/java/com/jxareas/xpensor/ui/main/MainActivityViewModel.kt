@@ -9,7 +9,7 @@ import com.jxareas.xpensor.ui.main.event.MainActivityEvent
 import com.jxareas.xpensor.utils.DateUtils
 import com.jxareas.xpensor.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_CURRENCY
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow

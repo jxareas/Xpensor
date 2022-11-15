@@ -6,7 +6,7 @@ import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.AddAccountUseCase
 import com.jxareas.xpensor.ui.accounts.actions.add.events.AddAccountEvent
 import com.jxareas.xpensor.utils.extensions.getImageViewTint
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

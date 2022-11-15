@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="12dp"
+    android:paddingBottom="@dimen/margin_high"
     tools:context="com.jxareas.xpensor.ui.transactions.actions.add.AddTransactionBottomSheet">
 
     <LinearLayout
@@ -106,13 +106,14 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input_layout_expense"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="@dimen/margin_standard"
         android:layout_marginTop="12dp"
         android:hint="@string/expense"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/from_to_container">
+        app:layout_constraintTop_toBottomOf="@id/from_to_container"
+        app:startIconDrawable="@drawable/ic_money">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -124,13 +125,14 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/text_input_layout_description"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="@dimen/margin_standard"
         android:layout_marginTop="12dp"
         android:hint="@string/description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_input_layout_expense">
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_expense"
+        app:startIconDrawable="@drawable/ic_edit">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -139,25 +141,20 @@
             android:maxLength="20" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/button_apply_changes"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_input_layout_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_input_layout_expense"
-        app:layout_constraintTop_toTopOf="@id/text_input_layout_expense"
-        app:srcCompat="@drawable/ic_circle"
-        app:tint="@color/orange_red" />
-
-    <ImageView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/button_add_transaction"
+        style="@style/TextAppearance.Xpensor.Button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/button_apply_changes"
-        app:layout_constraintEnd_toEndOf="@id/button_apply_changes"
-        app:layout_constraintStart_toStartOf="@id/button_apply_changes"
-        app:layout_constraintTop_toTopOf="@id/button_apply_changes"
-        app:srcCompat="@drawable/ic_apply" />
+        android:layout_marginHorizontal="@dimen/margin_high"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:text="@string/add_transaction"
+        android:textColor="?attr/colorOnPrimarySurface"
+        app:icon="@drawable/ic_add"
+        app:iconTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

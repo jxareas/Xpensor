@@ -18,7 +18,7 @@ import com.jxareas.xpensor.ui.converter.event.CurrencyConverterEvent
 import com.jxareas.xpensor.ui.converter.state.ConversionState
 import com.jxareas.xpensor.utils.extensions.getCurrentDestination
 import com.jxareas.xpensor.utils.extensions.toast
-import com.jxareas.xpensor.utils.getLong
+import com.jxareas.xpensor.utils.extensions.getLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

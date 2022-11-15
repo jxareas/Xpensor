@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.GetAccountsUseCase
 import com.jxareas.xpensor.ui.accounts.actions.filter.events.AccountFilterEvent
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow

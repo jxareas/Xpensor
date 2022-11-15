@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.utils
+package com.jxareas.xpensor.utils.extensions
 
 import android.content.res.Resources
 import android.graphics.Color
@@ -9,8 +9,6 @@ import androidx.viewbinding.ViewBinding
 import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.utils.extensions.setIcon
-import com.jxareas.xpensor.utils.extensions.setTint
 
 internal inline infix operator fun <reified VB : ViewBinding> ViewGroup.invoke(
     crossinline bindingInflater: LayoutInflater.(parent: ViewGroup, attachToParent: Boolean) -> VB,

@@ -6,7 +6,7 @@ import com.jxareas.xpensor.utils.DateUtils.DAY_IN_MS
 import com.jxareas.xpensor.utils.DateUtils.getCurrentLocalDate
 import com.jxareas.xpensor.utils.DateUtils.toLocalDate
 import com.jxareas.xpensor.utils.DateUtils.toMilliseconds
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

@@ -10,7 +10,7 @@ import com.jxareas.xpensor.domain.usecase.GetTransactionsWithDayUseCase
 import com.jxareas.xpensor.ui.transactions.event.TransactionEvent
 import com.jxareas.xpensor.ui.transactions.state.TransactionState
 import com.jxareas.xpensor.utils.DateRange
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow

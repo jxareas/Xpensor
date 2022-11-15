@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Xpensor"
+        android:theme="@style/Theme.Xpensor.Splash"
         tools:targetApi="31">
         <activity
             android:name=".ui.authentication.AuthenticationActivity"
@@ -31,10 +31,12 @@
         <activity
             android:name="com.jxareas.xpensor.ui.settings.SettingsActivity"
             android:exported="false"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:theme="@style/Theme.Xpensor.Base" />
         <activity
             android:name="com.jxareas.xpensor.ui.main.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Xpensor.Base">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

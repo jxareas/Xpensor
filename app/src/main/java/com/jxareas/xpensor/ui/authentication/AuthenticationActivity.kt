@@ -23,8 +23,8 @@ import androidx.lifecycle.lifecycleScope
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.databinding.ActivityAuthenticationBinding
 import com.jxareas.xpensor.ui.main.MainActivity
+import com.jxareas.xpensor.utils.extensions.getLong
 import com.jxareas.xpensor.utils.extensions.setTint
-import com.jxareas.xpensor.utils.getLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -53,12 +53,11 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val splashScreen = installSplashScreen()
-        splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
+        installSplashScreen().setOnExitAnimationListener { splashScreenViewProvider ->
             val animationDuration = resources.getLong(R.integer.xpensor_splash_screen_duration)
             animateSplashScreen(splashScreenViewProvider, animationDuration)
         }
+        super.onCreate(savedInstanceState)
         binding = ActivityAuthenticationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupView()

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.jxareas.xpensor.domain.model.Account
 import com.jxareas.xpensor.domain.usecase.DeleteAccountUseCase
 import com.jxareas.xpensor.ui.accounts.actions.events.AccountActionsEvent
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

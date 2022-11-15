@@ -28,7 +28,7 @@ import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.ui.transactions.adapter.TransactionAdapter
 import com.jxareas.xpensor.ui.transactions.event.TransactionEvent
 import com.jxareas.xpensor.ui.transactions.state.TransactionState
-import com.jxareas.xpensor.utils.getLong
+import com.jxareas.xpensor.utils.extensions.getLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
