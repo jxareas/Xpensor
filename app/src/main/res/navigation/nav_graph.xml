@@ -126,7 +126,7 @@
             app:argType="com.jxareas.xpensor.domain.model.AccountWithDetails" />
         <argument
             android:name="selectedCategory"
-            app:argType="com.jxareas.xpensor.data.local.views.CategoryView" />
+            app:argType="com.jxareas.xpensor.domain.model.CategoryWithDetails" />
         <argument
             android:name="amount"
             app:argType="float" />

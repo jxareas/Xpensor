@@ -3,11 +3,8 @@ package com.jxareas.xpensor.domain.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-
 @Parcelize
-data class Category(
-    val id: Int,
-    val name: String,
-    val icon: Int,
-    val iconColor: String,
+data class CategoryWithDetails(
+    val category: Category,
+    val amount: Double,
 ) : Domain, Parcelable

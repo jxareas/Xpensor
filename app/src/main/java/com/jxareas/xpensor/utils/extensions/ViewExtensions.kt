@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.IntegerRes
 import androidx.viewbinding.ViewBinding
-import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
+import com.jxareas.xpensor.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 
 internal inline infix operator fun <reified VB : ViewBinding> ViewGroup.invoke(
@@ -22,18 +22,18 @@ fun Resources.getLong(@IntegerRes integerRes: Int): Long =
 
 
 fun ListItemCategoryBinding.setCategoryAttributes(
-    category: CategoryView,
+    details: CategoryWithDetails,
     currency: String?,
 ) {
-    this.name.text = category.name
-    this.icon.setIcon(category.icon)
-    this.iconBackground.setTint(category.iconColor)
-    this.amount.text = category.amount.toAmountFormat(withMinus = false)
+    this.name.text = details.category.name
+    this.icon.setIcon(details.category.icon)
+    this.iconBackground.setTint(details.category.iconColor)
+    this.amount.text = details.amount.toAmountFormat(withMinus = false)
     this.currency.text = currency
 
-    val color = Color.parseColor(category.iconColor)
+    val color = Color.parseColor(details.category.iconColor)
     this.amount.setTextColor(color)
     this.currency.setTextColor(color)
 
-    this.item.alpha = if (category.amount == 0.0) 0.3f else 1f
+    this.item.alpha = if (details.amount == 0.0) 0.3f else 1f
 }

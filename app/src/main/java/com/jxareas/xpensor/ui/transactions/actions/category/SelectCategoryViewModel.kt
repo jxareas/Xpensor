@@ -3,8 +3,8 @@ package com.jxareas.xpensor.ui.transactions.actions.category
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.domain.model.AccountWithDetails
+import com.jxareas.xpensor.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.ui.transactions.actions.category.event.SelectCategoryEvent
 import com.jxareas.xpensor.utils.extensions.launchScoped
@@ -24,7 +24,7 @@ class SelectCategoryViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
 ) : ViewModel() {
 
-    private val _categories = MutableStateFlow(emptyList<CategoryView>())
+    private val _categories = MutableStateFlow(emptyList<CategoryWithDetails>())
     val categories = _categories.asStateFlow()
 
 
@@ -58,8 +58,9 @@ class SelectCategoryViewModel @Inject constructor(
         launchGetCategoriesJob()
     }
 
-    fun selectCategoryClick(account: AccountWithDetails, categoryView: CategoryView) = launchScoped {
-        _events.emit(SelectCategoryEvent.SelectCategory(account, categoryView))
-    }
+    fun selectCategoryClick(account: AccountWithDetails, categoryView: CategoryWithDetails) =
+        launchScoped {
+            _events.emit(SelectCategoryEvent.SelectCategory(account, categoryView))
+        }
 
 }

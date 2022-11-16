@@ -21,15 +21,15 @@ import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
-import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.databinding.FragmentChartBinding
+import com.jxareas.xpensor.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.ui.chart.events.ChartEvent
 import com.jxareas.xpensor.ui.date.menu.SelectDateMenu
 import com.jxareas.xpensor.ui.main.MainActivityViewModel
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_COLOR
-import com.jxareas.xpensor.utils.extensions.getThemeColor
 import com.jxareas.xpensor.utils.extensions.getLong
+import com.jxareas.xpensor.utils.extensions.getThemeColor
 import com.jxareas.xpensor.utils.extensions.setCategoryAttributes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -122,21 +122,21 @@ class ChartFragment : Fragment() {
         }
     }
 
-    private fun updateChartData(categories: List<CategoryView>) {
-        if (categories.isNotEmpty()) {
+    private fun updateChartData(details: List<CategoryWithDetails>) {
+        if (details.isNotEmpty()) {
             val currency = mainViewModel.getCurrency()
 
-            updateCategories(categories, currency)
+            updateCategories(details, currency)
 
             var amount = 0.0
             val entries = ArrayList<PieEntry>()
             val entryColors = ArrayList<Int>()
 
-            categories.forEach { category ->
-                if (category.amount != 0.0) {
-                    entries.add(PieEntry(category.amount.toFloat()))
-                    entryColors.add(Color.parseColor(category.iconColor))
-                    amount += category.amount
+            details.forEach { categoryWithDetails ->
+                if (categoryWithDetails.amount != 0.0) {
+                    entries.add(PieEntry(categoryWithDetails.amount.toFloat()))
+                    entryColors.add(Color.parseColor(categoryWithDetails.category.iconColor))
+                    amount += categoryWithDetails.amount
                 }
             }
 
@@ -170,7 +170,7 @@ class ChartFragment : Fragment() {
         }
     }
 
-    private fun updateCategories(categories: List<CategoryView>, currency: String?) =
+    private fun updateCategories(categories: List<CategoryWithDetails>, currency: String?) =
         binding.run {
             category1.setCategoryAttributes(categories[0], currency)
             category2.setCategoryAttributes(categories[1], currency)

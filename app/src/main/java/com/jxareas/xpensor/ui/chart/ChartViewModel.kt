@@ -2,8 +2,8 @@ package com.jxareas.xpensor.ui.chart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jxareas.xpensor.data.local.views.CategoryView
 import com.jxareas.xpensor.domain.model.AccountWithDetails
+import com.jxareas.xpensor.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.ui.chart.events.ChartEvent
 import com.jxareas.xpensor.utils.extensions.launchScoped
@@ -23,7 +23,7 @@ class ChartViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
 ) : ViewModel() {
 
-    private val _categories = MutableStateFlow(emptyList<CategoryView>())
+    private val _categories = MutableStateFlow(emptyList<CategoryWithDetails>())
     val categories = _categories.asStateFlow()
 
     private val _events = MutableSharedFlow<ChartEvent>()
