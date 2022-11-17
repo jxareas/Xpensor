@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.jxareas.xpensor.data.local.views.TransactionView
 import com.jxareas.xpensor.databinding.CardItemTransactionBinding
 import com.jxareas.xpensor.databinding.ListItemDayInformationBinding
+import com.jxareas.xpensor.domain.model.TransactionWithDetails
 import com.jxareas.xpensor.utils.OnBindViewHolder
-import com.jxareas.xpensor.utils.invoke
+import com.jxareas.xpensor.utils.extensions.invoke
 import javax.inject.Inject
 
 class TransactionAdapter @Inject constructor(
@@ -33,7 +33,7 @@ class TransactionAdapter @Inject constructor(
                 TransactionViewHolder(parent invoke CardItemTransactionBinding::inflate,
                     preferences)
             else ->
-                DayInformationViewHolder(parent invoke ListItemDayInformationBinding::inflate,
+                TransactionsByDayViewHolder(parent invoke ListItemDayInformationBinding::inflate,
                     preferences)
         }
 
@@ -45,13 +45,15 @@ class TransactionAdapter @Inject constructor(
                 viewHolder.bind(currentList[position])
             }
             else -> {
-                val viewHolder = holder as DayInformationViewHolder
+                val viewHolder = holder as TransactionsByDayViewHolder
                 viewHolder.bind(currentList[position])
             }
         }
 
     override fun getItemViewType(position: Int): Int =
-        if (currentList[position] is TransactionView) TRANSACTION_VIEW_TYPE else DAY_INFO_VIEW_TYPE
+        if (currentList[position] is TransactionWithDetails)
+            TRANSACTION_VIEW_TYPE
+        else DAY_INFO_VIEW_TYPE
 
 
 }

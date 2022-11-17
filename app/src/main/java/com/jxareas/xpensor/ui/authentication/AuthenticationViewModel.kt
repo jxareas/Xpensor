@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.domain.model.PinCode
 import com.jxareas.xpensor.domain.usecase.AddUserAuthenticationPin
+import com.jxareas.xpensor.domain.usecase.GetAuthenticationPinUseCase
 import com.jxareas.xpensor.utils.PreferenceUtils.FIRST_TIME_PREFERENCE_KEY
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthenticationViewModel @Inject constructor(
     private val addUserAuthenticationPin: AddUserAuthenticationPin,
-    private val getUserAuthenticationPin: GetUserAuthenticationPin,
+    private val getAuthenticationPinUseCase: GetAuthenticationPinUseCase,
     private val preferences: SharedPreferences,
 ) : ViewModel() {
 
@@ -40,7 +41,7 @@ class AuthenticationViewModel @Inject constructor(
     private fun checkTheCode() {
         viewModelScope.launch {
             if (!isAppLaunchedFirstTime()) {
-                val currentUserPinCode = getUserAuthenticationPin().code
+                val currentUserPinCode = getAuthenticationPinUseCase().code
 
                 val authenticationEvent = if (_pinCode.value == currentUserPinCode)
                     AuthenticationEvent.OpenMainActivity

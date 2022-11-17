@@ -6,7 +6,7 @@ import com.jxareas.xpensor.domain.usecase.AddTransactionUseCase
 import com.jxareas.xpensor.domain.usecase.ValidateTransactionUseCase
 import com.jxareas.xpensor.ui.transactions.actions.add.event.AddTransactionEvent
 import com.jxareas.xpensor.ui.transactions.actions.add.state.AddTransactionState
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

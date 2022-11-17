@@ -5,7 +5,7 @@ import com.jxareas.xpensor.domain.usecase.ConvertCurrencyUseCase
 import com.jxareas.xpensor.ui.converter.event.CurrencyConverterEvent
 import com.jxareas.xpensor.ui.converter.state.ConversionState
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

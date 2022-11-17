@@ -3,14 +3,14 @@ package com.jxareas.xpensor.ui.transactions
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.data.local.views.TransactionView
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 import com.jxareas.xpensor.domain.usecase.DeleteTransactionUseCase
 import com.jxareas.xpensor.domain.usecase.GetTransactionsUseCase
 import com.jxareas.xpensor.domain.usecase.GetTransactionsWithDayUseCase
 import com.jxareas.xpensor.ui.transactions.event.TransactionEvent
 import com.jxareas.xpensor.ui.transactions.state.TransactionState
 import com.jxareas.xpensor.utils.DateRange
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -35,7 +35,7 @@ class TransactionsViewModel @Inject constructor(
     private val _events = MutableSharedFlow<TransactionEvent>()
     val events = _events.asSharedFlow()
 
-    private val _selectedAccount = MutableStateFlow<Account?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountWithDetails?>(null)
     private val selectedAccount get() = _selectedAccount.value
 
     private val _selectedDateRange = MutableStateFlow<DateRange>(null to null)
@@ -67,7 +67,7 @@ class TransactionsViewModel @Inject constructor(
         launchGetTransactionsJob()
     }
 
-    fun onUpdateSelectedAccount(account: Account? = null) {
+    fun onUpdateSelectedAccount(account: AccountWithDetails? = null) {
         _selectedAccount.value = account
         launchGetTransactionsJob()
     }
@@ -77,7 +77,7 @@ class TransactionsViewModel @Inject constructor(
     }
 
 
-    fun onAddTransactionClick(account: Account) = launchScoped {
+    fun onAddTransactionClick(account: AccountWithDetails) = launchScoped {
         _events.emit(TransactionEvent.OpenTheAddTransactionSheet(account))
     }
 

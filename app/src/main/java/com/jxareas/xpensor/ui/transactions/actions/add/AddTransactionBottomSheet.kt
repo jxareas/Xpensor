@@ -61,7 +61,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun setupListeners() = binding.run {
-        buttonApplyChanges.setOnClickListener { viewModel.onApplyChanges() }
+        buttonAddTransaction.setOnClickListener { viewModel.onApplyChanges() }
     }
 
     private fun setupEventCollector() {
@@ -70,7 +70,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                 when (event) {
                     is AddTransactionEvent.CreateNewTransaction -> {
                         val account = args.selectedAccount
-                        val category = args.selectedCategory
+                        val categoryWithDetails = args.selectedCategory
                         val amount =
                             binding.textInputLayoutExpense.editText?.text.toString()
                                 .toDoubleOrNull()
@@ -84,7 +84,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                                 note = note,
                                 amount = amount,
                                 accountId = account.id,
-                                categoryId = category.id
+                                categoryId = categoryWithDetails.category.id,
                             )
 
                             viewModel.onAddTransaction(transaction)
@@ -110,8 +110,8 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupView() = binding.run {
         accountName.text = args.selectedAccount.name
-        categoryName.text = args.selectedCategory.name
-        categoryIcon.setIcon(args.selectedCategory.icon)
+        categoryName.text = args.selectedCategory.category.name
+        categoryIcon.setIcon(args.selectedCategory.category.icon)
 
         if (args.amount != 0f)
             textInputLayoutExpense.editText?.setText(
@@ -119,7 +119,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
             )
 
         accountBackground.setBackgroundColor(Color.parseColor(args.selectedAccount.color))
-        categoryBackground.setBackgroundColor(Color.parseColor(args.selectedCategory.iconColor))
+        categoryBackground.setBackgroundColor(Color.parseColor(args.selectedCategory.category.iconColor))
     }
 
     override fun onDestroyView() {

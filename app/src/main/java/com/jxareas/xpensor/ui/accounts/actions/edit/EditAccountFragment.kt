@@ -23,7 +23,7 @@ import com.jxareas.xpensor.ui.accounts.actions.menu.ApplyChangesMenu
 import com.jxareas.xpensor.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.utils.extensions.setTint
 import com.jxareas.xpensor.utils.extensions.toast
-import com.jxareas.xpensor.utils.getLong
+import com.jxareas.xpensor.utils.extensions.getLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

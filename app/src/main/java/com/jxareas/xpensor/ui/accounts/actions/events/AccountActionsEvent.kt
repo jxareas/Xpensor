@@ -1,9 +1,9 @@
 package com.jxareas.xpensor.ui.accounts.actions.events
 
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
 
 sealed class AccountActionsEvent {
-    data class NavigateToEditAccountsScreen(val account: Account) : AccountActionsEvent()
-    data class ShowDeleteAccountDialog(val account: Account) : AccountActionsEvent()
+    data class NavigateToEditAccountsScreen(val account: AccountWithDetails) : AccountActionsEvent()
+    data class ShowDeleteAccountDialog(val account: AccountWithDetails) : AccountActionsEvent()
     object DeleteAccount : AccountActionsEvent()
 }

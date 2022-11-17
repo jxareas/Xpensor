@@ -1,12 +1,20 @@
 package com.jxareas.xpensor.ui.transactions.actions.category.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.jxareas.xpensor.data.local.views.CategoryView
+import com.jxareas.xpensor.domain.model.CategoryWithDetails
 
-object CategoryDiffCallback : DiffUtil.ItemCallback<CategoryView>() {
-    override fun areItemsTheSame(oldItem: CategoryView, newItem: CategoryView): Boolean =
-        oldItem.id == newItem.id
+object CategoryDiffCallback : DiffUtil.ItemCallback<CategoryWithDetails>() {
 
-    override fun areContentsTheSame(oldItem: CategoryView, newItem: CategoryView): Boolean =
+    override fun areItemsTheSame(
+        oldItem: CategoryWithDetails,
+        newItem: CategoryWithDetails,
+    ): Boolean =
+        oldItem.category.id == newItem.category.id
+
+    override fun areContentsTheSame(
+        oldItem: CategoryWithDetails,
+        newItem: CategoryWithDetails,
+    ): Boolean =
         oldItem.hashCode() == newItem.hashCode()
+
 }

@@ -74,4 +74,5 @@
     <string name="set_the_pin">Set your new PIN</string>
     <string name="repeat_the_pin">Repeat the PIN</string>
     <string name="ok">OK</string>
+    <string name="add_transaction">Add Transaction</string>
 </resources>

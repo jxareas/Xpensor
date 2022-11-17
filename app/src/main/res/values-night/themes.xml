@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Xpensor" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Xpensor.Base" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dark_black</item>
         <item name="colorPrimaryVariant">@color/black_matte</item>
         <item name="colorOnPrimary">@color/light_gray</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/light_blue_gray</item>
-        <item name="colorSecondaryVariant">@color/red</item>
+        <item name="colorSecondaryVariant">@color/dark_gray</item>
         <item name="colorOnSecondary">@color/darker_gray</item>
         <item name="colorOnPrimarySurface">@color/light_gray</item>
         <item name="colorControlHighlight">@color/light_blue_gray</item>
@@ -46,6 +46,7 @@
         <item name="buttonBarPositiveButtonStyle">@style/DialogPickerButtonText</item>
         <item name="buttonBarNegativeButtonStyle">@style/DialogPickerButtonText</item>
     </style>
+
     <style name="DialogPickerButtonText" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>

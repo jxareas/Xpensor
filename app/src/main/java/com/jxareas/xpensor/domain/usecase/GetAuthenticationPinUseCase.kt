@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.ui.authentication
+package com.jxareas.xpensor.domain.usecase
 
 import android.content.SharedPreferences
 import com.jxareas.xpensor.domain.model.PinCode
@@ -7,8 +7,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class GetUserAuthenticationPin @Inject constructor(private val preferences: SharedPreferences) {
-
+class GetAuthenticationPinUseCase @Inject constructor(private val preferences: SharedPreferences) {
 
     operator fun invoke(): PinCode {
         val code =
@@ -16,4 +15,5 @@ class GetUserAuthenticationPin @Inject constructor(private val preferences: Shar
                 ?: PinCode.EMPTY_CODE
         return PinCode(code)
     }
+
 }

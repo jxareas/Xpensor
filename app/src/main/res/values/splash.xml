@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Xpensor.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">?attr/colorSecondaryVariant</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/xpensor_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Xpensor.Base</item>
+    </style>
+</resources>

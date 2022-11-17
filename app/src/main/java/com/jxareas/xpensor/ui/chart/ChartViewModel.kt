@@ -2,11 +2,11 @@ package com.jxareas.xpensor.ui.chart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jxareas.xpensor.data.local.views.CategoryView
-import com.jxareas.xpensor.domain.model.Account
+import com.jxareas.xpensor.domain.model.AccountWithDetails
+import com.jxareas.xpensor.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.ui.chart.events.ChartEvent
-import com.jxareas.xpensor.utils.launchScoped
+import com.jxareas.xpensor.utils.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,7 +23,7 @@ class ChartViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
 ) : ViewModel() {
 
-    private val _categories = MutableStateFlow(emptyList<CategoryView>())
+    private val _categories = MutableStateFlow(emptyList<CategoryWithDetails>())
     val categories = _categories.asStateFlow()
 
     private val _events = MutableSharedFlow<ChartEvent>()
@@ -31,7 +31,7 @@ class ChartViewModel @Inject constructor(
 
     private var getCategoriesJob: Job? = null
 
-    private val _selectedAccount = MutableStateFlow<Account?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountWithDetails?>(null)
     private val _selectedDateRange = MutableStateFlow<Pair<LocalDate?, LocalDate?>>(null to null)
 
     init {
@@ -55,7 +55,7 @@ class ChartViewModel @Inject constructor(
         launchGetCategoriesJob()
     }
 
-    fun onUpdateSelectedAccount(account: Account? = null) {
+    fun onUpdateSelectedAccount(account: AccountWithDetails? = null) {
         _selectedAccount.value = account
         launchGetCategoriesJob()
     }

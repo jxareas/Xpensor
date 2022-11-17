@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.utils
+package com.jxareas.xpensor.utils.extensions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
