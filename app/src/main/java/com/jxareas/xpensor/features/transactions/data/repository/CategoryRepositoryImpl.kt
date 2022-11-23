@@ -1,6 +1,6 @@
 package com.jxareas.xpensor.features.transactions.data.repository
 
-import com.jxareas.xpensor.core.domain.mapper.DomainMapper
+import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.transactions.domain.repository.CategoryRepository
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.data.local.dao.CategoryDao
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
     private val dao: CategoryDao,
-    private val categoryViewMapper: DomainMapper<CategoryView, CategoryWithDetails>,
+    private val categoryViewMapper: Mapper<CategoryView, CategoryWithDetails>,
 ) : CategoryRepository {
 
     override fun getCategoryViewsFromAccount(
@@ -21,11 +21,11 @@ class CategoryRepositoryImpl @Inject constructor(
         id: Int,
     ): Flow<List<CategoryWithDetails>> =
         dao.getCategoryViewsForAccount(from, to, id)
-            .map { categoryViews -> categoryViewMapper.toDomainList(categoryViews) }
+            .map { categoryViews -> categoryViewMapper.toList(categoryViews) }
 
     override fun getCategoryViews(from: LocalDate, to: LocalDate): Flow<List<CategoryWithDetails>> =
         dao.getCategoryViews(from, to)
-            .map { categoryViews -> categoryViewMapper.toDomainList(categoryViews) }
+            .map { categoryViews -> categoryViewMapper.toList(categoryViews) }
 
 
 }

@@ -22,11 +22,11 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.core.presentation.MainActivityViewModel
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.date.presentation.menu.SelectDateMenu
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
 import com.jxareas.xpensor.features.transactions.presentation.adapter.TransactionAdapter
 import com.jxareas.xpensor.common.extensions.getLong
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountListItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -132,10 +132,10 @@ class TransactionsFragment : Fragment() {
             .show()
             .also { isAlertShowing = true }
 
-    private fun navigateToAddTransactionSheet(account: AccountWithDetails) {
+    private fun navigateToAddTransactionSheet(accountListItem: AccountListItem) {
         val direction =
             TransactionsFragmentDirections.actionTransactionsFragmentToSelectCategoryBottomSheet(
-                account)
+                accountListItem)
         findNavController().navigate(direction)
     }
 

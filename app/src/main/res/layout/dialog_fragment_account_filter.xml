@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_shape"
-    tools:context=".features.accounts.presentation.actions.filter.AccountFilterDialogFragment">
+    tools:context=".features.accounts.presentation.ui.actions.filter.AccountFilterDialogFragment">
 
     <TextView
         style="@style/TextAppearance.Xpensor.Headline1"

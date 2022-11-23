@@ -2,10 +2,12 @@ package com.jxareas.xpensor.features.chart.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jxareas.xpensor.common.extensions.launchScoped
+import com.jxareas.xpensor.core.domain.mapper.Mapper
+import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountListItem
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
-import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChartViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val accountUiMapper: Mapper<AccountWithDetails, AccountListItem>,
 ) : ViewModel() {
 
     private val _categories = MutableStateFlow(emptyList<CategoryWithDetails>())
@@ -30,7 +33,8 @@ class ChartViewModel @Inject constructor(
 
     private var getCategoriesJob: Job? = null
 
-    private val _selectedAccount = MutableStateFlow<AccountWithDetails?>(null)
+    private val _selectedAccountListItem = MutableStateFlow<AccountListItem?>(null)
+
     private val _selectedDateRange = MutableStateFlow<Pair<LocalDate?, LocalDate?>>(null to null)
 
     init {
@@ -39,8 +43,12 @@ class ChartViewModel @Inject constructor(
 
     private fun launchGetCategoriesJob() {
         getCategoriesJob?.cancel()
+        val selectedAccount: AccountWithDetails? =
+            _selectedAccountListItem.value?.let { accountListItem ->
+                accountUiMapper.mapFrom(accountListItem)
+            }
         getCategoriesJob =
-            getCategoriesUseCase(_selectedDateRange.value, _selectedAccount.value)
+            getCategoriesUseCase(_selectedDateRange.value, selectedAccount)
                 .onEach { categories -> _categories.value = categories }
                 .launchIn(viewModelScope)
     }
@@ -54,8 +62,8 @@ class ChartViewModel @Inject constructor(
         launchGetCategoriesJob()
     }
 
-    fun onUpdateSelectedAccount(account: AccountWithDetails? = null) {
-        _selectedAccount.value = account
+    fun onUpdateSelectedAccount(account: AccountListItem? = null) {
+        _selectedAccountListItem.value = account
         launchGetCategoriesJob()
     }
 

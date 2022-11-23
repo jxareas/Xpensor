@@ -9,7 +9,7 @@ import com.jxareas.xpensor.features.transactions.data.mapper.TransactionMapper
 import com.jxareas.xpensor.features.transactions.data.mapper.TransactionViewMapper
 import com.jxareas.xpensor.features.transactions.data.mapper.TransactionsByDateMapper
 import com.jxareas.xpensor.features.transactions.data.repository.TransactionRepositoryImpl
-import com.jxareas.xpensor.core.domain.mapper.DomainMapper
+import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionsByDate
@@ -38,17 +38,17 @@ interface TransactionModule {
 
         @Provides
         @Singleton
-        fun provideTransactionMapper(): DomainMapper<TransactionEntity, Transaction> =
+        fun provideTransactionMapper(): Mapper<TransactionEntity, Transaction> =
             TransactionMapper
 
         @Provides
         @Singleton
-        fun provideTransactionViewMapper(): DomainMapper<TransactionView, TransactionWithDetails> =
+        fun provideTransactionViewMapper(): Mapper<TransactionView, TransactionWithDetails> =
             TransactionViewMapper
 
         @Provides
         @Singleton
-        fun provideTransactionByDateMapper(): DomainMapper<TransactionsByDateView, TransactionsByDate> =
+        fun provideTransactionByDateMapper(): Mapper<TransactionsByDateView, TransactionsByDate> =
             TransactionsByDateMapper
 
     }

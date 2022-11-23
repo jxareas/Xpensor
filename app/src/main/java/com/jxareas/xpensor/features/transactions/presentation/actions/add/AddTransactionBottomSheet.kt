@@ -11,13 +11,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.jxareas.xpensor.R
-import com.jxareas.xpensor.databinding.BottomSheetAddTransactionBinding
-import com.jxareas.xpensor.features.transactions.domain.model.Transaction
-import com.jxareas.xpensor.features.transactions.presentation.actions.add.event.AddTransactionEvent
-import com.jxareas.xpensor.features.transactions.presentation.actions.add.state.AddTransactionState
 import com.jxareas.xpensor.common.extensions.setIcon
 import com.jxareas.xpensor.common.extensions.showSnackbar
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
+import com.jxareas.xpensor.databinding.BottomSheetAddTransactionBinding
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountListItem
+import com.jxareas.xpensor.features.transactions.domain.model.Transaction
+import com.jxareas.xpensor.features.transactions.presentation.actions.add.event.AddTransactionEvent
+import com.jxareas.xpensor.features.transactions.presentation.actions.add.state.AddTransactionState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -83,7 +84,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                             val transaction = Transaction(
                                 note = note,
                                 amount = amount,
-                                accountId = account.id,
+                                accountId = account.id ?: AccountListItem.EMPTY_ID,
                                 categoryId = categoryWithDetails.category.id,
                             )
 

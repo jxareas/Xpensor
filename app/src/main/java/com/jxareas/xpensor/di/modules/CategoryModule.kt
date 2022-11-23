@@ -5,7 +5,7 @@ import com.jxareas.xpensor.core.data.database.XpensorDatabase
 import com.jxareas.xpensor.features.transactions.data.local.views.CategoryView
 import com.jxareas.xpensor.features.transactions.data.mapper.CategoryViewMapper
 import com.jxareas.xpensor.features.transactions.data.repository.CategoryRepositoryImpl
-import com.jxareas.xpensor.core.domain.mapper.DomainMapper
+import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.CategoryRepository
 import dagger.Binds
@@ -33,7 +33,7 @@ interface CategoryModule {
 
         @Provides
         @Singleton
-        fun provideCategoryMapper(): DomainMapper<CategoryView, CategoryWithDetails> =
+        fun provideCategoryMapper(): Mapper<CategoryView, CategoryWithDetails> =
             CategoryViewMapper
     }
 
