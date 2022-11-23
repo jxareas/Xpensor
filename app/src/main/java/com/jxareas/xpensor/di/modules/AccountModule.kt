@@ -1,13 +1,13 @@
 package com.jxareas.xpensor.di.modules
 
-import com.jxareas.xpensor.data.local.dao.AccountDao
-import com.jxareas.xpensor.data.local.database.XpensorDatabase
-import com.jxareas.xpensor.data.local.model.AccountEntity
-import com.jxareas.xpensor.data.mapper.AccountMapper
-import com.jxareas.xpensor.data.repository.AccountRepositoryImpl
-import com.jxareas.xpensor.domain.mapper.DomainMapper
-import com.jxareas.xpensor.domain.model.AccountWithDetails
-import com.jxareas.xpensor.domain.repository.AccountRepository
+import com.jxareas.xpensor.features.accounts.data.local.dao.AccountDao
+import com.jxareas.xpensor.core.data.database.XpensorDatabase
+import com.jxareas.xpensor.features.accounts.data.local.entity.AccountEntity
+import com.jxareas.xpensor.features.accounts.data.mapper.AccountMapper
+import com.jxareas.xpensor.features.accounts.data.repository.AccountRepositoryImpl
+import com.jxareas.xpensor.core.domain.mapper.DomainMapper
+import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
+import com.jxareas.xpensor.features.accounts.domain.repository.AccountRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

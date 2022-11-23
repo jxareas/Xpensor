@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:transitionGroup="true"
     android:layout_height="match_parent"
-    tools:context="com.jxareas.xpensor.ui.chart.ChartFragment">
+    tools:context="com.jxareas.xpensor.features.chart.presentation.ChartFragment">
 
     <include
         android:id="@+id/category1"

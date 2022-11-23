@@ -1,7 +1,7 @@
 package com.jxareas.xpensor.di.modules
 
-import com.jxareas.xpensor.data.api.constants.ApiConstants
-import com.jxareas.xpensor.data.api.interceptor.AuthenticationInterceptor
+import com.jxareas.xpensor.features.converter.data.api.constants.ApiConstants
+import com.jxareas.xpensor.features.converter.data.api.interceptor.AuthenticationInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

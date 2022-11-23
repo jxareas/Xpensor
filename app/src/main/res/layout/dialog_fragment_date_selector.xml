@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_shape"
-    tools:context="com.jxareas.xpensor.ui.date.DateSelectorDialogFragment">
+    tools:context="com.jxareas.xpensor.features.date.presentation.DateSelectorDialogFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_select_date"
