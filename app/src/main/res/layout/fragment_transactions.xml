@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jxareas.xpensor.ui.transactions.TransactionsFragment">
+    tools:context="com.jxareas.xpensor.features.transactions.presentation.TransactionsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactions_recycler_view"

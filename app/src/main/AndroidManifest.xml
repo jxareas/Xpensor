@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Xpensor.Splash"
         tools:targetApi="31">
         <activity
-            android:name=".ui.authentication.AuthenticationActivity"
+            android:name=".features.authentication.presentation.AuthenticationActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
@@ -29,12 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jxareas.xpensor.ui.settings.SettingsActivity"
+            android:name="com.jxareas.xpensor.features.settings.SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings"
             android:theme="@style/Theme.Xpensor.Base" />
         <activity
-            android:name="com.jxareas.xpensor.ui.main.MainActivity"
+            android:name="com.jxareas.xpensor.core.presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Xpensor.Base">
             <meta-data

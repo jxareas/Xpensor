@@ -1,8 +1,8 @@
 package com.jxareas.xpensor.di.modules
 
-import com.jxareas.xpensor.data.api.service.ConverterService
-import com.jxareas.xpensor.data.repository.ConverterRepositoryImpl
-import com.jxareas.xpensor.domain.repository.ConverterRepository
+import com.jxareas.xpensor.features.converter.data.api.ConverterApi
+import com.jxareas.xpensor.features.converter.data.repository.ConverterRepositoryImpl
+import com.jxareas.xpensor.features.converter.domain.repository.ConverterRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -24,7 +24,7 @@ interface ConverterModule {
 
         @Provides
         @Singleton
-        fun provideConverterService(retrofit: Retrofit): ConverterService =
+        fun provideConverterService(retrofit: Retrofit): ConverterApi =
             retrofit.create()
 
     }

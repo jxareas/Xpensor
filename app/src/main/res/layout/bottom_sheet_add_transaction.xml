@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/margin_high"
-    tools:context="com.jxareas.xpensor.ui.transactions.actions.add.AddTransactionBottomSheet">
+    tools:context="com.jxareas.xpensor.features.transactions.presentation.actions.add.AddTransactionBottomSheet">
 
     <LinearLayout
         android:id="@+id/from_to_container"
