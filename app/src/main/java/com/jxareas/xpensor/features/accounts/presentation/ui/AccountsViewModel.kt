@@ -6,7 +6,7 @@ import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountListItem
+import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,10 +20,10 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountsViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
-    private val accountUiMapper: Mapper<AccountWithDetails, AccountListItem>,
+    private val accountUiMapper: Mapper<AccountWithDetails, UiAccount>,
 ) : ViewModel() {
 
-    private val _accounts = MutableStateFlow(emptyList<AccountListItem>())
+    private val _accounts = MutableStateFlow(emptyList<UiAccount>())
     val accounts = _accounts.asStateFlow()
 
     private val _events = MutableSharedFlow<AccountEvent>()
@@ -39,15 +39,15 @@ class AccountsViewModel @Inject constructor(
         _events.emit(AccountEvent.NavigateToAddAccountScreen)
     }
 
-    fun onAccountSelected(accountListItem: AccountListItem) = launchScoped {
-        _events.emit(AccountEvent.OpenTheAccountBottomSheet(accountListItem))
+    fun onAccountSelected(uiAccount: UiAccount) = launchScoped {
+        _events.emit(AccountEvent.OpenTheAccountBottomSheet(uiAccount))
     }
 
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
             .onEach { accounts ->
-                _accounts.value = accountUiMapper.toList(accounts)
+                _accounts.value = accountUiMapper.mapFromList(accounts)
             }
             .launchIn(viewModelScope)
     }

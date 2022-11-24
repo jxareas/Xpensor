@@ -6,21 +6,21 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import com.jxareas.xpensor.common.extensions.invoke
 import com.jxareas.xpensor.databinding.ListItemAccountBinding
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountListItem
+import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AccountsListAdapter @Inject constructor(
     private val preferences: SharedPreferences,
-) : ListAdapter<AccountListItem, AccountsViewHolder>(
+) : ListAdapter<UiAccount, AccountsViewHolder>(
     AsyncDifferConfig.Builder(AccountDiffCallback).build()
 ) {
 
     private var onClickListener: AccountsListAdapter.OnClickListener? = null
 
-    class OnClickListener(val clickListener: (account: AccountListItem) -> Unit) {
-        fun onClick(account: AccountListItem) = clickListener(account)
+    class OnClickListener(val clickListener: (account: UiAccount) -> Unit) {
+        fun onClick(account: UiAccount) = clickListener(account)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountsViewHolder =

@@ -9,7 +9,7 @@ import com.jxareas.xpensor.features.accounts.data.repository.AccountRepositoryIm
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.repository.AccountRepository
 import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountListItem
+import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -29,12 +29,12 @@ interface AccountModule {
 
         @Provides
         @Singleton
-        fun provideAccountMapper(): Mapper<AccountEntity, AccountWithDetails> =
+        fun provideAccountMapper(): Mapper<AccountWithDetails, AccountEntity> =
             AccountEntityMapper
 
         @Provides
         @Singleton
-        fun provideAccountUiMapper(): Mapper<AccountWithDetails, AccountListItem> =
+        fun provideAccountUiMapper(): Mapper<AccountWithDetails, UiAccount> =
             AccountUiMapper
 
         @Provides

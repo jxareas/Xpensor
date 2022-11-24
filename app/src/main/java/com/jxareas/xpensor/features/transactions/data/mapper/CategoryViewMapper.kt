@@ -1,26 +1,35 @@
 package com.jxareas.xpensor.features.transactions.data.mapper
 
 import com.jxareas.xpensor.core.domain.mapper.Mapper
+import com.jxareas.xpensor.features.transactions.data.local.views.CategoryView
 import com.jxareas.xpensor.features.transactions.domain.model.Category
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
-import com.jxareas.xpensor.features.transactions.data.local.views.CategoryView
 
-object CategoryViewMapper : Mapper<CategoryView, CategoryWithDetails> {
-    override fun mapTo(source: CategoryView): CategoryWithDetails =
-        CategoryWithDetails(
-            category = Category(id = source.id,
-                name = source.name,
-                icon = source.icon,
-                iconColor = source.iconColor),
+object CategoryViewMapper : Mapper<CategoryWithDetails, CategoryView> {
+
+    //    override fun mapFromDomain(source: CategoryView): CategoryWithDetails =
+//        CategoryWithDetails(
+//            category = Category(id = source.id,
+//                name = source.name,
+//                icon = source.icon,
+//                iconColor = source.iconColor),
+//            amount = source.amount,
+//        )
+//
+    override fun mapFromDomain(source: CategoryWithDetails): CategoryView =
+        CategoryView(
+            id = source.category.id,
+            name = source.category.name,
+            icon = source.category.icon,
+            iconColor = source.category.iconColor,
             amount = source.amount,
         )
-
-    override fun mapFrom(destination: CategoryWithDetails): CategoryView =
-        CategoryView(
-            id = destination.category.id,
-            name = destination.category.name,
-            icon = destination.category.icon,
-            iconColor = destination.category.iconColor,
+    override fun mapToDomain(destination: CategoryView): CategoryWithDetails =
+            CategoryWithDetails(
+            category = Category(id = destination.id,
+                name = destination.name,
+                icon = destination.icon,
+                iconColor = destination.iconColor),
             amount = destination.amount,
         )
 
