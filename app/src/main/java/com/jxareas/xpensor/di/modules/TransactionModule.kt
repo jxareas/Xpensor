@@ -12,7 +12,7 @@ import com.jxareas.xpensor.features.transactions.data.mapper.TransactionsByDateM
 import com.jxareas.xpensor.features.transactions.data.repository.TransactionRepositoryImpl
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
-import com.jxareas.xpensor.features.transactions.domain.model.TransactionsByDate
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionAmountPerDay
 import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRepository
 import dagger.Binds
 import dagger.Module
@@ -48,7 +48,7 @@ interface TransactionModule {
 
         @Provides
         @Singleton
-        fun provideTransactionByDateMapper(): Mapper<TransactionsByDate, TransactionsByDateView> =
+        fun provideTransactionByDateMapper(): Mapper<TransactionAmountPerDay, TransactionsByDateView> =
             TransactionsByDateMapper
 
     }

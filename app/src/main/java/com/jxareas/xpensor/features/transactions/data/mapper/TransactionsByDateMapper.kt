@@ -2,13 +2,13 @@ package com.jxareas.xpensor.features.transactions.data.mapper
 
 import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDateView
-import com.jxareas.xpensor.features.transactions.domain.model.TransactionsByDate
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionAmountPerDay
 
-object TransactionsByDateMapper : Mapper<TransactionsByDate, TransactionsByDateView> {
+object TransactionsByDateMapper : Mapper<TransactionAmountPerDay, TransactionsByDateView> {
 
-    override fun mapFromDomain(source: TransactionsByDate): TransactionsByDateView =
+    override fun mapFromDomain(source: TransactionAmountPerDay): TransactionsByDateView =
         TransactionsByDateView(source.transactionDate, source.amountPerDay)
 
-    override fun mapToDomain(destination: TransactionsByDateView): TransactionsByDate =
-        TransactionsByDate(destination.transactionDate, destination.amountPerDay)
+    override fun mapToDomain(destination: TransactionsByDateView): TransactionAmountPerDay =
+        TransactionAmountPerDay(destination.transactionDate, destination.amountPerDay)
 }
