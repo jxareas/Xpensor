@@ -1,13 +1,12 @@
 package com.jxareas.xpensor.features.transactions.data.repository
 
-import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.transactions.data.local.dao.TransactionDao
-import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEntity
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDateView
+import com.jxareas.xpensor.features.transactions.data.mapper.TransactionAmountPerDayMapper
+import com.jxareas.xpensor.features.transactions.data.mapper.TransactionMapper
+import com.jxareas.xpensor.features.transactions.data.mapper.TransactionViewMapper
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
-import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionAmountPerDay
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -16,9 +15,9 @@ import javax.inject.Inject
 
 class TransactionRepositoryImpl @Inject constructor(
     private val dao: TransactionDao,
-    private val transactionMapper: Mapper<Transaction, TransactionEntity>,
-    private val transactionViewMapper: Mapper<TransactionWithDetails, TransactionView>,
-    private val transactionAmountPerDayMapper: Mapper<TransactionAmountPerDay, TransactionsByDateView>,
+    private val transactionMapper: TransactionMapper,
+    private val transactionViewMapper: TransactionViewMapper,
+    private val transactionAmountPerDayMapper: TransactionAmountPerDayMapper,
 ) : TransactionRepository {
 
     override fun getTransactionDetails(

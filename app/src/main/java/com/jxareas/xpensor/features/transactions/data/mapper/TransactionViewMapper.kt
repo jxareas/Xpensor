@@ -5,8 +5,11 @@ import com.jxareas.xpensor.features.accounts.domain.model.Account
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
 import com.jxareas.xpensor.features.transactions.domain.model.Category
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object TransactionViewMapper : Mapper<TransactionWithDetails, TransactionView> {
+@Singleton
+class TransactionViewMapper @Inject constructor() : Mapper<TransactionWithDetails, TransactionView> {
 
     override fun mapFromDomain(source: TransactionWithDetails): TransactionView =
         TransactionView(

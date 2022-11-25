@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import com.jxareas.xpensor.common.extensions.invoke
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
-import com.jxareas.xpensor.features.transactions.presentation.model.UiCategoryWithAmount
+import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CategoryAdapter @Inject constructor(
     private val sharedPreferences: SharedPreferences,
-) : ListAdapter<UiCategoryWithAmount, CategoryViewHolder>(
+) : ListAdapter<CategoryWithAmountUi, CategoryViewHolder>(
     AsyncDifferConfig.Builder(CategoryDiffCallback).build()
 ) {
 
@@ -23,8 +23,8 @@ class CategoryAdapter @Inject constructor(
         this.onClickListener = onClickListener
     }
 
-    class OnClickListener(val clickListener: (category: UiCategoryWithAmount) -> Unit) {
-        fun onClick(category: UiCategoryWithAmount) = clickListener(category)
+    class OnClickListener(val clickListener: (category: CategoryWithAmountUi) -> Unit) {
+        fun onClick(category: CategoryWithAmountUi) = clickListener(category)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder =

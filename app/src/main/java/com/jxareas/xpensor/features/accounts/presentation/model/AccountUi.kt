@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UiAccount(
+data class AccountUi(
     val id: Int?,
     val name: String,
     val amount: Double,

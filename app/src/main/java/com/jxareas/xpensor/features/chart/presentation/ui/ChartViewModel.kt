@@ -3,9 +3,9 @@ package com.jxareas.xpensor.features.chart.presentation.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
-import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
+import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChartViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val accountUiMapper: Mapper<AccountWithDetails, UiAccount>,
+    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
     private val _categories = MutableStateFlow(emptyList<CategoryWithDetails>())
@@ -33,7 +33,7 @@ class ChartViewModel @Inject constructor(
 
     private var getCategoriesJob: Job? = null
 
-    private val _selectedUiAccount = MutableStateFlow<UiAccount?>(null)
+    private val _selectedAccountUi = MutableStateFlow<AccountUi?>(null)
 
     private val _selectedDateRange = MutableStateFlow<Pair<LocalDate?, LocalDate?>>(null to null)
 
@@ -44,7 +44,7 @@ class ChartViewModel @Inject constructor(
     private fun launchGetCategoriesJob() {
         getCategoriesJob?.cancel()
         val selectedAccount: AccountWithDetails? =
-            _selectedUiAccount.value?.let { accountListItem ->
+            _selectedAccountUi.value?.let { accountListItem ->
                 accountUiMapper.mapToDomain(accountListItem)
             }
         getCategoriesJob =
@@ -62,8 +62,8 @@ class ChartViewModel @Inject constructor(
         launchGetCategoriesJob()
     }
 
-    fun onUpdateSelectedAccount(account: UiAccount? = null) {
-        _selectedUiAccount.value = account
+    fun onUpdateSelectedAccount(account: AccountUi? = null) {
+        _selectedAccountUi.value = account
         launchGetCategoriesJob()
     }
 

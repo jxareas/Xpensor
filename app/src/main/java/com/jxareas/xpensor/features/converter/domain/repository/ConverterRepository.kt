@@ -1,8 +1,8 @@
 package com.jxareas.xpensor.features.converter.domain.repository
 
-import com.jxareas.xpensor.features.converter.data.api.dto.CurrencyResponse
 import com.jxareas.xpensor.common.utils.Resource
+import com.jxareas.xpensor.features.converter.domain.model.CurrencyComparison
 
 interface ConverterRepository {
-    suspend fun getCurrencyRates(base: String): Resource<CurrencyResponse>
+    suspend fun getCurrencyRates(base: String): Resource<CurrencyComparison>
 }

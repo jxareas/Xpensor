@@ -7,10 +7,9 @@ import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.utils.DateUtils
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
-import com.jxareas.xpensor.core.domain.mapper.Mapper
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
-import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
+import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,13 +25,13 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val sharedPreferences: SharedPreferences,
-    private val accountUiMapper: Mapper<AccountWithDetails, UiAccount>,
+    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
-    private val _accounts = MutableStateFlow(emptyList<UiAccount>())
+    private val _accounts = MutableStateFlow(emptyList<AccountUi>())
     val accounts = _accounts.asStateFlow()
 
-    private val _selectedAccount = MutableStateFlow<UiAccount?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
     val selectedAccount = _selectedAccount.asStateFlow()
 
     private val _selectedDateRange = MutableStateFlow(DateUtils.defaultDateRange)
@@ -68,7 +67,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
 
-    fun onUpdateSelectedAccount(account: UiAccount?) = launchScoped {
+    fun onUpdateSelectedAccount(account: AccountUi?) = launchScoped {
         _selectedAccount.value = account
     }
 

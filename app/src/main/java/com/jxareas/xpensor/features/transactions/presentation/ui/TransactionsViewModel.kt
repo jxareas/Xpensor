@@ -4,9 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.utils.DateRange
-import com.jxareas.xpensor.core.domain.mapper.Mapper
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
-import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
+import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
 import com.jxareas.xpensor.features.transactions.domain.usecase.DeleteTransactionUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsUseCase
@@ -27,7 +26,7 @@ class TransactionsViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getTransactionsWithDayUseCase: GetTransactionsWithDayUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
-    private val accountUiMapper: Mapper<AccountWithDetails, UiAccount>,
+    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
     private val _transactionState = MutableStateFlow<TransactionState>(TransactionState.Idle)
@@ -36,7 +35,7 @@ class TransactionsViewModel @Inject constructor(
     private val _events = MutableSharedFlow<TransactionEvent>()
     val events = _events.asSharedFlow()
 
-    private val _selectedAccount = MutableStateFlow<UiAccount?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
     private val selectedAccount get() = _selectedAccount.value
 
     private val _selectedDateRange = MutableStateFlow<DateRange>(null to null)
@@ -73,7 +72,7 @@ class TransactionsViewModel @Inject constructor(
         launchGetTransactionsJob()
     }
 
-    fun onUpdateSelectedAccount(account: UiAccount? = null) {
+    fun onUpdateSelectedAccount(account: AccountUi? = null) {
         _selectedAccount.value = account
         launchGetTransactionsJob()
     }
@@ -83,7 +82,7 @@ class TransactionsViewModel @Inject constructor(
     }
 
 
-    fun onAddTransactionClick(account: UiAccount) = launchScoped {
+    fun onAddTransactionClick(account: AccountUi) = launchScoped {
         _events.emit(TransactionEvent.OpenTheAddTransactionSheet(account))
     }
 

@@ -23,7 +23,7 @@ import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
 import com.jxareas.xpensor.core.presentation.MainActivityViewModel
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
-import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
 import com.jxareas.xpensor.features.transactions.presentation.ui.adapter.TransactionAdapter
@@ -132,10 +132,10 @@ class TransactionsFragment : Fragment() {
             .show()
             .also { isAlertShowing = true }
 
-    private fun navigateToAddTransactionSheet(uiAccount: UiAccount) {
+    private fun navigateToAddTransactionSheet(accountUi: AccountUi) {
         val direction =
             TransactionsFragmentDirections.actionTransactionsFragmentToSelectCategoryBottomSheet(
-                uiAccount)
+                accountUi)
         findNavController().navigate(direction)
     }
 

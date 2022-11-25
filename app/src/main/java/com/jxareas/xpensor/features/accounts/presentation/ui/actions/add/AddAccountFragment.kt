@@ -18,7 +18,7 @@ import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.extensions.toast
 import com.jxareas.xpensor.common.utils.PreferenceUtils
 import com.jxareas.xpensor.databinding.FragmentAddAccountBinding
-import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.ApplyChangesMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -74,10 +74,10 @@ class AddAccountFragment : Fragment() {
                                     .toDoubleOrNull() ?: 0.0
 
                             val account =
-                                UiAccount(name = name,
+                                AccountUi(name = name,
                                     amount = amount,
                                     color = color,
-                                    id = UiAccount.EMPTY_ID)
+                                    id = AccountUi.EMPTY_ID)
                             viewModel.addAccount(account).also { findNavController().navigateUp() }
                         }
                     }

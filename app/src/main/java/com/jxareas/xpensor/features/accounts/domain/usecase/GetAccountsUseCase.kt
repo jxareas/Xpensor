@@ -8,6 +8,8 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class GetAccountsUseCase @Inject constructor(private val repository: AccountRepository) {
+
     operator fun invoke(): Flow<List<AccountWithDetails>> =
         repository.getAccounts()
+
 }

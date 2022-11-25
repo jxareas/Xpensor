@@ -3,8 +3,9 @@ package com.jxareas.xpensor.features.transactions.data.mapper
 import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEntity
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
+import javax.inject.Inject
 
-object TransactionMapper : Mapper<Transaction, TransactionEntity> {
+class TransactionMapper @Inject constructor(): Mapper<Transaction, TransactionEntity> {
 
     override fun mapFromDomain(source: Transaction): TransactionEntity =
         TransactionEntity(source.id,

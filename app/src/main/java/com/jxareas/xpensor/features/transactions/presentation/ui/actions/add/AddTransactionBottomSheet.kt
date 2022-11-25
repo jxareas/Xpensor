@@ -15,7 +15,7 @@ import com.jxareas.xpensor.common.extensions.setIcon
 import com.jxareas.xpensor.common.extensions.showSnackbar
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.databinding.BottomSheetAddTransactionBinding
-import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.presentation.ui.actions.add.event.AddTransactionEvent
 import com.jxareas.xpensor.features.transactions.presentation.ui.actions.add.state.AddTransactionState
@@ -84,7 +84,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                             val transaction = Transaction(
                                 note = note,
                                 amount = amount,
-                                accountId = account.id ?: UiAccount.EMPTY_ID,
+                                accountId = account.id ?: AccountUi.EMPTY_ID,
                                 categoryId = categoryWithDetails.category.id,
                             )
 

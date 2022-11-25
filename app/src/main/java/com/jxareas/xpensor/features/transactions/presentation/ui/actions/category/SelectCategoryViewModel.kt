@@ -4,12 +4,11 @@ package com.jxareas.xpensor.features.transactions.presentation.ui.actions.catego
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.core.domain.mapper.Mapper
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
-import com.jxareas.xpensor.features.accounts.presentation.model.UiAccount
-import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
+import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
-import com.jxareas.xpensor.features.transactions.presentation.model.UiCategoryWithAmount
+import com.jxareas.xpensor.features.transactions.presentation.mapper.CategoryWithAmountUiMapper
+import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.event.SelectCategoryEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -25,18 +24,18 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectCategoryViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val accountUiMapper: Mapper<AccountWithDetails, UiAccount>,
-    private val categoryUiMapper: Mapper<CategoryWithDetails, UiCategoryWithAmount>,
+    private val accountUiMapper: AccountUiMapper,
+    private val categoryUiMapper: CategoryWithAmountUiMapper,
 ) : ViewModel() {
 
-    private val _categories = MutableStateFlow(emptyList<UiCategoryWithAmount>())
+    private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
 
 
     private val _events = MutableSharedFlow<SelectCategoryEvent>()
     val events = _events.asSharedFlow()
 
-    private val _selectedAccount = MutableStateFlow<UiAccount?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
     private val _selectedDateRange = MutableStateFlow<Pair<LocalDate?, LocalDate?>>(null to null)
 
     private var getCategoriesJob: Job? = null
@@ -61,16 +60,16 @@ class SelectCategoryViewModel @Inject constructor(
         launchGetCategoriesJob()
     }
 
-    fun setSelectedAccount(uiAccount: UiAccount? = null) {
-        _selectedAccount.value = uiAccount
+    fun setSelectedAccount(accountUi: AccountUi? = null) {
+        _selectedAccount.value = accountUi
         launchGetCategoriesJob()
     }
 
     fun selectCategoryClick(
-        uiAccount: UiAccount,
-        uiCategoryWithAmount: UiCategoryWithAmount,
+        accountUi: AccountUi,
+        categoryWithAmountUi: CategoryWithAmountUi,
     ) = launchScoped {
-        _events.emit(SelectCategoryEvent.SelectCategory(uiAccount, uiCategoryWithAmount))
+        _events.emit(SelectCategoryEvent.SelectCategory(accountUi, categoryWithAmountUi))
     }
 
 }

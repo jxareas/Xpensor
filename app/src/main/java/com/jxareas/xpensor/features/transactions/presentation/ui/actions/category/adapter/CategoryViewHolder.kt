@@ -9,13 +9,13 @@ import com.jxareas.xpensor.common.utils.OnBindViewHolder
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
-import com.jxareas.xpensor.features.transactions.presentation.model.UiCategoryWithAmount
+import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 
 class CategoryViewHolder(
     private val binding: ListItemCategoryBinding,
     private val sharedPreferences: SharedPreferences,
-) : RecyclerView.ViewHolder(binding.root), OnBindViewHolder<UiCategoryWithAmount> {
-    override fun bind(item: UiCategoryWithAmount) = binding.run {
+) : RecyclerView.ViewHolder(binding.root), OnBindViewHolder<CategoryWithAmountUi> {
+    override fun bind(item: CategoryWithAmountUi) = binding.run {
         icon.setIcon(item.category.icon)
         iconBackground.setTint(item.category.iconColor)
 

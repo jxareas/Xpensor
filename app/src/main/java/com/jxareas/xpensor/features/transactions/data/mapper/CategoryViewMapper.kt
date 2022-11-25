@@ -4,18 +4,10 @@ import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.transactions.data.local.views.CategoryView
 import com.jxareas.xpensor.features.transactions.domain.model.Category
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
+import javax.inject.Inject
 
-object CategoryViewMapper : Mapper<CategoryWithDetails, CategoryView> {
+class CategoryViewMapper @Inject constructor() : Mapper<CategoryWithDetails, CategoryView> {
 
-    //    override fun mapFromDomain(source: CategoryView): CategoryWithDetails =
-//        CategoryWithDetails(
-//            category = Category(id = source.id,
-//                name = source.name,
-//                icon = source.icon,
-//                iconColor = source.iconColor),
-//            amount = source.amount,
-//        )
-//
     override fun mapFromDomain(source: CategoryWithDetails): CategoryView =
         CategoryView(
             id = source.category.id,
@@ -24,8 +16,9 @@ object CategoryViewMapper : Mapper<CategoryWithDetails, CategoryView> {
             iconColor = source.category.iconColor,
             amount = source.amount,
         )
+
     override fun mapToDomain(destination: CategoryView): CategoryWithDetails =
-            CategoryWithDetails(
+        CategoryWithDetails(
             category = Category(id = destination.id,
                 name = destination.name,
                 icon = destination.icon,

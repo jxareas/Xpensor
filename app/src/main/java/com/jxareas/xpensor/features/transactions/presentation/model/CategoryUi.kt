@@ -4,7 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UiCategoryWithAmount(
-    val category: UiCategory,
-    val amount: Double,
+data class CategoryUi(
+    val id: Int,
+    val name: String,
+    val icon: Int,
+    val iconColor: String,
 ) : Parcelable
