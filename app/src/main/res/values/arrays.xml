@@ -11,6 +11,16 @@
         <item>default</item>
     </string-array>
 
+    <string-array name="required_password_entries">
+        <item>Always</item>
+        <item>Never</item>
+    </string-array>
+
+    <string-array name="required_password_values">
+        <item>always</item>
+        <item>never</item>
+    </string-array>
+
     <string-array name="currency_entries">
         <item>United States Dollar - USD</item>
         <item>Euro - EUR</item>

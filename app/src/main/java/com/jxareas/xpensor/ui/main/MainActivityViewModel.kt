@@ -11,13 +11,16 @@ import com.jxareas.xpensor.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.utils.PreferenceUtils.MAIN_CURRENCY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+<<<<<<< Updated upstream:app/src/main/java/com/jxareas/xpensor/ui/main/MainActivityViewModel.kt
 import kotlinx.coroutines.launch
+=======
+import kotlinx.coroutines.flow.receiveAsFlow
+>>>>>>> Stashed changes:app/src/main/java/com/jxareas/xpensor/core/presentation/MainActivityViewModel.kt
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -36,8 +39,8 @@ class MainActivityViewModel @Inject constructor(
     private val _selectedDateRange = MutableStateFlow(DateUtils.defaultDateRange)
     val selectedDateRange = _selectedDateRange.asStateFlow()
 
-    private val _events = MutableSharedFlow<MainActivityEvent>()
-    val events = _events.asSharedFlow()
+    private val _events = Channel<MainActivityEvent>(Channel.UNLIMITED)
+    val events = _events.receiveAsFlow()
 
     private var getAccountsJob: Job? = null
 
@@ -55,6 +58,7 @@ class MainActivityViewModel @Inject constructor(
     fun getCurrency() =
         sharedPreferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY) ?: MAIN_CURRENCY
 
+<<<<<<< Updated upstream:app/src/main/java/com/jxareas/xpensor/ui/main/MainActivityViewModel.kt
     fun onSettingsButtonClick() =
         viewModelScope.launch {
             _events.emit(MainActivityEvent.OpenTheSettingsScreen)
@@ -70,6 +74,14 @@ class MainActivityViewModel @Inject constructor(
         viewModelScope.launch {
             _selectedAccount.value = account
         }
+=======
+    fun onSettingsButtonClick() = launchScoped {
+        _events.send(MainActivityEvent.OpenTheSettingsScreen)
+    }
+
+    fun onSelectAccountButtonClick() = launchScoped {
+        _events.send(MainActivityEvent.OpenTheSelectAccountDialog)
+>>>>>>> Stashed changes:app/src/main/java/com/jxareas/xpensor/core/presentation/MainActivityViewModel.kt
     }
 
     fun onUpdateCurrentDateRange(begin: LocalDate?, end: LocalDate?) {

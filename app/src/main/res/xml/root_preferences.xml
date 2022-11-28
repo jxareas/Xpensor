@@ -10,6 +10,16 @@
         app:useSimpleSummaryProvider="true" />
 
     <ListPreference
+        app:defaultValue="on"
+        app:entries="@array/required_password_entries"
+        app:entryValues="@array/required_password_values"
+        app:icon="@drawable/ic_required_password"
+        app:key="required_password"
+        app:title="@string/require_password"
+        app:useSimpleSummaryProvider="true" />
+
+
+    <ListPreference
         app:defaultValue="USD"
         app:entries="@array/currency_entries"
         app:entryValues="@array/currency_values"

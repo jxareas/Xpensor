@@ -34,4 +34,44 @@
     <string name="reset_pin_message">Click twice to reset the PIN and set a new one</string>
     <string name="reset_pin_message_repeat">Click to reset the PIN and set a new one</string>
     <string name="theme">Theme</string>
+<<<<<<< Updated upstream
+=======
+    <string name="no_transactions">No Transactions</string>
+    <string name="add">"Add "</string>
+    <string name="apply">Apply</string>
+    <string name="adding">Adding</string>
+    <string name="new_account">New Account</string>
+    <string name="select_date">Custom Date</string>
+    <string name="today">Today</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="color_filter">Select Color Filter</string>
+    <string name="name">Name</string>
+    <string name="color_selected">Color Selected</string>
+    <string name="account_empty_name_error">The name field is empty</string>
+    <string name="account">Account</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="confirm">Confirm</string>
+    <string name="delete_account_alert_title">Are you sure you want to delete this account?</string>
+    <string name="delete_account_alert_message">All transactions from this account will be deleted.</string>
+    <string name="cancel">Cancel</string>
+    <string name="expense">Expense</string>
+    <string name="description">Description</string>
+    <string name="to_category">To category</string>
+    <string name="from_account">From account</string>
+    <string name="delete_transaction_alert_title">Are you sure you want to delete this transaction?</string>
+    <string name="enter_expense_error">Enter a valid expense number.</string>
+    <string name="not_enough_funds">Selected account has insufficient funds for this transaction.</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="filter_account">Filter account</string>
+    <string name="enter_the_pin">Enter your pin</string>
+    <string name="forgot_code">Forgot Code</string>
+    <string name="set_the_pin">Set your new PIN</string>
+    <string name="repeat_the_pin">Repeat the PIN</string>
+    <string name="ok">OK</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="require_password">Require PIN Code</string>
+>>>>>>> Stashed changes
 </resources>
