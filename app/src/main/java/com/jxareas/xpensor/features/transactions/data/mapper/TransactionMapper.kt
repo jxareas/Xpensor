@@ -1,28 +1,30 @@
 package com.jxareas.xpensor.features.transactions.data.mapper
 
+import com.jxareas.xpensor.core.domain.mapper.Mapper
 import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEntity
-import com.jxareas.xpensor.core.domain.mapper.DomainMapper
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
+import javax.inject.Inject
 
-object TransactionMapper : DomainMapper<TransactionEntity, Transaction> {
-    override fun toDomain(entity: TransactionEntity): Transaction =
+class TransactionMapper @Inject constructor(): Mapper<Transaction, TransactionEntity> {
+
+    override fun mapFromDomain(source: Transaction): TransactionEntity =
+        TransactionEntity(source.id,
+            source.note,
+            source.amount,
+            source.date,
+            source.time,
+            source.accountId,
+            source.categoryId)
+
+    override fun mapToDomain(destination: TransactionEntity): Transaction =
         Transaction(
-            entity.id,
-            entity.note,
-            entity.amount,
-            entity.date,
-            entity.time,
-            entity.accountId,
-            entity.categoryId,
+            destination.id,
+            destination.note,
+            destination.amount,
+            destination.date,
+            destination.time,
+            destination.accountId,
+            destination.categoryId,
         )
-
-    override fun fromDomain(domain: Transaction): TransactionEntity =
-        TransactionEntity(domain.id,
-            domain.note,
-            domain.amount,
-            domain.date,
-            domain.time,
-            domain.accountId,
-            domain.categoryId)
 
 }

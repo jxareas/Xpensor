@@ -6,7 +6,7 @@
     app:startDestination="@id/accountsFragment">
     <fragment
         android:id="@+id/transactionsFragment"
-        android:name="com.jxareas.xpensor.features.transactions.presentation.TransactionsFragment"
+        android:name="com.jxareas.xpensor.features.transactions.presentation.ui.TransactionsFragment"
         android:label="Transactions"
         tools:layout="@layout/fragment_transactions">
 
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountsFragment"
-        android:name="com.jxareas.xpensor.features.accounts.presentation.AccountsFragment"
+        android:name="com.jxareas.xpensor.features.accounts.presentation.ui.AccountsFragment"
         android:label="fragment_accounts"
         tools:layout="@layout/fragment_accounts">
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/chartFragment"
-        android:name="com.jxareas.xpensor.features.chart.presentation.ChartFragment"
+        android:name="com.jxareas.xpensor.features.chart.presentation.ui.ChartFragment"
         android:label="fragment_chart"
         tools:layout="@layout/fragment_chart">
         <action
@@ -44,12 +44,12 @@
     </fragment>
     <fragment
         android:id="@+id/converterFragment"
-        android:name="com.jxareas.xpensor.features.converter.presentation.ConverterFragment"
+        android:name="com.jxareas.xpensor.features.converter.presentation.ui.ConverterFragment"
         android:label="fragment_converter"
         tools:layout="@layout/fragment_converter" />
     <activity
         android:id="@+id/settingsActivity"
-        android:name="com.jxareas.xpensor.features.settings.SettingsActivity"
+        android:name="com.jxareas.xpensor.features.settings.ui.SettingsActivity"
         android:label="SettingsActivity"
         tools:layout="@layout/settings_activity" />
     <action
@@ -60,7 +60,7 @@
         app:destination="@id/accountActionsBottomSheetFragment" />
     <fragment
         android:id="@+id/addAccountFragment"
-        android:name="com.jxareas.xpensor.features.accounts.presentation.actions.add.AddAccountFragment"
+        android:name="com.jxareas.xpensor.features.accounts.presentation.ui.actions.add.AddAccountFragment"
         android:label="@string/new_account"
         tools:layout="@layout/fragment_add_account">
         <action
@@ -73,26 +73,26 @@
     </fragment>
     <fragment
         android:id="@+id/editAccountFragment"
-        android:name="com.jxareas.xpensor.features.accounts.presentation.actions.edit.EditAccountFragment"
+        android:name="com.jxareas.xpensor.features.accounts.presentation.ui.actions.edit.EditAccountFragment"
         android:label="@string/edit"
         tools:layout="@layout/fragment_edit_account">
         <argument
             android:name="editableAccount"
-            app:argType="com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails" />
+            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountUi" />
     </fragment>
     <dialog
         android:id="@+id/dateSelectorDialogFragment"
-        android:name="com.jxareas.xpensor.features.date.presentation.DateSelectorDialogFragment"
+        android:name="com.jxareas.xpensor.features.date.presentation.ui.DateSelectorDialogFragment"
         android:label="dialog_fragment_date_selector"
         tools:layout="@layout/dialog_fragment_date_selector" />
     <dialog
         android:id="@+id/accountActionsBottomSheetFragment"
-        android:name="com.jxareas.xpensor.features.accounts.presentation.actions.AccountActionsBottomSheet"
+        android:name="com.jxareas.xpensor.features.accounts.presentation.ui.actions.AccountActionsBottomSheet"
         android:label="AccountActionsBottomSheetFragment"
         tools:layout="@layout/bottom_sheet_account_actions">
         <argument
             android:name="selectedAccount"
-            app:argType="com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails" />
+            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountUi" />
         <argument
             android:name="numberOfAccounts"
             app:argType="integer" />
@@ -102,7 +102,7 @@
     </dialog>
     <dialog
         android:id="@+id/selectCategoryBottomSheet"
-        android:name="com.jxareas.xpensor.features.transactions.presentation.actions.category.SelectCategoryBottomSheet"
+        android:name="com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.SelectCategoryBottomSheet"
         android:label="bottom_sheet_select_category"
         tools:layout="@layout/bottom_sheet_select_category">
         <action
@@ -110,7 +110,7 @@
             app:destination="@id/addTransactionBottomSheet" />
         <argument
             android:name="selectedAccount"
-            app:argType="com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails" />
+            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountUi" />
         <argument
             android:name="amount"
             android:defaultValue="0.0"
@@ -118,15 +118,15 @@
     </dialog>
     <dialog
         android:id="@+id/addTransactionBottomSheet"
-        android:name="com.jxareas.xpensor.features.transactions.presentation.actions.add.AddTransactionBottomSheet"
+        android:name="com.jxareas.xpensor.features.transactions.presentation.ui.actions.add.AddTransactionBottomSheet"
         android:label="bottom_sheet_add_transaction"
         tools:layout="@layout/bottom_sheet_add_transaction">
         <argument
             android:name="selectedAccount"
-            app:argType="com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails" />
+            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountUi" />
         <argument
             android:name="selectedCategory"
-            app:argType="com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails" />
+            app:argType="com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi" />
         <argument
             android:name="amount"
             app:argType="float" />
@@ -138,7 +138,7 @@
     </dialog>
     <dialog
         android:id="@+id/accountFilterDialogFragment"
-        android:name="com.jxareas.xpensor.features.accounts.presentation.actions.filter.AccountFilterDialogFragment"
+        android:name="com.jxareas.xpensor.features.accounts.presentation.ui.actions.filter.AccountFilterDialogFragment"
         android:label="dialog_fragment_account_filter"
         tools:layout="@layout/dialog_fragment_account_filter" />
     <action

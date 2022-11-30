@@ -1,10 +1,10 @@
 package com.jxareas.xpensor.features.transactions.domain.usecase
 
+import com.jxareas.xpensor.common.utils.DateRange
+import com.jxareas.xpensor.common.utils.DateUtils
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.CategoryRepository
-import com.jxareas.xpensor.common.utils.DateRange
-import com.jxareas.xpensor.common.utils.DateUtils
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -25,6 +25,5 @@ class GetCategoriesUseCase @Inject constructor(
         else repository.getCategoryViewsFromAccount(minDate, maxDate, account.id)
 
     }
-
 
 }

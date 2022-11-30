@@ -4,11 +4,12 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
-import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
 import com.jxareas.xpensor.common.utils.DateUtils
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
+import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
+import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,12 +25,13 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val sharedPreferences: SharedPreferences,
+    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
-    private val _accounts = MutableStateFlow(emptyList<AccountWithDetails>())
+    private val _accounts = MutableStateFlow(emptyList<AccountUi>())
     val accounts = _accounts.asStateFlow()
 
-    private val _selectedAccount = MutableStateFlow<AccountWithDetails?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
     val selectedAccount = _selectedAccount.asStateFlow()
 
     private val _selectedDateRange = MutableStateFlow(DateUtils.defaultDateRange)
@@ -47,7 +49,9 @@ class MainActivityViewModel @Inject constructor(
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
-            .onEach { accounts -> _accounts.value = accounts }
+            .onEach { accounts ->
+                _accounts.value = accountUiMapper.mapFromList(accounts)
+            }
             .launchIn(viewModelScope)
     }
 
@@ -63,7 +67,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
 
-    fun onUpdateSelectedAccount(account: AccountWithDetails?) = launchScoped {
+    fun onUpdateSelectedAccount(account: AccountUi?) = launchScoped {
         _selectedAccount.value = account
     }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/margin_standard"
-    tools:context="com.jxareas.xpensor.features.transactions.presentation.actions.category.SelectCategoryBottomSheet">
+    tools:context="com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.SelectCategoryBottomSheet">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/actions_container"

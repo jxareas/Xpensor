@@ -1,10 +1,10 @@
 package com.jxareas.xpensor.features.transactions.domain.usecase
 
+import com.jxareas.xpensor.common.utils.DateRange
+import com.jxareas.xpensor.common.utils.DateUtils
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRepository
-import com.jxareas.xpensor.common.utils.DateRange
-import com.jxareas.xpensor.common.utils.DateUtils
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -28,7 +28,7 @@ class GetTransactionsWithDayUseCase @Inject constructor(
         val amountsPerDay = if (account == null)
             repository.getTransactionAmountsPerDay(minDate, maxDate).first()
         else {
-            repository.getTransactionAmountsPerDayForAccount(minDate, maxDate, account.id ?: 0)
+            repository.getTransactionAmountsPerDayForAccount(minDate, maxDate, account.id)
                 .first()
         }
 
