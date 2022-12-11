@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="#">
     <img src="./readme/logo/blue.svg" alt="Logo" width="80" height="80">
   </a>
 
@@ -28,7 +28,7 @@ As of now, this project still has certain functionalities being worked on, altho
 
 ## 🕹️ UI/UX 🕹️
 
-This app providers a clean and simple Material-based Visual Feedback via Dialogs, Snackbars, Toasts and Bottom Sheets. It also enhances the user interfaces by providing visual cues to the user via animations, which are exaggerated to an extent, as this is an experimental app.
+This app provides a clean and simple Material-based Visual Feedback via Dialogs, Snackbars, Toasts and Bottom Sheets. It also enhances the user interfaces by providing visual cues to the user via animations, which are exaggerated to an extent, as this is an experimental app whose purpose is to showcase the use of several libraries and common design principles used in Android Development.
 
 Some of the APIs and Motion Patterns used all around this app are [*ObjectAnimator*](https://developer.android.com/reference/android/animation/ObjectAnimator), [*ViewPropertyAnimator*](https://developer.android.com/reference/android/view/ViewPropertyAnimator) and [*Material Motion Transition Patterns*](https://m2.material.io/design/motion/the-motion-system.html#transition-patterns).
 
@@ -38,7 +38,7 @@ Bottom Items	|	Settings Menu	|	Date Selector Dialog | Expense Bottom Sheet	|
 
 ## 📷 Screenshots 📷
 
-This Project uses [**Material 3**](https://m3.material.io/), the latest version of Google's open source design system known as *Material Design*. It also supports [Dark Theme](https://developer.android.com/develop/ui/views/theming/darktheme), as evidendeced by the screenshots below:
+This Project uses [**Material 3**](https://m3.material.io/), the latest version of Google's open source design system known as *Material Design*. It also supports [Dark Theme](https://developer.android.com/develop/ui/views/theming/darktheme), as evidenced by the screenshots below:
 
 | Accounts List  | Expenses | Expenses Chart | 
 | ------------- | ------------- |  ------------- |
