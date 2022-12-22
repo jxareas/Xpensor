@@ -4,6 +4,9 @@ object BuildPlugins {
     const val JETBRAINS_KOTLIN_ANDROID = "org.jetbrains.kotlin.android"
     const val KOTLIN_KAPT = "kotlin-kapt"
     const val KTLINT = "org.jlleitschuh.gradle.ktlint"
+    const val VERSIONS = "com.github.ben-manes.versions"
+    const val VERSIONS_PLUGIN =
+        "com.github.ben-manes:gradle-versions-plugin:${Versions.VERSIONS_PLUGIN}"
     const val KOTLIN_PARCELIZE = "kotlin-parcelize"
     const val SAFE_ARGS = "androidx.navigation.safeargs"
     const val DAGGER_HILT = "dagger.hilt.android.plugin"

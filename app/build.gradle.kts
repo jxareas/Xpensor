@@ -9,6 +9,7 @@ plugins {
     id(BuildPlugins.KOTLIN_PARCELIZE)
     id(BuildPlugins.DAGGER_HILT)
     id(BuildPlugins.KTLINT)
+    id(BuildPlugins.VERSIONS)
 }
 
 android {
@@ -107,8 +108,8 @@ dependencies {
     implementation(Dependencies.DataStore.DATA_STORE)
 
     // Navigation
-    implementation(Dependencies.Navigation.NAVIGATION_FRAGMENT_KTX)
-    implementation(Dependencies.Navigation.NAVIGATION_UI_KTX)
+    implementation(Dependencies.Navigation.FRAGMENT_KTX)
+    implementation(Dependencies.Navigation.UI_KTX)
 
     // Lifecycle
     implementation(Dependencies.Android.LIFECYCLE_VIEWMODEL_KTX)

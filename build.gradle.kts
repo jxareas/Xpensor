@@ -3,8 +3,9 @@ buildscript {
     dependencies {
         classpath(BuildPlugins.TOOLS_BUILD_GRADLE)
         classpath(BuildPlugins.KOTLIN_GRADLE_PLUGIN)
-        classpath(Dependencies.Navigation.NAVIGATION_SAFE_ARGS)
+        classpath(Dependencies.Navigation.SAFE_ARGS_PLUGIN)
         classpath(Dependencies.Dagger.HILT_PLUGIN)
+        classpath(BuildPlugins.VERSIONS_PLUGIN)
     }
 }
 

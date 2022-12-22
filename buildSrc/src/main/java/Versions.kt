@@ -31,4 +31,5 @@ object Versions {
     const val ESPRESSO_ANDROID_CORE = "3.4.0"
     const val KTLINT = "11.0.0"
     const val DESUGAR_JDK_LIB = "1.1.5"
+    const val VERSIONS_PLUGIN = "0.44.0"
 }

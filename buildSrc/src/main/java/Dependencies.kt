@@ -46,11 +46,11 @@ object Dependencies {
     }
 
     object Navigation {
-        const val NAVIGATION_SAFE_ARGS =
+        const val SAFE_ARGS_PLUGIN =
             "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.NAVIGATION}"
-        const val NAVIGATION_FRAGMENT_KTX =
+        const val FRAGMENT_KTX =
             "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION}"
-        const val NAVIGATION_UI_KTX = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION}"
+        const val UI_KTX = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION}"
     }
 
     object DataStore {
