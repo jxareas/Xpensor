@@ -12,11 +12,13 @@ import javax.inject.Singleton
 class CurrencyRatesDtoMapper @Inject constructor() : Mapper<CurrencyRates, CurrencyRatesDto> {
 
     override fun mapFromDomain(source: CurrencyRates): CurrencyRatesDto =
-        CurrencyRatesDto(source.usd.rate,
+        CurrencyRatesDto(
+            source.usd.rate,
             source.eur.rate,
             source.nio.rate,
             source.crc.rate,
-            source.gbp.rate)
+            source.gbp.rate
+        )
 
     override fun mapToDomain(destination: CurrencyRatesDto): CurrencyRates =
         CurrencyRates(
@@ -26,5 +28,4 @@ class CurrencyRatesDtoMapper @Inject constructor() : Mapper<CurrencyRates, Curre
             nio = Currency(Currencies.NIO, destination.nio),
             gbp = Currency(Currencies.GBP, destination.gbp),
         )
-
 }

@@ -6,8 +6,8 @@ import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.CategoryRepository
 import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 @ViewModelScoped
 class GetCategoriesUseCase @Inject constructor(
@@ -15,7 +15,7 @@ class GetCategoriesUseCase @Inject constructor(
 ) {
 
     operator fun invoke(dateRange: DateRange, account: AccountWithDetails?):
-            Flow<List<CategoryWithDetails>> {
+        Flow<List<CategoryWithDetails>> {
 
         val minDate = dateRange.first ?: DateUtils.DEFAULT_LOCAL_DATE
         val maxDate = dateRange.second ?: DateUtils.getCurrentLocalDate()
@@ -23,7 +23,5 @@ class GetCategoriesUseCase @Inject constructor(
         return if (account == null)
             repository.getCategoryViews(minDate, maxDate)
         else repository.getCategoryViewsFromAccount(minDate, maxDate, account.id)
-
     }
-
 }

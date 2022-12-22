@@ -23,5 +23,4 @@ class CategoryUiMapper @Inject constructor() : Mapper<Category, CategoryUi> {
             icon = destination.icon,
             iconColor = destination.iconColor,
         )
-
 }

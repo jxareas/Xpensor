@@ -25,7 +25,5 @@ interface TransactionModule {
         @Singleton
         fun provideTransactionDao(database: XpensorDatabase): TransactionDao =
             database.transactionDao
-
     }
-
 }

@@ -3,8 +3,8 @@ package com.jxareas.xpensor.features.transactions.domain.repository
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionAmountPerDay
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
+import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
 
@@ -30,5 +30,4 @@ interface TransactionRepository {
     suspend fun insertTransaction(transaction: Transaction)
 
     suspend fun deleteTransactionById(transactionId: Int)
-
 }

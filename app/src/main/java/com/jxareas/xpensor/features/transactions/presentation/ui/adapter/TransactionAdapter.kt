@@ -1,17 +1,16 @@
 package com.jxareas.xpensor.features.transactions.presentation.ui.adapter
 
-
 import android.content.SharedPreferences
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.jxareas.xpensor.common.extensions.invoke
+import com.jxareas.xpensor.common.utils.OnBindViewHolder
 import com.jxareas.xpensor.databinding.CardItemTransactionBinding
 import com.jxareas.xpensor.databinding.ListItemDayInformationBinding
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
-import com.jxareas.xpensor.common.utils.OnBindViewHolder
-import com.jxareas.xpensor.common.extensions.invoke
 import javax.inject.Inject
 
 class TransactionAdapter @Inject constructor(
@@ -19,7 +18,8 @@ class TransactionAdapter @Inject constructor(
 ) : ListAdapter<Any, TransactionAdapter.ViewHolder>(
     AsyncDifferConfig.Builder(TransactionDiffCallback).build()
 ) {
-    abstract class ViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root),
+    abstract class ViewHolder(binding: ViewBinding) :
+        RecyclerView.ViewHolder(binding.root),
         OnBindViewHolder<Any>
 
     companion object {
@@ -30,13 +30,16 @@ class TransactionAdapter @Inject constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
             TRANSACTION_VIEW_TYPE ->
-                TransactionViewHolder(parent invoke CardItemTransactionBinding::inflate,
-                    preferences)
+                TransactionViewHolder(
+                    parent invoke CardItemTransactionBinding::inflate,
+                    preferences
+                )
             else ->
-                TransactionsByDayViewHolder(parent invoke ListItemDayInformationBinding::inflate,
-                    preferences)
+                TransactionsByDayViewHolder(
+                    parent invoke ListItemDayInformationBinding::inflate,
+                    preferences
+                )
         }
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         when (holder.itemViewType) {
@@ -54,6 +57,4 @@ class TransactionAdapter @Inject constructor(
         if (currentList[position] is TransactionWithDetails)
             TRANSACTION_VIEW_TYPE
         else DAY_INFO_VIEW_TYPE
-
-
 }

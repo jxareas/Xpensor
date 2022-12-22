@@ -7,10 +7,10 @@ import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalDate
 import com.jxareas.xpensor.common.utils.DateUtils.toLocalDate
 import com.jxareas.xpensor.common.utils.DateUtils.toMilliseconds
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import java.time.LocalDate
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 @HiltViewModel
 class DateSelectorViewModel @Inject constructor() : ViewModel() {
@@ -20,7 +20,8 @@ class DateSelectorViewModel @Inject constructor() : ViewModel() {
 
     fun getDate(daysAgo: Int = 0): LocalDate =
         if (daysAgo != 0)
-            ((getCurrentLocalDate()).toMilliseconds() + DAY_IN_MS - (daysAgo * DAY_IN_MS)).toLocalDate()
+            ((getCurrentLocalDate()).toMilliseconds() + DAY_IN_MS - (daysAgo * DAY_IN_MS))
+                .toLocalDate()
         else getCurrentLocalDate()
 
     fun onSelectDate() = launchScoped {
@@ -46,5 +47,4 @@ class DateSelectorViewModel @Inject constructor() : ViewModel() {
     fun onSelectAllTime() = launchScoped {
         _events.emit(DateSelectedEvent.AllTime)
     }
-
 }

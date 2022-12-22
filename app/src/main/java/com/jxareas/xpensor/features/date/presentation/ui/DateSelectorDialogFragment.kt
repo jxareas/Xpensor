@@ -10,10 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.jxareas.xpensor.R
-import com.jxareas.xpensor.databinding.DialogFragmentDateSelectorBinding
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
 import com.jxareas.xpensor.common.utils.DateUtils.DAY_IN_MS
 import com.jxareas.xpensor.common.utils.DateUtils.toLocalDate
+import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.databinding.DialogFragmentDateSelectorBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -109,5 +109,4 @@ class DateSelectorDialogFragment : DialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

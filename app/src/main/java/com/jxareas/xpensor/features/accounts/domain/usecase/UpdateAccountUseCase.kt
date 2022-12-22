@@ -10,5 +10,4 @@ class UpdateAccountUseCase @Inject constructor(private val repository: AccountRe
 
     suspend operator fun invoke(account: AccountWithDetails) =
         repository.updateAccount(account)
-
 }

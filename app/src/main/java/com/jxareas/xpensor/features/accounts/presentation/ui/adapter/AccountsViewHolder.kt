@@ -21,5 +21,4 @@ class AccountsViewHolder(
         textViewCurrency.text = preferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY)
         iconBackground.setTint(item.color)
     }
-
 }

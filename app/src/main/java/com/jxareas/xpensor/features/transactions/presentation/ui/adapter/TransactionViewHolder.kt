@@ -1,13 +1,13 @@
 package com.jxareas.xpensor.features.transactions.presentation.ui.adapter
 
 import android.content.SharedPreferences
-import com.jxareas.xpensor.databinding.CardItemTransactionBinding
-import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
+import com.jxareas.xpensor.common.extensions.setIcon
+import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
-import com.jxareas.xpensor.common.extensions.setIcon
-import com.jxareas.xpensor.common.extensions.setTint
+import com.jxareas.xpensor.databinding.CardItemTransactionBinding
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
 
 class TransactionViewHolder(
     private val binding: CardItemTransactionBinding,
@@ -33,6 +33,4 @@ class TransactionViewHolder(
             cardName.isSelected = true
         }
     }
-
-
 }

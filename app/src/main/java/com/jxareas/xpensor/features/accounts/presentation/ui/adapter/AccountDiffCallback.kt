@@ -10,5 +10,4 @@ object AccountDiffCallback : DiffUtil.ItemCallback<AccountUi>() {
 
     override fun areContentsTheSame(oldItem: AccountUi, newItem: AccountUi): Boolean =
         oldItem.hashCode() == newItem.hashCode()
-
 }

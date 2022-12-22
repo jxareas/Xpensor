@@ -14,11 +14,14 @@ class AccountEntityMapper @Inject constructor() : Mapper<AccountWithDetails, Acc
             id = if (source.id == AccountEntity.EMPTY_ID) null else source.id,
             name = source.name,
             amount = source.amount,
-            color = source.color)
+            color = source.color
+        )
 
     override fun mapToDomain(destination: AccountEntity): AccountWithDetails =
-        AccountWithDetails(id = destination.id ?: 0,
+        AccountWithDetails(
+            id = destination.id ?: 0,
             name = destination.name,
             amount = destination.amount,
-            color = destination.color)
+            color = destination.color
+        )
 }

@@ -13,6 +13,4 @@ class AddUserAuthenticationPin @Inject constructor(private val preferences: Shar
             .putString(PreferenceUtils.AUTH_CODE_PREFERENCE_KEY, pinCode)
             .putBoolean(PreferenceUtils.FIRST_TIME_PREFERENCE_KEY, false)
             .apply()
-
-
 }

@@ -18,6 +18,9 @@ plugins {
     id(BuildPlugins.JETBRAINS_KOTLIN_ANDROID)
         .version(ProjectProperties.KOTLIN_VERSION)
         .apply(false)
+    id(BuildPlugins.KTLINT)
+        .version(Versions.KTLINT)
+        .apply(false)
 }
 
 tasks.register("clean", Delete::class) {

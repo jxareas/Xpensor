@@ -14,5 +14,4 @@ object CategoryDiffCallback : DiffUtil.ItemCallback<CategoryWithAmountUi>() {
         oldItem: CategoryWithAmountUi,
         newItem: CategoryWithAmountUi,
     ): Boolean = oldItem.hashCode() == newItem.hashCode()
-
 }

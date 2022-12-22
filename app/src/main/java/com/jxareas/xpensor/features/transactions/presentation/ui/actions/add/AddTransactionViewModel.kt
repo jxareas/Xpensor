@@ -1,16 +1,16 @@
 package com.jxareas.xpensor.features.transactions.presentation.ui.actions.add
 
 import androidx.lifecycle.ViewModel
+import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.usecase.AddTransactionUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.ValidateTransactionUseCase
 import com.jxareas.xpensor.features.transactions.presentation.ui.actions.add.event.AddTransactionEvent
 import com.jxareas.xpensor.features.transactions.presentation.ui.actions.add.state.AddTransactionState
-import com.jxareas.xpensor.common.extensions.launchScoped
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import javax.inject.Inject
 
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(
@@ -36,5 +36,4 @@ class AddTransactionViewModel @Inject constructor(
     fun onApplyChanges() = launchScoped {
         _events.emit(AddTransactionEvent.CreateNewTransaction)
     }
-
 }

@@ -97,7 +97,7 @@
             android:name="numberOfAccounts"
             app:argType="integer" />
         <action
-            android:id="@+id/action_accountActionsBottomSheetFragment_to_editAccountFragment"
+            android:id="@+id/action_accountBottomSheet_to_editAccount"
             app:destination="@id/editAccountFragment" />
     </dialog>
     <dialog

@@ -5,16 +5,18 @@ import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEn
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import javax.inject.Inject
 
-class TransactionMapper @Inject constructor(): Mapper<Transaction, TransactionEntity> {
+class TransactionMapper @Inject constructor() : Mapper<Transaction, TransactionEntity> {
 
     override fun mapFromDomain(source: Transaction): TransactionEntity =
-        TransactionEntity(source.id,
+        TransactionEntity(
+            source.id,
             source.note,
             source.amount,
             source.date,
             source.time,
             source.accountId,
-            source.categoryId)
+            source.categoryId
+        )
 
     override fun mapToDomain(destination: TransactionEntity): Transaction =
         Transaction(
@@ -26,5 +28,4 @@ class TransactionMapper @Inject constructor(): Mapper<Transaction, TransactionEn
             destination.accountId,
             destination.categoryId,
         )
-
 }

@@ -1,7 +1,7 @@
 package com.jxareas.xpensor.features.transactions.domain.usecase
 
-import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.accounts.domain.repository.AccountRepository
+import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
@@ -19,5 +19,4 @@ class AddTransactionUseCase @Inject constructor(
             transactionRepository.insertTransaction(transaction)
         }
     }
-
 }

@@ -5,9 +5,6 @@ import android.util.TypedValue
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.DialogFragmentNavigator
-import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.jxareas.xpensor.R
@@ -38,9 +35,10 @@ fun Fragment.showSnackbar(
         .show()
 }
 
-fun Fragment.getCurrentDestination() =
-    (findNavController().currentDestination as? FragmentNavigator.Destination)?.className
-        ?: (findNavController().currentDestination as? DialogFragmentNavigator.Destination)?.className
+// fun Fragment.getCurrentDestination() =
+//    (findNavController().currentDestination as? FragmentNavigator.Destination)?.className
+//        ?:
+//        (findNavController().currentDestination as? DialogFragmentNavigator.Destination)?.className
 
 fun Fragment.getThemeColor(color: Int): Int {
     val value = TypedValue()

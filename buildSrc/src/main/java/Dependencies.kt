@@ -13,10 +13,6 @@ object Dependencies {
         const val LEGACY_SUPPORT =
             "androidx.legacy:legacy-support-v4:${Versions.LEGACY_SUPPORT_VERSION}"
 
-        const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
-        const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
-        const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
-
         const val SPLASH_SCREEN = "androidx.core:core-splashscreen:${Versions.SPLASH_SCREEN}"
         const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
         const val MATERIAL =
@@ -31,6 +27,9 @@ object Dependencies {
         const val RECYCLERVIEW =
             "androidx.recyclerview:recyclerview:${Versions.RECYCLERVIEW}"
         const val VIEWPAGER2 = "androidx.viewpager2:viewpager2:${Versions.VIEWPAGER2}"
+
+        const val DESUGARING_CORE_LIB =
+            "com.android.tools:desugar_jdk_libs:${Versions.DESUGAR_JDK_LIB}"
 
         const val LIFECYCLE_LIVE_DATA_KTX =
             "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE_KTX_VERSION}"

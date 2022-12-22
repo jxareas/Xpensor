@@ -1,6 +1,5 @@
 package com.jxareas.xpensor.features.transactions.presentation.ui.actions.category
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
@@ -11,6 +10,8 @@ import com.jxareas.xpensor.features.transactions.presentation.mapper.CategoryWit
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.event.SelectCategoryEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.LocalDate
+import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,8 +19,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.time.LocalDate
-import javax.inject.Inject
 
 @HiltViewModel
 class SelectCategoryViewModel @Inject constructor(
@@ -30,7 +29,6 @@ class SelectCategoryViewModel @Inject constructor(
 
     private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
-
 
     private val _events = MutableSharedFlow<SelectCategoryEvent>()
     val events = _events.asSharedFlow()
@@ -71,5 +69,4 @@ class SelectCategoryViewModel @Inject constructor(
     ) = launchScoped {
         _events.emit(SelectCategoryEvent.SelectCategory(accountUi, categoryWithAmountUi))
     }
-
 }

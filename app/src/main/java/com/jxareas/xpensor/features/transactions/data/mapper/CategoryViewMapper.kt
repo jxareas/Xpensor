@@ -19,11 +19,12 @@ class CategoryViewMapper @Inject constructor() : Mapper<CategoryWithDetails, Cat
 
     override fun mapToDomain(destination: CategoryView): CategoryWithDetails =
         CategoryWithDetails(
-            category = Category(id = destination.id,
+            category = Category(
+                id = destination.id,
                 name = destination.name,
                 icon = destination.icon,
-                iconColor = destination.iconColor),
+                iconColor = destination.iconColor
+            ),
             amount = destination.amount,
         )
-
 }

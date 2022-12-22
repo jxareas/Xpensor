@@ -8,8 +8,8 @@ import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRe
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -47,7 +47,5 @@ class GetTransactionsWithDayUseCase @Inject constructor(
                 result.add(amountsPerDay[index])
         }
         return result.reversed()
-
     }
-
 }

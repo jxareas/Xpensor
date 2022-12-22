@@ -7,7 +7,6 @@ import androidx.core.view.MenuProvider
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.utils.OnToolbarMenuItemClick
 
-
 class AddAccountMenu(private val onItemClicked: OnToolbarMenuItemClick) : MenuProvider {
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) =
         menuInflater.inflate(R.menu.accounts_menu, menu)

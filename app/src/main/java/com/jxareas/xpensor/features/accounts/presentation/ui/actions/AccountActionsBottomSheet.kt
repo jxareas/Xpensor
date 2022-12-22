@@ -62,7 +62,6 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
                         }
                         viewModel.removeAccount(args.selectedAccount)
                         dismiss()
-
                     }
                     is AccountActionsEvent.ShowDeleteAccountDialog -> {
                         buildAlertDialog().show()
@@ -70,11 +69,10 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
                     is AccountActionsEvent.NavigateToEditAccountsScreen -> {
                         val editAccountDirection =
                             AccountActionsBottomSheetDirections
-                                .actionAccountActionsBottomSheetFragmentToEditAccountFragment(args.selectedAccount)
+                                .actionAccountBottomSheetToEditAccount(args.selectedAccount)
                         findNavController().navigate(editAccountDirection)
                     }
                 }
-
             }
         }
     }
@@ -88,7 +86,6 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
         }
         .setNegativeButton(getString(R.string.cancel)) { _, _ ->
             this@AccountActionsBottomSheet.dismiss()
-
         }
         .setOnCancelListener {
             this@AccountActionsBottomSheet.dismiss()
@@ -109,5 +106,4 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

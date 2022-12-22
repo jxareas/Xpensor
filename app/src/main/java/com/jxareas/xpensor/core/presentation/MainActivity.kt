@@ -12,12 +12,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.jxareas.xpensor.NavGraphDirections
 import com.jxareas.xpensor.R
-import com.jxareas.xpensor.databinding.ActivityMainBinding
 import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalDate
+import com.jxareas.xpensor.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -36,15 +36,16 @@ class MainActivity : AppCompatActivity() {
         get() = setOf(R.id.accountsFragment, R.id.converterFragment)
 
     private val topLevelDestinationIds: Set<Int>
-        get() = setOf(R.id.converterFragment,
+        get() = setOf(
+            R.id.converterFragment,
             R.id.accountsFragment,
             R.id.transactionsFragment,
             R.id.dateSelectorDialogFragment,
             R.id.accountFilterDialogFragment,
             R.id.selectCategoryBottomSheet,
             R.id.addTransactionBottomSheet,
-            R.id.chartFragment)
-
+            R.id.chartFragment
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                         getString(R.string.all_time)
                     else if (currentDateRange.second == null)
                         "${currentDateRange.first?.format(datePattern)} - ${
-                            getCurrentLocalDate().format(datePattern)
+                        getCurrentLocalDate().format(datePattern)
                         }"
                     else
                         currentDateRange.first?.format(datePattern)
@@ -100,8 +101,6 @@ class MainActivity : AppCompatActivity() {
                     is MainActivityEvent.OpenTheSelectAccountDialog ->
                         navController.navigate(NavGraphDirections.actionGlobalAccountFilterDialog())
                 }
-
-
             }
         }
     }
@@ -134,7 +133,6 @@ class MainActivity : AppCompatActivity() {
         val isNonFilterableFragment = destinationId in nonFilterableFragmentIds
         moreButton.visibility = if (isNonFilterableFragment) View.GONE else View.VISIBLE
         toolbarInfoBox.isEnabled = !isNonFilterableFragment
-
     }
 
     private fun changeNavigationVisibility(visibility: Int) {
@@ -147,5 +145,4 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean =
         navController.navigateUp() || super.onSupportNavigateUp()
-
 }

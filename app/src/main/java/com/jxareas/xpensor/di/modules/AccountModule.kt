@@ -25,7 +25,5 @@ interface AccountModule {
         @Singleton
         fun provideAccountDao(database: XpensorDatabase): AccountDao =
             database.accountDao
-
     }
-
 }

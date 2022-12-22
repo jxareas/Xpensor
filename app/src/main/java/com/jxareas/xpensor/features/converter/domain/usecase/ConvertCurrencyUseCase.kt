@@ -23,7 +23,7 @@ class ConvertCurrencyUseCase @Inject constructor(private val repository: Convert
         when (val response = repository.getCurrencyRates(from)) {
             is Resource.Success -> {
                 val rates = response.data?.currencyRates
-                if(rates != null) {
+                if (rates != null) {
                     val currencyRate = when (to) {
                         Currencies.USD.name -> rates.usd
                         Currencies.EUR.name -> rates.eur
@@ -37,6 +37,4 @@ class ConvertCurrencyUseCase @Inject constructor(private val repository: Convert
             }
             is Resource.Error -> NO_INTERNET_CONNECTION
         }
-
-
 }

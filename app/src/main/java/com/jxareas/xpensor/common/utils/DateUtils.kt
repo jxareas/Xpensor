@@ -2,13 +2,8 @@ package com.jxareas.xpensor.common.utils
 
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.ZoneId
-import java.time.ZoneOffset
-import java.util.Date
-import java.util.Locale
+import java.time.*
+import java.util.*
 import kotlin.math.absoluteValue
 
 object DateUtils {
@@ -19,7 +14,8 @@ object DateUtils {
         getCurrentLocalDate() to getCurrentLocalDate()
 
     fun Double.toAmountFormat(withMinus: Boolean): String =
-        DecimalFormat(if (withMinus || this < 0) "—######.##" else "######.##").format(this.absoluteValue)
+        DecimalFormat(if (withMinus || this < 0) "—######.##" else "######.##")
+            .format(this.absoluteValue)
 
     fun getCurrentLocalDate(): LocalDate = LocalDate.parse(
         SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())

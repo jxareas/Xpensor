@@ -97,8 +97,6 @@ class ChartFragment : Fragment() {
                 viewModel.onUpdateSelectedAccount(account)
             }
         }
-
-
     }
 
     private fun navigateToSelectDateDialogFragment() {
@@ -109,9 +107,12 @@ class ChartFragment : Fragment() {
 
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(SelectDateMenu {
-            viewModel.onSelectedDateClick()
-        }, viewLifecycleOwner, Lifecycle.State.STARTED)
+        menuHost.addMenuProvider(
+            SelectDateMenu {
+                viewModel.onSelectedDateClick()
+            },
+            viewLifecycleOwner, Lifecycle.State.STARTED
+        )
     }
 
     private fun setupCollectors() {

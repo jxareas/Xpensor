@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
@@ -7,6 +8,7 @@ plugins {
     id(BuildPlugins.SAFE_ARGS)
     id(BuildPlugins.KOTLIN_PARCELIZE)
     id(BuildPlugins.DAGGER_HILT)
+    id(BuildPlugins.KTLINT)
 }
 
 android {
@@ -21,7 +23,6 @@ android {
         multiDexEnabled = ProjectProperties.IS_MULTIDEX_ENABLED
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = ProjectProperties.TEST_RUNNER
-
 
         val currencyApiKey = ProjectProperties.CURRENCY_API_KEY
         val currencyApiToken: String = gradleLocalProperties(rootDir).getProperty(currencyApiKey)
@@ -56,6 +57,20 @@ android {
     }
 }
 
+tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+    disabledRules.add("no-wildcard-imports")
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.HTML)
+        reporter(ReporterType.JSON)
+        reporter(ReporterType.CHECKSTYLE)
+    }
+}
+
 dependencies {
 
     // Support Libraries
@@ -65,7 +80,7 @@ dependencies {
     implementation(Dependencies.Android.FRAGMENT_KTX)
 
     // Desugaring
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+    coreLibraryDesugaring(Dependencies.Android.DESUGARING_CORE_LIB)
 
     // Testing Dependencies
     testImplementation(Dependencies.Testing.JUNIT)
@@ -76,7 +91,7 @@ dependencies {
     implementation(Dependencies.Android.SPLASH_SCREEN)
     implementation(Dependencies.Android.MATERIAL)
     implementation(Dependencies.Android.CARDVIEW)
-    implementation(Dependencies.Android.CARDVIEW)
+    implementation(Dependencies.Android.CONSTRAINT_LAYOUT)
     implementation(Dependencies.Android.SWIPE_REFRESH_LAYOUT)
     implementation(Dependencies.Android.RECYCLERVIEW)
     implementation(Dependencies.Android.VIEWPAGER2)

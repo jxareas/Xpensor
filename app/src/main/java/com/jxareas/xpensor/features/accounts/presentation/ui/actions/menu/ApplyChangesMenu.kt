@@ -12,7 +12,7 @@ class ApplyChangesMenu(private val onItemClicked: OnToolbarMenuItemClick) : Menu
         menuInflater.inflate(R.menu.apply_changes_menu, menu)
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
-        when(menuItem.itemId) {
+        when (menuItem.itemId) {
             R.id.apply_changes -> true.also { onItemClicked() }
             else -> false
         }

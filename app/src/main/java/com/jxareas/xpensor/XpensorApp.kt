@@ -19,12 +19,11 @@ class XpensorApp : Application() {
             .getString(THEME_PREFERENCE_KEY, THEME_DEFAULT)
 
         AppCompatDelegate.setDefaultNightMode(
-            when(selectedTheme) {
+            when (selectedTheme) {
                 THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
                 THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
                 else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             }
         )
     }
-
 }

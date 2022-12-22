@@ -16,8 +16,8 @@ import com.jxareas.xpensor.core.presentation.MainActivityViewModel
 import com.jxareas.xpensor.databinding.DialogFragmentAccountFilterBinding
 import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class AccountFilterDialogFragment : DialogFragment() {
@@ -95,6 +95,4 @@ class AccountFilterDialogFragment : DialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

@@ -1,9 +1,9 @@
 package com.jxareas.xpensor.features.converter.data.api.interceptor
 
 import com.jxareas.xpensor.features.converter.data.api.constants.ApiConstants
+import javax.inject.Singleton
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Singleton
 
 @Singleton
 object AuthenticationInterceptor : Interceptor {
@@ -21,5 +21,4 @@ object AuthenticationInterceptor : Interceptor {
 
         return chain.proceed(newRequest)
     }
-
 }

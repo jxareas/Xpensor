@@ -25,6 +25,4 @@ class CategoryViewHolder(
 
         name.isSelected = true
     }
-
-
 }

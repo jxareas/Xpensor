@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
-import com.jxareas.xpensor.features.accounts.data.local.entity.AccountEntity
 import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalDate
 import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalTime
+import com.jxareas.xpensor.features.accounts.data.local.entity.AccountEntity
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -35,8 +35,8 @@ data class TransactionEntity(
     val amount: Double,
     val date: LocalDate = getCurrentLocalDate(),
     val time: LocalTime = getCurrentLocalTime(),
-    @ColumnInfo(name="account_id")
+    @ColumnInfo(name = "account_id")
     val accountId: Int,
-    @ColumnInfo(name="category_id")
+    @ColumnInfo(name = "category_id")
     val categoryId: Int
 )

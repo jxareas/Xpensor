@@ -22,8 +22,8 @@ import com.jxareas.xpensor.databinding.FragmentAccountsBinding
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.AddAccountMenu
 import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class AccountsFragment : Fragment() {
@@ -83,8 +83,10 @@ class AccountsFragment : Fragment() {
                     is AccountEvent.OpenTheAccountBottomSheet -> {
                         val totalNumberOfAccounts = viewModel.accounts.value.size
                         val openAccountBottomSheetAction =
-                            NavGraphDirections.actionGlobalAccountActions(event.account,
-                                totalNumberOfAccounts)
+                            NavGraphDirections.actionGlobalAccountActions(
+                                event.account,
+                                totalNumberOfAccounts
+                            )
                         findNavController().navigate(openAccountBottomSheetAction)
                     }
                 }
@@ -94,11 +96,13 @@ class AccountsFragment : Fragment() {
 
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(AddAccountMenu {
-            viewModel.onAddNewAccountButtonClick()
-        }, viewLifecycleOwner, Lifecycle.State.STARTED)
+        menuHost.addMenuProvider(
+            AddAccountMenu {
+                viewModel.onAddNewAccountButtonClick()
+            },
+            viewLifecycleOwner, Lifecycle.State.STARTED
+        )
     }
-
 
     private fun setupRecyclerView() = binding.recyclerViewAccounts.run {
         adapter = accountsListAdapter
