@@ -11,5 +11,4 @@ class GetAccountsUseCase @Inject constructor(private val repository: AccountRepo
 
     operator fun invoke(): Flow<List<AccountWithDetails>> =
         repository.getAccounts()
-
 }

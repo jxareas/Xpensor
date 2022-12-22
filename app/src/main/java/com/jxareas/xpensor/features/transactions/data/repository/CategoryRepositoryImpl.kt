@@ -25,6 +25,4 @@ class CategoryRepositoryImpl @Inject constructor(
     override fun getCategoryViews(from: LocalDate, to: LocalDate): Flow<List<CategoryWithDetails>> =
         dao.getCategoryViews(from, to)
             .map { categoryViews -> categoryViewMapper.mapToList(categoryViews) }
-
-
 }

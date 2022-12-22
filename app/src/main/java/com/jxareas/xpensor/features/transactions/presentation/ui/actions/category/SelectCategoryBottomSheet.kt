@@ -58,10 +58,12 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
                 when (event) {
                     is SelectCategoryEvent.SelectCategory -> {
                         val direction =
-                            SelectCategoryBottomSheetDirections.actionSelectCategoryBottomSheetToAddTransactionBottomSheet(
-                                event.account,
-                                event.category,
-                                args.amount)
+                            SelectCategoryBottomSheetDirections
+                                .actionSelectCategoryBottomSheetToAddTransactionBottomSheet(
+                                    event.account,
+                                    event.category,
+                                    args.amount
+                                )
                         findNavController().navigate(direction)
                     }
                 }
@@ -71,9 +73,11 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupRecyclerView() = binding.recyclerViewCategories.run {
         adapter = categoryAdapter
-        categoryAdapter.setOnClickListener(CategoryAdapter.OnClickListener { category ->
-            viewModel.selectCategoryClick(args.selectedAccount, category)
-        })
+        categoryAdapter.setOnClickListener(
+            CategoryAdapter.OnClickListener { category ->
+                viewModel.selectCategoryClick(args.selectedAccount, category)
+            }
+        )
     }
 
     private fun setupCollectors() {
@@ -98,5 +102,4 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

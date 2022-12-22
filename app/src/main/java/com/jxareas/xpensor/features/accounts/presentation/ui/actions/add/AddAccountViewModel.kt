@@ -32,6 +32,4 @@ class AddAccountViewModel @Inject constructor(
         val color = getImageViewTint(image)
         _events.emit(AddAccountEvent.SelectAccountColor(color))
     }
-
-
 }

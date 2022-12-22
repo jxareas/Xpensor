@@ -12,12 +12,7 @@ import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsU
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsWithDayUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -81,20 +76,15 @@ class TransactionsViewModel @Inject constructor(
         _events.emit(TransactionEvent.DateSelected)
     }
 
-
     fun onAddTransactionClick(account: AccountUi) = launchScoped {
         _events.emit(TransactionEvent.OpenTheAddTransactionSheet(account))
     }
-
 
     fun onDeleteButtonClick(transaction: TransactionView) = launchScoped {
         _events.emit(TransactionEvent.ShowTheDeleteTransactionDialog(transaction))
     }
 
-
     fun onDeleteTransactionConfirm(transaction: TransactionView) = launchScoped {
         _events.emit(TransactionEvent.DeleteTransaction(transaction))
     }
-
-
 }

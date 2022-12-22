@@ -47,7 +47,5 @@ class GetTransactionsWithDayUseCase @Inject constructor(
                 result.add(amountsPerDay[index])
         }
         return result.reversed()
-
     }
-
 }

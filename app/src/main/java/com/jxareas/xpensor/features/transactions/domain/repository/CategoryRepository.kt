@@ -6,8 +6,8 @@ import java.time.LocalDate
 
 interface CategoryRepository {
 
-    fun getCategoryViewsFromAccount(from: LocalDate, to: LocalDate, id: Int): Flow<List<CategoryWithDetails>>
+    fun getCategoryViewsFromAccount(from: LocalDate, to: LocalDate, id: Int):
+        Flow<List<CategoryWithDetails>>
 
     fun getCategoryViews(from: LocalDate, to: LocalDate): Flow<List<CategoryWithDetails>>
-
 }

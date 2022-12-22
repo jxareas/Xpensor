@@ -28,8 +28,10 @@ class CategoryAdapter @Inject constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder =
-        CategoryViewHolder(parent invoke ListItemCategoryBinding::inflate,
-            sharedPreferences).apply {
+        CategoryViewHolder(
+            parent invoke ListItemCategoryBinding::inflate,
+            sharedPreferences
+        ).apply {
 
             val category by lazy { currentList[bindingAdapterPosition] }
 
@@ -38,6 +40,4 @@ class CategoryAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) =
         holder.bind(currentList[position])
-
-
 }

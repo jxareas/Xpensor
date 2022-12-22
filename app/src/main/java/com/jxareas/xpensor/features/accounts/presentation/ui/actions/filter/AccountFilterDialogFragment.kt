@@ -95,6 +95,4 @@ class AccountFilterDialogFragment : DialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

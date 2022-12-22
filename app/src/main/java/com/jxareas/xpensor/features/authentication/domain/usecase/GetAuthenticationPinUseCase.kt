@@ -1,8 +1,8 @@
 package com.jxareas.xpensor.features.authentication.domain.usecase
 
 import android.content.SharedPreferences
-import com.jxareas.xpensor.features.authentication.domain.model.PinCode
 import com.jxareas.xpensor.common.utils.PreferenceUtils
+import com.jxareas.xpensor.features.authentication.domain.model.PinCode
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
@@ -15,5 +15,4 @@ class GetAuthenticationPinUseCase @Inject constructor(private val preferences: S
                 ?: PinCode.EMPTY_CODE
         return PinCode(code)
     }
-
 }

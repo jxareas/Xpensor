@@ -24,8 +24,10 @@ class AccountsListAdapter @Inject constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountsViewHolder =
-        AccountsViewHolder(preferences,
-            parent invoke ListItemAccountBinding::inflate).apply {
+        AccountsViewHolder(
+            preferences,
+            parent invoke ListItemAccountBinding::inflate
+        ).apply {
             val account by lazy { currentList[bindingAdapterPosition] }
             itemView.setOnClickListener {
                 onClickListener?.onClick(account)
@@ -36,8 +38,6 @@ class AccountsListAdapter @Inject constructor(
         this.onClickListener = onClickListener
     }
 
-
     override fun onBindViewHolder(holder: AccountsViewHolder, position: Int) =
         holder.bind(currentList[position])
-
 }

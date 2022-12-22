@@ -7,10 +7,8 @@ import retrofit2.http.Query
 
 interface ConverterApi {
 
-
     @GET("api/v2/latest")
     suspend fun getCurrencyRates(
         @Query("base_currency") base: String,
     ): Response<CurrencyDto>
-
 }

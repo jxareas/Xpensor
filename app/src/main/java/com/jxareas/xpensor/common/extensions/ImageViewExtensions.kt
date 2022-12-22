@@ -27,7 +27,9 @@ private val mapOfDrawables = mapOf(
 
 fun getImageViewTint(imageView: ImageView): String {
     val colorInt = imageView.imageTintList?.defaultColor
-    return if (colorInt != null) String.format("#%06X", 0xFFFFFF and colorInt) else PreferenceUtils.MAIN_COLOR
+    return if (colorInt != null)
+        String.format("#%06X", 0xFFFFFF and colorInt)
+    else PreferenceUtils.MAIN_COLOR
 }
 
 fun ImageView.setIcon(id: Int) {

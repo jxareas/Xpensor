@@ -26,5 +26,4 @@ class ConverterRepositoryImpl @Inject constructor(
         } catch (exception: IOException) {
             Resource.Error(context.getString(R.string.connection_error))
         }
-
 }

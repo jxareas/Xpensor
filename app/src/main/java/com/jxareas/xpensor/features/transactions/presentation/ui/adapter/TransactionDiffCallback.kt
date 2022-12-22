@@ -1,8 +1,8 @@
 package com.jxareas.xpensor.features.transactions.presentation.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionAmountPerDay
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
 
 object TransactionDiffCallback : DiffUtil.ItemCallback<Any>() {
 
@@ -19,5 +19,4 @@ object TransactionDiffCallback : DiffUtil.ItemCallback<Any>() {
         else if (oldItem is TransactionWithDetails && newItem is TransactionWithDetails)
             oldItem.hashCode() == newItem.hashCode()
         else false
-
 }

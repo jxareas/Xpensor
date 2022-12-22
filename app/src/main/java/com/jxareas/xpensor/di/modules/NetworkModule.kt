@@ -30,7 +30,6 @@ class NetworkModule {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-
     @Provides
     @Singleton
     fun provideHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
@@ -47,7 +46,4 @@ class NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(moshi)
             .build()
-
-
-
 }

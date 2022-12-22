@@ -10,5 +10,4 @@ class AddAccountUseCase @Inject constructor(private val repository: AccountRepos
 
     suspend operator fun invoke(account: AccountWithDetails) =
         repository.insertAccount(account)
-
 }

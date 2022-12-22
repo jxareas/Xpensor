@@ -66,6 +66,4 @@ class ChartViewModel @Inject constructor(
         _selectedAccountUi.value = account
         launchGetCategoriesJob()
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.jxareas.xpensor.features.transactions.presentation.ui.actions.category
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
@@ -30,7 +29,6 @@ class SelectCategoryViewModel @Inject constructor(
 
     private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
-
 
     private val _events = MutableSharedFlow<SelectCategoryEvent>()
     val events = _events.asSharedFlow()
@@ -71,5 +69,4 @@ class SelectCategoryViewModel @Inject constructor(
     ) = launchScoped {
         _events.emit(SelectCategoryEvent.SelectCategory(accountUi, categoryWithAmountUi))
     }
-
 }

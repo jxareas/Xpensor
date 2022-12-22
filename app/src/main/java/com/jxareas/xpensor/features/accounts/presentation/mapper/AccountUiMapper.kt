@@ -13,7 +13,8 @@ class AccountUiMapper @Inject constructor() : Mapper<AccountWithDetails, Account
             id = source.id,
             name = source.name,
             amount = source.amount,
-            color = source.color)
+            color = source.color
+        )
 
     override fun mapToDomain(destination: AccountUi): AccountWithDetails =
         AccountWithDetails(
@@ -22,5 +23,4 @@ class AccountUiMapper @Inject constructor() : Mapper<AccountWithDetails, Account
             amount = destination.amount,
             color = destination.color,
         )
-
 }

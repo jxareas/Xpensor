@@ -21,5 +21,4 @@ object AuthenticationInterceptor : Interceptor {
 
         return chain.proceed(newRequest)
     }
-
 }

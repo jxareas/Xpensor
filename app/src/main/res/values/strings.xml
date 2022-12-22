@@ -7,6 +7,7 @@
     <string name="converter">Converter</string>
     <string name="connection_error">Check your internet connection</string>
     <string name="add_transaction_button">Add transaction button</string>
+    <string name="transaction_summary_dialog">From: %1$s \nTo: %2$s\nAmount: %3$s</string>
     <string name="convert">Convert</string>
     <string name="enter_amount_error">The amount entered is incorrect or not entered at all.</string>
     <string name="from">From:</string>

@@ -15,7 +15,7 @@ class GetCategoriesUseCase @Inject constructor(
 ) {
 
     operator fun invoke(dateRange: DateRange, account: AccountWithDetails?):
-            Flow<List<CategoryWithDetails>> {
+        Flow<List<CategoryWithDetails>> {
 
         val minDate = dateRange.first ?: DateUtils.DEFAULT_LOCAL_DATE
         val maxDate = dateRange.second ?: DateUtils.getCurrentLocalDate()
@@ -23,7 +23,5 @@ class GetCategoriesUseCase @Inject constructor(
         return if (account == null)
             repository.getCategoryViews(minDate, maxDate)
         else repository.getCategoryViewsFromAccount(minDate, maxDate, account.id)
-
     }
-
 }

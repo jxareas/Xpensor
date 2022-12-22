@@ -55,7 +55,6 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                 when (state) {
                     is AddTransactionState.ValidTransaction -> navigateBackToTransactionFragment()
                     is AddTransactionState.InvalidTransaction -> showInvalidTransactionSnackbar()
-
                 }
             }
         }
@@ -104,7 +103,8 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
 
     private fun navigateBackToTransactionFragment() {
         val direction =
-            AddTransactionBottomSheetDirections.actionAddTransactionBottomSheetToTransactionsFragment()
+            AddTransactionBottomSheetDirections
+                .actionAddTransactionBottomSheetToTransactionsFragment()
         findNavController().navigate(direction)
     }
 
@@ -119,12 +119,12 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
             )
 
         accountBackground.setBackgroundColor(Color.parseColor(args.selectedAccount.color))
-        categoryBackground.setBackgroundColor(Color.parseColor(args.selectedCategory.category.iconColor))
+        categoryBackground
+            .setBackgroundColor(Color.parseColor(args.selectedCategory.category.iconColor))
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

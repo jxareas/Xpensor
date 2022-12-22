@@ -26,8 +26,5 @@ interface ConverterModule {
         @Singleton
         fun provideConverterService(retrofit: Retrofit): ConverterApi =
             retrofit.create()
-
     }
-
-
 }

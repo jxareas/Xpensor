@@ -20,7 +20,8 @@ class DateSelectorViewModel @Inject constructor() : ViewModel() {
 
     fun getDate(daysAgo: Int = 0): LocalDate =
         if (daysAgo != 0)
-            ((getCurrentLocalDate()).toMilliseconds() + DAY_IN_MS - (daysAgo * DAY_IN_MS)).toLocalDate()
+            ((getCurrentLocalDate()).toMilliseconds() + DAY_IN_MS - (daysAgo * DAY_IN_MS))
+                .toLocalDate()
         else getCurrentLocalDate()
 
     fun onSelectDate() = launchScoped {
@@ -46,5 +47,4 @@ class DateSelectorViewModel @Inject constructor() : ViewModel() {
     fun onSelectAllTime() = launchScoped {
         _events.emit(DateSelectedEvent.AllTime)
     }
-
 }

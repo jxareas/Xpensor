@@ -9,7 +9,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TransactionViewMapper @Inject constructor() : Mapper<TransactionWithDetails, TransactionView> {
+class TransactionViewMapper @Inject constructor() :
+    Mapper<TransactionWithDetails, TransactionView> {
 
     override fun mapFromDomain(source: TransactionWithDetails): TransactionView =
         TransactionView(
@@ -33,10 +34,12 @@ class TransactionViewMapper @Inject constructor() : Mapper<TransactionWithDetail
             amount = destination.amount,
             date = destination.date,
             time = destination.time,
-            category = Category(destination.categoryId,
+            category = Category(
+                destination.categoryId,
                 destination.categoryName,
                 destination.icon,
-                destination.iconColor),
+                destination.iconColor
+            ),
             account = Account(destination.accountId, destination.accountName)
         )
 }

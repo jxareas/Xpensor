@@ -14,5 +14,4 @@ class TimeConverter {
     fun toLocalTime(data: String): LocalTime {
         return LocalTime.parse(data)
     }
-
 }

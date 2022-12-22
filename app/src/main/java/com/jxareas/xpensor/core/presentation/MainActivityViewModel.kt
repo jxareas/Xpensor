@@ -66,15 +66,11 @@ class MainActivityViewModel @Inject constructor(
         _events.emit(MainActivityEvent.OpenTheSelectAccountDialog)
     }
 
-
     fun onUpdateSelectedAccount(account: AccountUi?) = launchScoped {
         _selectedAccount.value = account
     }
 
-
     fun onUpdateCurrentDateRange(begin: LocalDate?, end: LocalDate?) = launchScoped {
         _selectedDateRange.value = begin to end
     }
-
-
 }

@@ -23,6 +23,4 @@ class CurrencyDtoMapper @Inject constructor(
             baseCurrency = baseCurrencyDtoMapper.mapToDomain(destination.baseCurrency),
             currencyRates = currencyRatesDtoMapper.mapToDomain(destination.rates)
         )
-
-
 }

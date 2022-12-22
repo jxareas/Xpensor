@@ -1,7 +1,7 @@
 package com.jxareas.xpensor.features.transactions.domain.model
 
-import com.jxareas.xpensor.core.domain.model.Domain
 import com.jxareas.xpensor.common.utils.DateUtils
+import com.jxareas.xpensor.core.domain.model.Domain
 import java.time.LocalDate
 import java.time.LocalTime
 

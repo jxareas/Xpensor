@@ -17,12 +17,12 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
-import com.jxareas.xpensor.databinding.FragmentEditAccountBinding
-import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.ApplyChangesMenu
-import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
+import com.jxareas.xpensor.common.extensions.getLong
 import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.extensions.toast
-import com.jxareas.xpensor.common.extensions.getLong
+import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
+import com.jxareas.xpensor.databinding.FragmentEditAccountBinding
+import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.ApplyChangesMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -32,7 +32,6 @@ class EditAccountFragment : Fragment() {
     private var _binding: FragmentEditAccountBinding? = null
     private val binding: FragmentEditAccountBinding
         get() = _binding!!
-
 
     private val args by navArgs<EditAccountFragmentArgs>()
     private val viewModel: EditAccountViewModel by viewModels()
@@ -50,7 +49,6 @@ class EditAccountFragment : Fragment() {
             interpolator = FastOutSlowInInterpolator()
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,17 +103,22 @@ class EditAccountFragment : Fragment() {
         val account = args.editableAccount
 
         binding.run {
-            textInputLayoutName.editText?.setText(account.name)
-            textInputLayoutMoneyAmount.editText?.setText(account.amount.toAmountFormat(withMinus = false))
+            textInputLayoutName.editText
+                ?.setText(account.name)
+            textInputLayoutMoneyAmount.editText
+                ?.setText(account.amount.toAmountFormat(withMinus = false))
             selectedColor.setTint(account.color)
         }
     }
 
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(ApplyChangesMenu {
-            viewModel.onApplyChanges()
-        }, viewLifecycleOwner, Lifecycle.State.STARTED)
+        menuHost.addMenuProvider(
+            ApplyChangesMenu {
+                viewModel.onApplyChanges()
+            },
+            viewLifecycleOwner, Lifecycle.State.STARTED
+        )
     }
 
     private fun setupListeners() = binding.run {

@@ -50,5 +50,4 @@ class AccountsViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
     }
-
 }

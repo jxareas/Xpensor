@@ -60,9 +60,9 @@ class TransactionsFragment : Fragment() {
         }
     }
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentTransactionsBinding.inflate(layoutInflater)
@@ -119,7 +119,12 @@ class TransactionsFragment : Fragment() {
         MaterialAlertDialogBuilder(requireContext())
             .setIcon(R.drawable.ic_warning)
             .setTitle(R.string.delete_transaction_alert_title)
-            .setMessage("From: ${transaction.categoryName}\nTo: ${transaction.accountName}\nAmount: ${transaction.amount}")
+            .setMessage(
+                getString(
+                    R.string.transaction_summary_dialog, transaction.categoryName,
+                    transaction.accountName, transaction.amount.toString()
+                )
+            )
             .setPositiveButton(getString(R.string.confirm)) { _, _ ->
                 viewModel.onDeleteTransactionConfirm(transaction)
                 isAlertShowing = false
@@ -135,10 +140,10 @@ class TransactionsFragment : Fragment() {
     private fun navigateToAddTransactionSheet(accountUi: AccountUi) {
         val direction =
             TransactionsFragmentDirections.actionTransactionsFragmentToSelectCategoryBottomSheet(
-                accountUi)
+                accountUi
+            )
         findNavController().navigate(direction)
     }
-
 
     private fun navigateToSelectDialogFragment() {
         val direction =
@@ -148,9 +153,12 @@ class TransactionsFragment : Fragment() {
 
     private fun setupDate() {
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(SelectDateMenu {
-            viewModel.onSelectedDateClick()
-        }, viewLifecycleOwner, Lifecycle.State.STARTED)
+        menuHost.addMenuProvider(
+            SelectDateMenu {
+                viewModel.onSelectedDateClick()
+            },
+            viewLifecycleOwner, Lifecycle.State.STARTED
+        )
     }
 
     private fun setupCollectors() {
@@ -169,7 +177,6 @@ class TransactionsFragment : Fragment() {
                     }
                     is TransactionState.Idle -> Unit
                 }
-
             }
         }
 
@@ -190,6 +197,4 @@ class TransactionsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

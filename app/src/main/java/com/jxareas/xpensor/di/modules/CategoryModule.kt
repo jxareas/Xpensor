@@ -11,7 +11,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 interface CategoryModule {
@@ -26,7 +25,5 @@ interface CategoryModule {
         @Singleton
         fun provideCategoryDao(database: XpensorDatabase): CategoryDao =
             database.categoryDao
-
     }
-
 }

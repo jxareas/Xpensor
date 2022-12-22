@@ -25,7 +25,5 @@ class GetTransactionsUseCase @Inject constructor(
         return if (account == null)
             repository.getTransactionDetails(minDate, maxDate)
         else repository.getTransactionDetailsFromAccount(minDate, maxDate, account.id)
-
     }
-
 }

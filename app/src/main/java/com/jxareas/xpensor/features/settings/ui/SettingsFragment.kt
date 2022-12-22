@@ -10,19 +10,19 @@ import com.jxareas.xpensor.common.utils.PreferenceUtils.THEME_LIGHT
 import com.jxareas.xpensor.common.utils.PreferenceUtils.THEME_PREFERENCE_KEY
 
 class SettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-            findPreference<ListPreference>(THEME_PREFERENCE_KEY)?.setOnPreferenceChangeListener { _, newValue ->
-                AppCompatDelegate.setDefaultNightMode(
-                    when (newValue) {
-                        THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-                        THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
-                        else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                    }
-                )
-                true
-            }
-
+        findPreference<ListPreference>(THEME_PREFERENCE_KEY)?.setOnPreferenceChangeListener {
+                _, newValue ->
+            AppCompatDelegate.setDefaultNightMode(
+                when (newValue) {
+                    THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+                    THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                }
+            )
+            true
         }
     }
+}

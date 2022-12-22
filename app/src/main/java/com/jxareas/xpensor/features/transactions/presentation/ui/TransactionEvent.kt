@@ -8,5 +8,4 @@ sealed class TransactionEvent {
     data class OpenTheAddTransactionSheet(val account: AccountUi) : TransactionEvent()
     data class ShowTheDeleteTransactionDialog(val transaction: TransactionView) : TransactionEvent()
     data class DeleteTransaction(val transaction: TransactionView) : TransactionEvent()
-
 }

@@ -42,7 +42,6 @@ class TransactionRepositoryImpl @Inject constructor(
         dao.getTransactionAmountsPerDay(from, to)
             .map { transactions -> transactionAmountPerDayMapper.mapToList(transactions) }
 
-
     override fun getTransactionAmountsPerDayForAccount(
         from: LocalDate,
         to: LocalDate,
@@ -56,5 +55,4 @@ class TransactionRepositoryImpl @Inject constructor(
 
     override suspend fun deleteTransactionById(transactionId: Int) =
         dao.deleteTransactionById(transactionId)
-
 }

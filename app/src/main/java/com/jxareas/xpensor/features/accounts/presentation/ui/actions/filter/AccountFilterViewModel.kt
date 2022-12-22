@@ -49,5 +49,4 @@ class AccountFilterViewModel @Inject constructor(
 
     fun getTotalAccountsAmount(): Double =
         _accounts.value.sumOf(AccountUi::amount)
-
 }

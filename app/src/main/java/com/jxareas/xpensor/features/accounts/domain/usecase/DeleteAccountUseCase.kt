@@ -10,5 +10,4 @@ class DeleteAccountUseCase @Inject constructor(private val repository: AccountRe
 
     suspend operator fun invoke(account: AccountWithDetails) =
         repository.deleteAccount(account)
-
 }

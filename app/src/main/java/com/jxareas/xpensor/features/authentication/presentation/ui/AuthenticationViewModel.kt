@@ -87,6 +87,4 @@ class AuthenticationViewModel @Inject constructor(
 
     fun isAppLaunchedFirstTime(): Boolean =
         preferences.getBoolean(FIRST_TIME_PREFERENCE_KEY, true)
-
-
 }

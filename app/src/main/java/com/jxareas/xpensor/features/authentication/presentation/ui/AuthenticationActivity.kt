@@ -4,11 +4,7 @@ import android.animation.ObjectAnimator
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
+import android.os.*
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnticipateOvershootInterpolator
@@ -21,10 +17,10 @@ import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.jxareas.xpensor.R
-import com.jxareas.xpensor.databinding.ActivityAuthenticationBinding
-import com.jxareas.xpensor.core.presentation.MainActivity
 import com.jxareas.xpensor.common.extensions.getLong
 import com.jxareas.xpensor.common.extensions.setTint
+import com.jxareas.xpensor.core.presentation.MainActivity
+import com.jxareas.xpensor.databinding.ActivityAuthenticationBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -107,7 +103,6 @@ class AuthenticationActivity : AppCompatActivity() {
             .scaleYBy(SPLASH_ICON_VIEW_ANIMATION_SCALE)
             .withEndAction(reverseIconAnimation)
             .start()
-
     }
 
     private fun setupEventCollector() = binding.run {
@@ -153,12 +148,11 @@ class AuthenticationActivity : AppCompatActivity() {
 
                             buttonBackspace.isClickable = true
                             buttonForgotCode.isClickable = true
-
                         }
                     }
-                    is AuthenticationEvent.EraseAppData -> {
-                        (getSystemService(ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()
-                    }
+                    is AuthenticationEvent.EraseAppData ->
+                        (getSystemService(ACTIVITY_SERVICE) as ActivityManager)
+                            .clearApplicationUserData()
                     is AuthenticationEvent.SetNewPinCode -> {
                         textViewEnterPin.text = getString(R.string.set_the_pin)
                     }

@@ -35,5 +35,4 @@ class AccountActionsViewModel @Inject constructor(
     fun onDeleteAccountConfirmation() = launchScoped {
         _events.emit(AccountActionsEvent.DeleteAccount)
     }
-
 }

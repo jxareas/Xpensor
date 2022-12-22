@@ -66,18 +66,22 @@ class AddAccountFragment : Fragment() {
                     is AddAccountEvent.CreateNewAccount -> {
                         val name = binding.textInputLayoutName.editText?.text.toString().trim()
                         if (name.isEmpty()) {
-                            toast(requireContext(),
-                                getString(R.string.account_empty_name_error))
+                            toast(
+                                requireContext(),
+                                getString(R.string.account_empty_name_error)
+                            )
                         } else {
                             val amount =
                                 binding.textInputLayoutMoneyAmount.editText?.text.toString()
                                     .toDoubleOrNull() ?: 0.0
 
                             val account =
-                                AccountUi(name = name,
+                                AccountUi(
+                                    name = name,
                                     amount = amount,
                                     color = color,
-                                    id = AccountUi.EMPTY_ID)
+                                    id = AccountUi.EMPTY_ID
+                                )
                             viewModel.addAccount(account).also { findNavController().navigateUp() }
                         }
                     }
@@ -86,7 +90,6 @@ class AddAccountFragment : Fragment() {
                         color = addAccountEvent.color
                     }
                 }
-
             }
         }
     }
@@ -110,12 +113,14 @@ class AddAccountFragment : Fragment() {
         color15.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
     }
 
-
     private fun setupMenu() {
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(ApplyChangesMenu {
-            viewModel.onApplyChangesButtonClick()
-        }, viewLifecycleOwner, Lifecycle.State.STARTED)
+        menuHost.addMenuProvider(
+            ApplyChangesMenu {
+                viewModel.onApplyChangesButtonClick()
+            },
+            viewLifecycleOwner, Lifecycle.State.STARTED
+        )
     }
 
     override fun onDestroyView() {

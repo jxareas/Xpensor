@@ -13,10 +13,9 @@ import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
-import com.jxareas.xpensor.databinding.FragmentConverterBinding
-import com.jxareas.xpensor.common.extensions.getCurrentDestination
-import com.jxareas.xpensor.common.extensions.toast
 import com.jxareas.xpensor.common.extensions.getLong
+import com.jxareas.xpensor.common.extensions.toast
+import com.jxareas.xpensor.databinding.FragmentConverterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -94,19 +93,18 @@ class ConverterFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { currencyConverterEvent ->
                 when (currencyConverterEvent) {
-                    is CurrencyConverterEvent.Convert -> handleConvertEvent()
-                    is CurrencyConverterEvent.Swap -> handleSwapEvent()
-                    is CurrencyConverterEvent.OpenTheAddTransactionSheet -> handleOpenTransactionSheetEvent()
+                    is CurrencyConverterEvent.Convert ->
+                        handleConvertEvent()
+                    is CurrencyConverterEvent.Swap ->
+                        handleSwapEvent()
+                    is CurrencyConverterEvent.OpenTheAddTransactionSheet ->
+                        handleOpenTransactionSheetEvent()
                 }
-
             }
         }
     }
 
     private fun handleOpenTransactionSheetEvent() {
-        if (getCurrentDestination() == this@ConverterFragment.javaClass.name) {
-            // TODO: NavDirection Navigation
-        }
     }
 
     private fun handleSwapEvent() {
@@ -132,5 +130,4 @@ class ConverterFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

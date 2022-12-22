@@ -16,5 +16,4 @@ class ValidateTransactionUseCase @Inject constructor(
                 account.amount > transaction.amount
             else false
         }
-
 }

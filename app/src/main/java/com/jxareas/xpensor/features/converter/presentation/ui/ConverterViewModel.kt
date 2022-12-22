@@ -1,9 +1,9 @@
 package com.jxareas.xpensor.features.converter.presentation.ui
 
 import androidx.lifecycle.ViewModel
-import com.jxareas.xpensor.features.converter.domain.usecase.ConvertCurrencyUseCase
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
+import com.jxareas.xpensor.features.converter.domain.usecase.ConvertCurrencyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,15 +38,11 @@ class ConverterViewModel @Inject constructor(
             }
     }
 
-
     fun onSwapButtonClick() = launchScoped {
         _events.emit(CurrencyConverterEvent.Swap)
     }
 
-
     fun onConvertButtonClick() = launchScoped {
         _events.emit(CurrencyConverterEvent.Convert)
     }
-
-
 }
