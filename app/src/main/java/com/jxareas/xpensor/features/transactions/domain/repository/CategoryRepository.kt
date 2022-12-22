@@ -1,8 +1,8 @@
 package com.jxareas.xpensor.features.transactions.domain.repository
 
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
-import java.time.LocalDate
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 interface CategoryRepository {
 

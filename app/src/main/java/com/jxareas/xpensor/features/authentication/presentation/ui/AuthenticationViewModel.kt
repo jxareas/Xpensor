@@ -9,12 +9,12 @@ import com.jxareas.xpensor.features.authentication.domain.model.PinCode
 import com.jxareas.xpensor.features.authentication.domain.usecase.AddUserAuthenticationPin
 import com.jxareas.xpensor.features.authentication.domain.usecase.GetAuthenticationPinUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class AuthenticationViewModel @Inject constructor(

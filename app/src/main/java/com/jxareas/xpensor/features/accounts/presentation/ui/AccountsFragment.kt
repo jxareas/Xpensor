@@ -22,8 +22,8 @@ import com.jxareas.xpensor.databinding.FragmentAccountsBinding
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.AddAccountMenu
 import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountsFragment : Fragment() {

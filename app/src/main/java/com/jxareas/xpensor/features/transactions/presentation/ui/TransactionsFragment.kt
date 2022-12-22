@@ -28,8 +28,8 @@ import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
 import com.jxareas.xpensor.features.transactions.presentation.ui.adapter.TransactionAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TransactionsFragment : Fragment() {

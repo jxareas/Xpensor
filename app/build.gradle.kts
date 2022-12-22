@@ -1,5 +1,4 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
@@ -8,8 +7,6 @@ plugins {
     id(BuildPlugins.SAFE_ARGS)
     id(BuildPlugins.KOTLIN_PARCELIZE)
     id(BuildPlugins.DAGGER_HILT)
-    id(BuildPlugins.KTLINT)
-    id(BuildPlugins.VERSIONS)
 }
 
 android {
@@ -55,20 +52,6 @@ android {
         compileOptions {
             isCoreLibraryDesugaringEnabled = ProjectProperties.IS_CORE_LIBRARY_DESUGARING_ENABLED
         }
-    }
-}
-
-tasks.getByPath("preBuild").dependsOn("ktlintFormat")
-
-ktlint {
-    android.set(true)
-    ignoreFailures.set(false)
-    disabledRules.add("no-wildcard-imports")
-    reporters {
-        reporter(ReporterType.PLAIN)
-        reporter(ReporterType.HTML)
-        reporter(ReporterType.JSON)
-        reporter(ReporterType.CHECKSTYLE)
     }
 }
 

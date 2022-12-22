@@ -8,9 +8,9 @@ import com.jxareas.xpensor.features.accounts.domain.usecase.UpdateAccountUseCase
 import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import javax.inject.Inject
 
 @HiltViewModel
 class EditAccountViewModel @Inject constructor(

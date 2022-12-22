@@ -1,0 +1,19 @@
+apply plugin: BuildPlugins.KTLINT
+
+ktlint {
+    // https://github.com/pinterest/ktlint/releases
+    version = Versions.KTLINT
+
+    reporters {
+        reporter "plain"
+        reporter "checkstyle"
+        reporter "html"
+    }
+
+    disabledRules.set(["no-wildcard-imports"])
+    outputColorName = "RED"
+
+    filter {
+        exclude { element -> element.file.path.contains("build/") }
+    }
+}

@@ -8,8 +8,8 @@ import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRe
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Inject
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
 @Module
 @InstallIn(SingletonComponent::class)

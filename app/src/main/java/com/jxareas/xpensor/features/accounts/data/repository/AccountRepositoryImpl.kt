@@ -4,9 +4,9 @@ import com.jxareas.xpensor.features.accounts.data.local.dao.AccountDao
 import com.jxareas.xpensor.features.accounts.data.mapper.AccountEntityMapper
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.repository.AccountRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
     private val dao: AccountDao,

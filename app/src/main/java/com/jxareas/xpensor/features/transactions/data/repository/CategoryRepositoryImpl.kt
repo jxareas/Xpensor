@@ -4,10 +4,10 @@ import com.jxareas.xpensor.features.transactions.data.local.dao.CategoryDao
 import com.jxareas.xpensor.features.transactions.data.mapper.CategoryViewMapper
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.CategoryRepository
-import java.time.LocalDate
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
+import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
     private val dao: CategoryDao,

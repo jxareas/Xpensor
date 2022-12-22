@@ -14,7 +14,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
         findPreference<ListPreference>(THEME_PREFERENCE_KEY)?.setOnPreferenceChangeListener {
-            _, newValue ->
+                _, newValue ->
             AppCompatDelegate.setDefaultNightMode(
                 when (newValue) {
                     THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO

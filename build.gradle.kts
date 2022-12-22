@@ -20,8 +20,13 @@ plugins {
         .version(ProjectProperties.KOTLIN_VERSION)
         .apply(false)
     id(BuildPlugins.KTLINT)
-        .version(Versions.KTLINT)
+        .version(Versions.KTLINT_PLUGIN)
         .apply(false)
+}
+
+subprojects {
+    apply(from = "${rootProject.projectDir}/${BuildScripts.KTLINT}")
+    apply(from = "${rootProject.projectDir}/${BuildScripts.VERSIONS}")
 }
 
 task<Delete>("clean") {

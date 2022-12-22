@@ -29,7 +29,8 @@ object Versions {
     const val JUNIT = "4.13.2"
     const val JUNIT_ANDROID_EXT = "1.1.3"
     const val ESPRESSO_ANDROID_CORE = "3.4.0"
-    const val KTLINT = "11.0.0"
+    const val KTLINT_PLUGIN = "11.0.0"
+    const val KTLINT = "0.45.2"
     const val DESUGAR_JDK_LIB = "1.1.5"
     const val VERSIONS_PLUGIN = "0.44.0"
 }

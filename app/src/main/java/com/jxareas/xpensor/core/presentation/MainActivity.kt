@@ -15,9 +15,9 @@ import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalDate
 import com.jxareas.xpensor.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
