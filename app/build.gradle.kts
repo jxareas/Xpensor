@@ -1,8 +1,8 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
-    id(BuildPlugins.ANDROID_APPLICATION_PLUGIN)
-    id(BuildPlugins.JETBRAINS_KOTLIN_ANDROID_PLUGIN)
+    id(BuildPlugins.ANDROID_APPLICATION)
+    id(BuildPlugins.JETBRAINS_KOTLIN_ANDROID)
     id(BuildPlugins.KOTLIN_KAPT)
     id(BuildPlugins.SAFE_ARGS)
     id(BuildPlugins.KOTLIN_PARCELIZE)

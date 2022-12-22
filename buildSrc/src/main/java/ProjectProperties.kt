@@ -6,6 +6,10 @@ object ProjectProperties {
     const val TARGET_SDK = COMPILE_SDK
     const val MIN_SDK = 21
 
+    // Android & Kotlin Versions
+    const val ANDROID_VERSION = "7.2.2"
+    const val KOTLIN_VERSION = "1.7.10"
+
     // Application
     const val APPLICATION_ID = "com.jxareas.xpensor"
     const val VERSION_CODE = 1
