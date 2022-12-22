@@ -10,6 +10,8 @@ object BuildPlugins {
     const val KOTLIN_PARCELIZE = "kotlin-parcelize"
     const val SAFE_ARGS = "androidx.navigation.safeargs"
     const val DAGGER_HILT = "dagger.hilt.android.plugin"
+    const val DETEKT = "io.gitlab.arturbosch.detekt"
+    const val DETEKT_PLUGIN = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.DETEKT}"
 
     private const val TOOLS_BUILD_VERSION = "7.1.3"
     const val TOOLS_BUILD_GRADLE =

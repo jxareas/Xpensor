@@ -33,4 +33,5 @@ object Versions {
     const val KTLINT = "0.45.2"
     const val DESUGAR_JDK_LIB = "1.1.5"
     const val VERSIONS_PLUGIN = "0.44.0"
+    const val DETEKT = "1.21.0"
 }
