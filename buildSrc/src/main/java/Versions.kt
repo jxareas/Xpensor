@@ -30,5 +30,5 @@ object Versions {
     const val JUNIT_ANDROID_EXT = "1.1.3"
     const val ESPRESSO_ANDROID_CORE = "3.4.0"
     const val KTLINT = "11.0.0"
-    const val DESUGAR_JDK_LIB = "1.0.6"
+    const val DESUGAR_JDK_LIB = "1.1.5"
 }

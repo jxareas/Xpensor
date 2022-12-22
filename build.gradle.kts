@@ -23,6 +23,6 @@ plugins {
         .apply(false)
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+task<Delete>("clean") {
+    delete = setOf(rootProject.buildDir)
 }
