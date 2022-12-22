@@ -1,7 +1,7 @@
 <br />
 <div align="center">
   <a href="#">
-    <img src="./readme/logo/blue.svg" alt="Logo" width="80" height="80">
+    <img src="./assets/logo/blue.svg" alt="Logo" width="80" height="80">
   </a>
 
 <h1 align = "center">
@@ -12,6 +12,8 @@
     A Local Expense Tracker for Android
     <br />
     <a href="#-screenshots-">Screenshots</a>
+    ·
+    <a href="#-requirements-">Requirements</a>
     ·
     <a href="#-architecture-">Architecture</a>
     ·
@@ -34,7 +36,7 @@ Some of the APIs and Motion Patterns used all around this app are [*ObjectAnimat
 
 Bottom Items	|	Settings Menu	|	Date Selector Dialog | Expense Bottom Sheet	|
 :------:|:---------------------:|:-----------------------------:|:-------------:|
-![](./readme/gifs/top_destination_transition.gif)  |  ![](./readme/gifs/transition.gif)  |  ![](./readme/gifs/date_selector_dialog.gif)  |  ![](./readme/gifs/bottom_sheet.gif)
+![](assets/gifs/top_destination_transition.gif)  |  ![](assets/gifs/transition.gif)  |  ![](assets/gifs/date_selector_dialog.gif)  |  ![](assets/gifs/bottom_sheet.gif)
 
 ## 📷 Screenshots 📷
 
@@ -42,14 +44,29 @@ This Project uses [**Material 3**](https://m3.material.io/), the latest version 
 
 | Accounts List  | Expenses | Expenses Chart | 
 | ------------- | ------------- |  ------------- |
-| ![](./readme/images/accounts.png)  | ![](./readme/images/transactions.png)  | ![](./readme/images/chart.png)  | 
-| ![](./readme/images/accounts_dark.png)  | ![](./readme/images/transactions_dark.png)  | ![](./readme/images/chart_dark.png)  | 
+| ![](assets/images/accounts.png)  | ![](assets/images/transactions.png)  | ![](assets/images/chart.png)  | 
+| ![](assets/images/accounts_dark.png)  | ![](assets/images/transactions_dark.png)  | ![](assets/images/chart_dark.png)  | 
 
 | Account Filter  | Date Selector | Settings | 
 | ------------- | ------------- |  ------------- |
-| ![](./readme/images/account_filter.png)  | ![](./readme/images/date_filter.png)  | ![](./readme/images/settings.png)  | 
-| ![](./readme/images/account_filter_dark.png)  | ![](./readme/images/date_filter_dark.png)  | ![](./readme/images/settings_dark.png)  | 
+| ![](assets/images/account_filter.png)  | ![](assets/images/date_filter.png)  | ![](assets/images/settings.png)  | 
+| ![](assets/images/account_filter_dark.png)  | ![](assets/images/date_filter_dark.png)  | ![](assets/images/settings_dark.png)  | 
 
+## 📝 Requirements 📝
+
+This project uses the [Currency API](https://currencyapi.com/) in order to convert currencies.
+Hence, in order to run this project it is necessary to specify the API keys in the `local.properties` file, in the following way:
+```groovy
+CURRENCY_API_KEY = "ReplaceThisForYourApiKey"
+```
+These fields are later on read in order to generate `BuildConfig` fields in the code, in the `build.gradle.kts` file from the App Module, in the following way:
+```kotlin
+// Read CURRENCY_API_TOKEN key from local.properties
+val currencyApiToken: String = gradleLocalProperties(rootDir).getProperty(currencyApiKey)
+buildConfigField("String", currencyApiKey, currencyApiToken)
+```
+
+For more information, feel free to [visit the website](https://currencyapi.com/).
 
 ## 🛠 Architecture 🛠
 
@@ -61,7 +78,7 @@ The architecture used in this project is that of Clean Architecture, sticking to
 
 **3. Data:** Dispenses data to the app, which can be local (SQLLite Database) or remote (API).
 
-![clean_architecture](./readme/images/clean_architecture.png)
+![clean_architecture](assets/images/clean_architecture.png)
 
 
 ## ⚙️ Technologies ⚙️

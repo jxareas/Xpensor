@@ -23,6 +23,7 @@ android {
         testInstrumentationRunner = ProjectProperties.TEST_RUNNER
 
         val currencyApiKey = ProjectProperties.CURRENCY_API_KEY
+        // Read CURRENCY_API_TOKEN key from local.properties
         val currencyApiToken: String = gradleLocalProperties(rootDir).getProperty(currencyApiKey)
         buildConfigField("String", currencyApiKey, currencyApiToken)
     }
