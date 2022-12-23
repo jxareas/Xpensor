@@ -12,8 +12,8 @@ object ProjectProperties {
 
     // Application
     const val APPLICATION_ID = "com.jxareas.xpensor"
-    const val VERSION_CODE = 1
-    const val VERSION_NAME = "1.0"
+    const val VERSION_CODE = 2
+    const val VERSION_NAME = "0.1.0-alpha01"
 
     // ProGuard
     const val PROGUARD_NAME = "proguard-android.txt"
