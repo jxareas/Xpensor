@@ -15,7 +15,6 @@ import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.core.presentation.MainActivityViewModel
 import com.jxareas.xpensor.databinding.BottomSheetSelectCategoryBinding
 import com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.adapter.CategoryAdapter
-import com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.event.SelectCategoryEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject

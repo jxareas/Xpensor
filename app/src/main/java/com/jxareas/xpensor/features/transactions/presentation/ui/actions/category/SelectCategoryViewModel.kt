@@ -8,7 +8,6 @@ import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.features.transactions.presentation.mapper.CategoryWithAmountUiMapper
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
-import com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.event.SelectCategoryEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
