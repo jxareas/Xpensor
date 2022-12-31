@@ -67,10 +67,17 @@ dependencies {
     // Desugaring
     coreLibraryDesugaring(Dependencies.Android.DESUGARING_CORE_LIB)
 
-    // Testing Dependencies
+    // Testing
     testImplementation(Dependencies.Testing.JUNIT)
     androidTestImplementation(Dependencies.Testing.JUNIT_ANDROID)
     androidTestImplementation(Dependencies.Testing.ESPRESSO_ANDROID)
+    testImplementation(Dependencies.Testing.ANDROID_TEST_CORE)
+    testImplementation(Dependencies.Testing.ANDROID_ARCH_TEST_CORE)
+    testImplementation(Dependencies.Testing.TURBINE)
+    testImplementation(Dependencies.Mockito.KOTLIN)
+    testImplementation(Dependencies.Mockito.CORE)
+    testImplementation(Dependencies.Mockito.INLINE)
+    testImplementation(Dependencies.Mockito.MOCKK)
 
     // AndroidX
     implementation(Dependencies.Android.SPLASH_SCREEN)
@@ -83,6 +90,7 @@ dependencies {
 
     // Kotlin Coroutines
     implementation(Dependencies.Kotlin.KOTLINX_COROUTINES)
+    testImplementation(Dependencies.Kotlin.KOTLIN_COROUTINES_TEST)
 
     // Dagger-Hilt
     implementation(Dependencies.Dagger.HILT)

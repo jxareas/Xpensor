@@ -34,4 +34,10 @@ object Versions {
     const val DESUGAR_JDK_LIB = "1.1.5"
     const val VERSIONS_PLUGIN = "0.44.0"
     const val DETEKT = "1.21.0"
+    const val MOCKITO_KOTLIN = "4.0.0"
+    const val MOCKITO_CORE = "3.3.3"
+    const val MOCKITO_MOCK = "1.12.1"
+    const val ANDROID_TEST_CORE = "1.4.0"
+    const val ANDROID_ARCH_TEST_CORE = "2.1.0"
+    const val TURBINE = "0.7.0"
 }
