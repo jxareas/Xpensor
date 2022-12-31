@@ -29,7 +29,7 @@ import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_COLOR
 import com.jxareas.xpensor.core.presentation.MainActivityViewModel
 import com.jxareas.xpensor.databinding.FragmentChartBinding
 import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
-import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
+import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -80,7 +80,7 @@ class ChartFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { event ->
                 when (event) {
-                    is ChartEvent.DateSelected ->
+                    is ChartUiEvent.DateSelected ->
                         navigateToSelectDateDialogFragment()
                 }
             }
@@ -123,7 +123,7 @@ class ChartFragment : Fragment() {
         }
     }
 
-    private fun updateChartData(details: List<CategoryWithDetails>) {
+    private fun updateChartData(details: List<CategoryWithAmountUi>) {
         if (details.isNotEmpty()) {
             val currency = mainViewModel.getCurrency()
 
@@ -171,7 +171,7 @@ class ChartFragment : Fragment() {
         }
     }
 
-    private fun updateCategories(categories: List<CategoryWithDetails>, currency: String?) =
+    private fun updateCategories(categories: List<CategoryWithAmountUi>, currency: String?) =
         binding.run {
             category1.setCategoryAttributes(categories[0], currency)
             category2.setCategoryAttributes(categories[1], currency)

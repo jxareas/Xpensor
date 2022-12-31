@@ -56,17 +56,17 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { event ->
                 when (event) {
-                    is AccountActionsEvent.DeleteAccount -> {
+                    is AccountActionsUiEvent.DeleteAccount -> {
                         if (args.selectedAccount == mainViewModel.selectedAccount.value) {
                             mainViewModel.onUpdateSelectedAccount(null)
                         }
                         viewModel.removeAccount(args.selectedAccount)
                         dismiss()
                     }
-                    is AccountActionsEvent.ShowDeleteAccountDialog -> {
+                    is AccountActionsUiEvent.ShowDeleteAccountDialog -> {
                         buildAlertDialog().show()
                     }
-                    is AccountActionsEvent.NavigateToEditAccountsScreen -> {
+                    is AccountActionsUiEvent.NavigateToEditAccountsScreen -> {
                         val editAccountDirection =
                             AccountActionsBottomSheetDirections
                                 .actionAccountBottomSheetToEditAccount(args.selectedAccount)

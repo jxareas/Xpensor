@@ -18,18 +18,18 @@ class AddAccountViewModel @Inject constructor(
     private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
-    private val _events = MutableSharedFlow<AddAccountEvent>()
+    private val _events = MutableSharedFlow<AddAccountUiEvent>()
     val events = _events.asSharedFlow()
 
     suspend fun addAccount(accountUi: AccountUi) =
         addAccountUseCase(accountUiMapper.mapToDomain(accountUi))
 
     fun onApplyChangesButtonClick() = launchScoped {
-        _events.emit(AddAccountEvent.CreateNewAccount)
+        _events.emit(AddAccountUiEvent.CreateNewAccount)
     }
 
     fun onSelectColorButtonClick(image: ImageView) = launchScoped {
         val color = getImageViewTint(image)
-        _events.emit(AddAccountEvent.SelectAccountColor(color))
+        _events.emit(AddAccountUiEvent.SelectAccountColor(color))
     }
 }

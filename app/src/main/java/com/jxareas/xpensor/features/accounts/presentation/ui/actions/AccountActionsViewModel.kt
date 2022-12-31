@@ -16,7 +16,7 @@ class AccountActionsViewModel @Inject constructor(
     private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
-    private val _events = MutableSharedFlow<AccountActionsEvent>()
+    private val _events = MutableSharedFlow<AccountActionsUiEvent>()
     val events = _events.asSharedFlow()
 
     suspend fun removeAccount(accountUi: AccountUi) {
@@ -25,14 +25,14 @@ class AccountActionsViewModel @Inject constructor(
     }
 
     fun onEditAccount(account: AccountUi) = launchScoped {
-        _events.emit(AccountActionsEvent.NavigateToEditAccountsScreen(account))
+        _events.emit(AccountActionsUiEvent.NavigateToEditAccountsScreen(account))
     }
 
     fun onDeleteAccount(account: AccountUi) = launchScoped {
-        _events.emit(AccountActionsEvent.ShowDeleteAccountDialog(account))
+        _events.emit(AccountActionsUiEvent.ShowDeleteAccountDialog(account))
     }
 
     fun onDeleteAccountConfirmation() = launchScoped {
-        _events.emit(AccountActionsEvent.DeleteAccount)
+        _events.emit(AccountActionsUiEvent.DeleteAccount)
     }
 }

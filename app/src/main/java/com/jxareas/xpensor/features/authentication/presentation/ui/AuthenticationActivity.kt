@@ -109,7 +109,7 @@ class AuthenticationActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest {
                 when (it) {
-                    is AuthenticationEvent.ForgotPinCode -> {
+                    is AuthenticationUiEvent.ForgotPinCode -> {
                         showAlert(
                             getString(R.string.forgot_alert_title),
                             getString(R.string.forgot_alert_message)
@@ -122,7 +122,7 @@ class AuthenticationActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    is AuthenticationEvent.OpenMainActivity -> {
+                    is AuthenticationUiEvent.OpenMainActivity -> {
 
                         for (item in listOf(circle1, circle2, circle3, circle4)) {
                             item.setTint(R.color.blue_green)
@@ -133,7 +133,7 @@ class AuthenticationActivity : AppCompatActivity() {
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                         finish()
                     }
-                    is AuthenticationEvent.DeletePinCode -> {
+                    is AuthenticationUiEvent.DeletePinCode -> {
                         lifecycleScope.launch {
 
                             buttonBackspace.isClickable = false
@@ -150,13 +150,13 @@ class AuthenticationActivity : AppCompatActivity() {
                             buttonForgotCode.isClickable = true
                         }
                     }
-                    is AuthenticationEvent.EraseAppData ->
+                    is AuthenticationUiEvent.EraseAppData ->
                         (getSystemService(ACTIVITY_SERVICE) as ActivityManager)
                             .clearApplicationUserData()
-                    is AuthenticationEvent.SetNewPinCode -> {
+                    is AuthenticationUiEvent.SetNewPinCode -> {
                         textViewEnterPin.text = getString(R.string.set_the_pin)
                     }
-                    is AuthenticationEvent.RepeatPinCode -> {
+                    is AuthenticationUiEvent.RepeatPinCode -> {
                         textViewEnterPin.text = getString(R.string.repeat_the_pin)
                     }
                 }

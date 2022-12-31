@@ -55,7 +55,7 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { event ->
                 when (event) {
-                    is SelectCategoryEvent.SelectCategory -> {
+                    is SelectCategoryUiEvent.SelectCategory -> {
                         val direction =
                             SelectCategoryBottomSheetDirections
                                 .actionSelectCategoryBottomSheetToAddTransactionBottomSheet(

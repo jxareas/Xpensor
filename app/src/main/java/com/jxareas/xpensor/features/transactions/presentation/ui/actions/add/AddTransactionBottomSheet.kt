@@ -66,7 +66,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { event ->
                 when (event) {
-                    is AddTransactionEvent.CreateNewTransaction -> {
+                    is AddTransactionUiEvent.CreateNewTransaction -> {
                         val account = args.selectedAccount
                         val categoryWithDetails = args.selectedCategory
                         val amount =

@@ -74,7 +74,7 @@ class EditAccountFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { event ->
                 when (event) {
-                    is EditAccountEvent.UpdateAccount -> {
+                    is EditAccountUiEvent.UpdateAccount -> {
                         val name = binding.textInputLayoutName.editText?.text.toString().trim()
                         if (name.isEmpty()) {
                             toast(context, getString(R.string.account_empty_name_error))
@@ -90,7 +90,7 @@ class EditAccountFragment : Fragment() {
                             findNavController().navigateUp()
                         }
                     }
-                    is EditAccountEvent.UpdateCurrentColor -> {
+                    is EditAccountUiEvent.UpdateCurrentColor -> {
                         binding.selectedColor.setTint(event.color)
                         color = event.color
                     }

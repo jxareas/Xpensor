@@ -19,7 +19,7 @@ class AddTransactionViewModel @Inject constructor(
     private val _transactionState = MutableSharedFlow<AddTransactionState>()
     val transactionState = _transactionState.asSharedFlow()
 
-    private val _events = MutableSharedFlow<AddTransactionEvent>()
+    private val _events = MutableSharedFlow<AddTransactionUiEvent>()
     val events = _events.asSharedFlow()
 
     suspend fun onAddTransaction(transaction: Transaction) {
@@ -32,6 +32,6 @@ class AddTransactionViewModel @Inject constructor(
     }
 
     fun onApplyChanges() = launchScoped {
-        _events.emit(AddTransactionEvent.CreateNewTransaction)
+        _events.emit(AddTransactionUiEvent.CreateNewTransaction)
     }
 }

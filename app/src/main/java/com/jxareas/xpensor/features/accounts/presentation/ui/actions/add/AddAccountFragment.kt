@@ -63,7 +63,7 @@ class AddAccountFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { addAccountEvent ->
                 when (addAccountEvent) {
-                    is AddAccountEvent.CreateNewAccount -> {
+                    is AddAccountUiEvent.CreateNewAccount -> {
                         val name = binding.textInputLayoutName.editText?.text.toString().trim()
                         if (name.isEmpty()) {
                             toast(
@@ -85,7 +85,7 @@ class AddAccountFragment : Fragment() {
                             viewModel.addAccount(account).also { findNavController().navigateUp() }
                         }
                     }
-                    is AddAccountEvent.SelectAccountColor -> {
+                    is AddAccountUiEvent.SelectAccountColor -> {
                         binding.selectedColor.setTint(addAccountEvent.color)
                         color = addAccountEvent.color
                     }

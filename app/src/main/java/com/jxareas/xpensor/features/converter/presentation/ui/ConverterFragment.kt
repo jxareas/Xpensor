@@ -93,11 +93,11 @@ class ConverterFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { currencyConverterEvent ->
                 when (currencyConverterEvent) {
-                    is ConvertCurrencyEvent.Convert ->
+                    is ConvertCurrencyUiEvent.Convert ->
                         handleConvertEvent()
-                    is ConvertCurrencyEvent.Swap ->
+                    is ConvertCurrencyUiEvent.Swap ->
                         handleSwapEvent()
-                    is ConvertCurrencyEvent.OpenTheAddTransactionSheet ->
+                    is ConvertCurrencyUiEvent.OpenTheAddTransactionSheet ->
                         handleOpenTransactionSheetEvent()
                 }
             }

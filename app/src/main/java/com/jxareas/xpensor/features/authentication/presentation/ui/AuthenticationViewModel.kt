@@ -26,7 +26,7 @@ class AuthenticationViewModel @Inject constructor(
     private val _pinCode = MutableStateFlow(PinCode.EMPTY_CODE)
     val pinCode = _pinCode.asStateFlow()
 
-    private val _events = MutableSharedFlow<AuthenticationEvent>()
+    private val _events = MutableSharedFlow<AuthenticationUiEvent>()
     val events = _events.asSharedFlow()
 
     private val _temporaryPinCode = MutableStateFlow(PinCode.EMPTY_CODE)
@@ -44,8 +44,8 @@ class AuthenticationViewModel @Inject constructor(
                 val currentUserPinCode = getAuthenticationPinUseCase().code
 
                 val authenticationEvent = if (_pinCode.value == currentUserPinCode)
-                    AuthenticationEvent.OpenMainActivity
-                else AuthenticationEvent.DeletePinCode
+                    AuthenticationUiEvent.OpenMainActivity
+                else AuthenticationUiEvent.DeletePinCode
                 _events.emit(authenticationEvent)
             } else checkUserAuthentication()
         }
@@ -55,16 +55,16 @@ class AuthenticationViewModel @Inject constructor(
         if (_temporaryPinCode.value != PinCode.EMPTY_CODE) {
             if (_temporaryPinCode.value == _pinCode.value) {
                 addUserAuthenticationPin(_temporaryPinCode.value)
-                _events.emit(AuthenticationEvent.OpenMainActivity)
+                _events.emit(AuthenticationUiEvent.OpenMainActivity)
             } else {
                 _temporaryPinCode.value = PinCode.EMPTY_CODE
-                _events.emit(AuthenticationEvent.DeletePinCode)
-                _events.emit(AuthenticationEvent.SetNewPinCode)
+                _events.emit(AuthenticationUiEvent.DeletePinCode)
+                _events.emit(AuthenticationUiEvent.SetNewPinCode)
             }
         } else {
             _temporaryPinCode.value = _pinCode.value
             clearCode()
-            _events.emit(AuthenticationEvent.RepeatPinCode)
+            _events.emit(AuthenticationUiEvent.RepeatPinCode)
         }
     }
 
@@ -78,11 +78,11 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     fun forgotButtonClick() = launchScoped {
-        _events.emit(AuthenticationEvent.ForgotPinCode)
+        _events.emit(AuthenticationUiEvent.ForgotPinCode)
     }
 
     fun onEraseDataClick() = launchScoped {
-        _events.emit(AuthenticationEvent.EraseAppData)
+        _events.emit(AuthenticationUiEvent.EraseAppData)
     }
 
     fun isAppLaunchedFirstTime(): Boolean =

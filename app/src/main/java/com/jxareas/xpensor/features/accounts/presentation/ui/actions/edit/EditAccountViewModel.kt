@@ -18,18 +18,18 @@ class EditAccountViewModel @Inject constructor(
     private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
-    private val _events = MutableSharedFlow<EditAccountEvent>()
+    private val _events = MutableSharedFlow<EditAccountUiEvent>()
     val events = _events.asSharedFlow()
 
     suspend fun onAccountUpdate(accountUi: AccountUi) =
         updateAccountUseCase(accountUiMapper.mapToDomain(accountUi))
 
     fun onApplyChanges() = launchScoped {
-        _events.emit(EditAccountEvent.UpdateAccount)
+        _events.emit(EditAccountUiEvent.UpdateAccount)
     }
 
     fun onSelectColorButtonClick(image: ImageView) = launchScoped {
         val color = getImageViewTint(image)
-        _events.emit(EditAccountEvent.UpdateCurrentColor(color))
+        _events.emit(EditAccountUiEvent.UpdateCurrentColor(color))
     }
 }

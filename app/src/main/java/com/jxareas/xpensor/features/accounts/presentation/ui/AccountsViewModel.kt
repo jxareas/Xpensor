@@ -25,7 +25,7 @@ class AccountsViewModel @Inject constructor(
     private val _accounts = MutableStateFlow(emptyList<AccountUi>())
     val accounts = _accounts.asStateFlow()
 
-    private val _events = MutableSharedFlow<AccountEvent>()
+    private val _events = MutableSharedFlow<AccountUiEvent>()
     val events = _events.asSharedFlow()
 
     private var getAccountsJob: Job? = null
@@ -35,11 +35,11 @@ class AccountsViewModel @Inject constructor(
     }
 
     fun onAddNewAccountButtonClick() = launchScoped {
-        _events.emit(AccountEvent.NavigateToAddAccountScreen)
+        _events.emit(AccountUiEvent.NavigateToAddAccountScreen)
     }
 
     fun onAccountSelected(accountUi: AccountUi) = launchScoped {
-        _events.emit(AccountEvent.OpenTheAccountBottomSheet(accountUi))
+        _events.emit(AccountUiEvent.OpenTheAccountBottomSheet(accountUi))
     }
 
     private fun launchGetAccountsJob() {

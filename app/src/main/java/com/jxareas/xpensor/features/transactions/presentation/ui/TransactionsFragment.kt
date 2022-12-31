@@ -102,13 +102,13 @@ class TransactionsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { event ->
                 when (event) {
-                    is TransactionEvent.DateSelected ->
+                    is TransactionUiEvent.DateSelected ->
                         navigateToSelectDialogFragment()
-                    is TransactionEvent.OpenTheAddTransactionSheet ->
+                    is TransactionUiEvent.OpenTheAddTransactionSheet ->
                         navigateToAddTransactionSheet(event.account)
-                    is TransactionEvent.DeleteTransaction ->
+                    is TransactionUiEvent.DeleteTransaction ->
                         viewModel.onDeleteTransaction(event.transaction)
-                    is TransactionEvent.ShowTheDeleteTransactionDialog ->
+                    is TransactionUiEvent.ShowTheDeleteTransactionDialog ->
                         if (!isAlertShowing) showAlertDialog(event.transaction)
                 }
             }

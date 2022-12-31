@@ -20,7 +20,7 @@ import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
 import com.jxareas.xpensor.databinding.FragmentAccountsBinding
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.AddAccountMenu
-import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountsListAdapter
+import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -35,7 +35,7 @@ class AccountsFragment : Fragment() {
     private val viewModel: AccountsViewModel by viewModels()
 
     @Inject
-    lateinit var accountsListAdapter: AccountsListAdapter
+    lateinit var accountsListAdapter: AccountListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,12 +75,12 @@ class AccountsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { event ->
                 when (event) {
-                    is AccountEvent.NavigateToAddAccountScreen -> {
+                    is AccountUiEvent.NavigateToAddAccountScreen -> {
                         val addAccountFragmentAction =
                             AccountsFragmentDirections.actionAccountsFragmentToAddAccountFragment()
                         findNavController().navigate(addAccountFragmentAction)
                     }
-                    is AccountEvent.OpenTheAccountBottomSheet -> {
+                    is AccountUiEvent.OpenTheAccountBottomSheet -> {
                         val totalNumberOfAccounts = viewModel.accounts.value.size
                         val openAccountBottomSheetAction =
                             NavGraphDirections.actionGlobalAccountActions(
@@ -111,7 +111,7 @@ class AccountsFragment : Fragment() {
         )
 
         accountsListAdapter.setOnClickListener(
-            AccountsListAdapter.OnClickListener { account ->
+            AccountListAdapter.OnClickListener { account ->
                 viewModel.onAccountSelected(account)
             }
         )

@@ -25,7 +25,7 @@ class AccountFilterViewModel @Inject constructor(
     private val _accounts = MutableStateFlow(emptyList<AccountUi>())
     val accounts = _accounts.asStateFlow()
 
-    private val _events = MutableSharedFlow<AccountFilterEvent>()
+    private val _events = MutableSharedFlow<AccountFilterUiEvent>()
     val events = _events.asSharedFlow()
 
     private var getAccountsJob: Job? = null
@@ -44,7 +44,7 @@ class AccountFilterViewModel @Inject constructor(
     }
 
     fun onAccountSelected(account: AccountUi) = launchScoped {
-        _events.emit(AccountFilterEvent.SelectAccount(account))
+        _events.emit(AccountFilterUiEvent.SelectAccount(account))
     }
 
     fun getTotalAccountsAmount(): Double =

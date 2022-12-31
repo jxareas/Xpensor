@@ -14,7 +14,7 @@ import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.core.presentation.MainActivityViewModel
 import com.jxareas.xpensor.databinding.DialogFragmentAccountFilterBinding
-import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountsListAdapter
+import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -30,7 +30,7 @@ class AccountFilterDialogFragment : DialogFragment() {
     private val mainViewModel: MainActivityViewModel by activityViewModels()
 
     @Inject
-    internal lateinit var accountsListAdapter: AccountsListAdapter
+    internal lateinit var accountListAdapter: AccountListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +53,7 @@ class AccountFilterDialogFragment : DialogFragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { event ->
                 when (event) {
-                    is AccountFilterEvent.SelectAccount ->
+                    is AccountFilterUiEvent.SelectAccount ->
                         mainViewModel.onUpdateSelectedAccount(event.account).also { dismiss() }
                 }
             }
@@ -63,7 +63,7 @@ class AccountFilterDialogFragment : DialogFragment() {
     private fun setupCollectors() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.accounts.collectLatest { accounts ->
-                accountsListAdapter.submitList(accounts)
+                accountListAdapter.submitList(accounts)
                 binding.allAccountsAmount.text =
                     viewModel.getTotalAccountsAmount().toAmountFormat(withMinus = false)
             }
@@ -80,12 +80,12 @@ class AccountFilterDialogFragment : DialogFragment() {
     }
 
     private fun setupRecyclerView() = binding.recyclerViewAccounts.run {
-        adapter = accountsListAdapter
+        adapter = accountListAdapter
         layoutManager = LinearLayoutManager(requireContext())
         addItemDecoration(getDivider(requireContext()))
 
-        accountsListAdapter.setOnClickListener(
-            AccountsListAdapter.OnClickListener { account ->
+        accountListAdapter.setOnClickListener(
+            AccountListAdapter.OnClickListener { account ->
                 viewModel.onAccountSelected(account)
             }
         )
