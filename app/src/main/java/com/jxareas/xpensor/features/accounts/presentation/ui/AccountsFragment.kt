@@ -73,14 +73,14 @@ class AccountsFragment : Fragment() {
 
     private fun setupEventCollectors() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.event.collectLatest { event ->
                 when (event) {
                     is AccountUiEvent.NavigateToAddAccountScreen -> {
                         val addAccountFragmentAction =
                             AccountsFragmentDirections.actionAccountsFragmentToAddAccountFragment()
                         findNavController().navigate(addAccountFragmentAction)
                     }
-                    is AccountUiEvent.OpenTheAccountBottomSheet -> {
+                    is AccountUiEvent.OpenAccountBottomSheet -> {
                         val totalNumberOfAccounts = viewModel.accounts.value.size
                         val openAccountBottomSheetAction =
                             NavGraphDirections.actionGlobalAccountActions(
@@ -98,7 +98,7 @@ class AccountsFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(
             AddAccountMenu {
-                viewModel.onAddNewAccountButtonClick()
+                viewModel.onAddAccount()
             },
             viewLifecycleOwner, Lifecycle.State.STARTED
         )

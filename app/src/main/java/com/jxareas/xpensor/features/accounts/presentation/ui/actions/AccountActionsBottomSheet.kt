@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.BottomSheetAccountActionsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -27,7 +27,7 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
         get() = _binding!!
 
     private val viewModel: AccountActionsViewModel by viewModels()
-    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     private val args by navArgs<AccountActionsBottomSheetArgs>()
 
@@ -54,7 +54,7 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.event.collectLatest { event ->
                 when (event) {
                     is AccountActionsUiEvent.DeleteAccount -> {
                         if (args.selectedAccount == mainViewModel.selectedAccount.value) {

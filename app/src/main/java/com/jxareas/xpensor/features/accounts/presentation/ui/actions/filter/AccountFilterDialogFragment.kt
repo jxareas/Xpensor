@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jxareas.xpensor.common.extensions.getDivider
 import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.DialogFragmentAccountFilterBinding
 import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +27,7 @@ class AccountFilterDialogFragment : DialogFragment() {
         get() = _binding!!
 
     private val viewModel: AccountFilterViewModel by viewModels()
-    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     @Inject
     internal lateinit var accountListAdapter: AccountListAdapter

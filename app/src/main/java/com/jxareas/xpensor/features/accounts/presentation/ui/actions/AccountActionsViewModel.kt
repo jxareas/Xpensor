@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.features.accounts.domain.usecase.DeleteAccountUseCase
 import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountWithDetails
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -15,23 +15,23 @@ class AccountActionsViewModel @Inject constructor(
     private val deleteAccountUseCase: DeleteAccountUseCase,
 ) : ViewModel() {
 
-    private val _events = MutableSharedFlow<AccountActionsUiEvent>()
-    val events = _events.asSharedFlow()
+    private val _event = MutableSharedFlow<AccountActionsUiEvent>()
+    val event = _event.asSharedFlow()
 
-    fun removeAccount(accountUi: AccountUi) = launchScoped {
+    fun removeAccount(accountUi: AccountWithDetailsUi) = launchScoped {
         val accountWithDetails = accountUi.asAccountWithDetails()
         deleteAccountUseCase(accountWithDetails)
     }
 
-    fun onEditAccount(account: AccountUi) = launchScoped {
-        _events.emit(AccountActionsUiEvent.NavigateToEditAccountsScreen(account))
+    fun onEditAccount(account: AccountWithDetailsUi) = launchScoped {
+        _event.emit(AccountActionsUiEvent.NavigateToEditAccountsScreen(account))
     }
 
-    fun onDeleteAccount(account: AccountUi) = launchScoped {
-        _events.emit(AccountActionsUiEvent.ShowDeleteAccountDialog(account))
+    fun onDeleteAccount(account: AccountWithDetailsUi) = launchScoped {
+        _event.emit(AccountActionsUiEvent.ShowDeleteAccountDialog(account))
     }
 
     fun onDeleteAccountConfirmation() = launchScoped {
-        _events.emit(AccountActionsUiEvent.DeleteAccount)
+        _event.emit(AccountActionsUiEvent.DeleteAccount)
     }
 }

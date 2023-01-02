@@ -6,8 +6,8 @@ import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.extensions.mapList
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountUi
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountDetailsUi
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,7 +23,7 @@ class AccountFilterViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
 ) : ViewModel() {
 
-    private val _accounts = MutableStateFlow(emptyList<AccountUi>())
+    private val _accounts = MutableStateFlow(emptyList<AccountWithDetailsUi>())
     val accounts = _accounts.asStateFlow()
 
     private val _events = MutableSharedFlow<AccountFilterUiEvent>()
@@ -38,15 +38,15 @@ class AccountFilterViewModel @Inject constructor(
     private fun getAccounts() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
-            .mapList(AccountWithDetails::asAccountUi)
+            .mapList(AccountWithDetails::asAccountDetailsUi)
             .onEach(_accounts::value::set)
             .launchIn(viewModelScope)
     }
 
-    fun onAccountSelected(account: AccountUi) = launchScoped {
+    fun onAccountSelected(account: AccountWithDetailsUi) = launchScoped {
         _events.emit(AccountFilterUiEvent.SelectAccount(account))
     }
 
     fun getTotalAccountsAmount(): Double =
-        _accounts.value.sumOf(AccountUi::amount)
+        _accounts.value.sumOf(AccountWithDetailsUi::amount)
 }

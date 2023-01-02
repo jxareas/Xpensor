@@ -15,8 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DateSelectorViewModel @Inject constructor() : ViewModel() {
 
-    private val _events = MutableSharedFlow<DateSelectedUiEvent>()
-    val events = _events.asSharedFlow()
+    private val _event = MutableSharedFlow<SelectDateUiEvent>()
+    val event = _event.asSharedFlow()
 
     fun getDate(daysAgo: Int = 0): LocalDate =
         if (daysAgo != 0)
@@ -25,26 +25,26 @@ class DateSelectorViewModel @Inject constructor() : ViewModel() {
         else getCurrentLocalDate()
 
     fun onSelectDate() = launchScoped {
-        _events.emit(DateSelectedUiEvent.CustomDate)
+        _event.emit(SelectDateUiEvent.CustomDate)
     }
 
     fun onSelectToday() = launchScoped {
-        _events.emit(DateSelectedUiEvent.Today)
+        _event.emit(SelectDateUiEvent.Today)
     }
 
     fun onSelectWeek() = launchScoped {
-        _events.emit(DateSelectedUiEvent.Week)
+        _event.emit(SelectDateUiEvent.Week)
     }
 
     fun onSelectMonth() = launchScoped {
-        _events.emit(DateSelectedUiEvent.Month)
+        _event.emit(SelectDateUiEvent.Month)
     }
 
     fun onSelectYear() = launchScoped {
-        _events.emit(DateSelectedUiEvent.Year)
+        _event.emit(SelectDateUiEvent.Year)
     }
 
     fun onSelectAllTime() = launchScoped {
-        _events.emit(DateSelectedUiEvent.AllTime)
+        _event.emit(SelectDateUiEvent.AllTime)
     }
 }

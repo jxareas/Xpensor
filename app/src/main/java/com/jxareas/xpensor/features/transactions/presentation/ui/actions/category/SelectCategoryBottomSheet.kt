@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.BottomSheetSelectCategoryBinding
 import com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.adapter.CategoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +27,7 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
         get() = _binding!!
 
     private val viewModel: SelectCategoryViewModel by viewModels()
-    private val activityViewModel: MainActivityViewModel by activityViewModels()
+    private val activityViewModel: MainViewModel by activityViewModels()
 
     @Inject
     internal lateinit var categoryAdapter: CategoryAdapter
@@ -53,7 +53,7 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.event.collectLatest { event ->
                 when (event) {
                     is SelectCategoryUiEvent.SelectCategory -> {
                         val direction =

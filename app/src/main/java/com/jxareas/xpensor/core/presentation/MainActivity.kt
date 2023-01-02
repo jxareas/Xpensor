@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding private set
 
-    private val viewModel: MainActivityViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     private val navController: NavController by lazy {
         val navHost =
@@ -88,17 +88,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() = binding.run {
-        buttonSettings.setOnClickListener { viewModel.onSettingsButtonClick() }
-        toolbarInfoBox.setOnClickListener { viewModel.onSelectAccountButtonClick() }
+        buttonSettings.setOnClickListener { viewModel.onOpenSettings() }
+        toolbarInfoBox.setOnClickListener { viewModel.onSelectAccount() }
     }
 
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.event.collectLatest { event ->
                 when (event) {
-                    is MainActivityEvent.OpenTheSettingsScreen ->
+                    is MainUiEvent.OpenTheSettingsScreen ->
                         navController.navigate(NavGraphDirections.actionGlobalSettingsActivity())
-                    is MainActivityEvent.OpenTheSelectAccountDialog ->
+                    is MainUiEvent.OpenTheSelectAccountDialog ->
                         navController.navigate(NavGraphDirections.actionGlobalAccountFilterDialog())
                 }
             }

@@ -21,11 +21,11 @@ import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi
 import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
+import com.jxareas.xpensor.features.transactions.presentation.model.TransactionDetailsUi
 import com.jxareas.xpensor.features.transactions.presentation.ui.adapter.TransactionAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -39,7 +39,7 @@ class TransactionsFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: TransactionsViewModel by viewModels()
-    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     @Inject
     lateinit var transactionAdapter: TransactionAdapter
@@ -94,28 +94,28 @@ class TransactionsFragment : Fragment() {
     private fun setupListeners() = binding.run {
         buttonNewTransaction.setOnClickListener {
             val account = mainViewModel.selectedAccount.value ?: mainViewModel.accounts.value[0]
-            viewModel.onAddTransactionClick(account)
+            viewModel.onAddNewTransaction(account)
         }
     }
 
     private fun setupEventCollector() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.event.collectLatest { event ->
                 when (event) {
                     is TransactionUiEvent.DateSelected ->
                         navigateToSelectDialogFragment()
                     is TransactionUiEvent.OpenTheAddTransactionSheet ->
                         navigateToAddTransactionSheet(event.account)
                     is TransactionUiEvent.DeleteTransaction ->
-                        viewModel.onDeleteTransaction(event.transaction)
-                    is TransactionUiEvent.ShowTheDeleteTransactionDialog ->
+                        viewModel.deleteTransaction(event.transaction)
+                    is TransactionUiEvent.ShowDeleteTransactionDialog ->
                         if (!isAlertShowing) showAlertDialog(event.transaction)
                 }
             }
         }
     }
 
-    private fun showAlertDialog(transaction: TransactionView) =
+    private fun showAlertDialog(transaction: TransactionDetailsUi) =
         MaterialAlertDialogBuilder(requireContext())
             .setIcon(R.drawable.ic_warning)
             .setTitle(R.string.delete_transaction_alert_title)
@@ -126,7 +126,7 @@ class TransactionsFragment : Fragment() {
                 )
             )
             .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                viewModel.onDeleteTransactionConfirm(transaction)
+                viewModel.onConfirmTransactionDeletion(transaction)
                 isAlertShowing = false
             }
             .setNegativeButton(getString(R.string.cancel)) { _, _ ->
@@ -137,7 +137,7 @@ class TransactionsFragment : Fragment() {
             .show()
             .also { isAlertShowing = true }
 
-    private fun navigateToAddTransactionSheet(accountUi: AccountUi) {
+    private fun navigateToAddTransactionSheet(accountUi: AccountWithDetailsUi) {
         val direction =
             TransactionsFragmentDirections.actionTransactionsFragmentToSelectCategoryBottomSheet(
                 accountUi
@@ -155,7 +155,7 @@ class TransactionsFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(
             SelectDateMenu {
-                viewModel.onSelectedDateClick()
+                viewModel.onSelectedDate()
             },
             viewLifecycleOwner, Lifecycle.State.STARTED
         )

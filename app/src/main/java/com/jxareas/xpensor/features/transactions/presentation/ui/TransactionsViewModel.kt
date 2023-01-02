@@ -5,11 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.utils.DateRange
 import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountWithDetails
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi
 import com.jxareas.xpensor.features.transactions.domain.usecase.DeleteTransactionUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsWithDayUseCase
+import com.jxareas.xpensor.features.transactions.presentation.mapper.asTransactionWithDetails
+import com.jxareas.xpensor.features.transactions.presentation.model.TransactionDetailsUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,16 +32,16 @@ class TransactionsViewModel @Inject constructor(
     private val _transactionState = MutableStateFlow<TransactionState>(TransactionState.Idle)
     val transactionState = _transactionState.asStateFlow()
 
-    private val _events = MutableSharedFlow<TransactionUiEvent>()
-    val events = _events.asSharedFlow()
+    private val _event = MutableSharedFlow<TransactionUiEvent>()
+    val event = _event.asSharedFlow()
 
-    private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountWithDetailsUi?>(null)
     private val selectedAccount get() = _selectedAccount.value
 
     private val _selectedDateRange = MutableStateFlow<DateRange>(null to null)
     private val selectedDateRange get() = _selectedDateRange.value
 
-    private var getTransactionsJob: Job? = null
+    private var fetchTransactionsJob: Job? = null
 
     init {
         launchGetTransactionsJob()
@@ -48,10 +49,10 @@ class TransactionsViewModel @Inject constructor(
 
     private fun launchGetTransactionsJob() {
         _transactionState.value = TransactionState.Loading
-        getTransactionsJob?.cancel()
+        fetchTransactionsJob?.cancel()
 
-        val account = selectedAccount?.let(AccountUi::asAccountWithDetails)
-        getTransactionsJob = getTransactionsUseCase(selectedDateRange, account)
+        val account = selectedAccount?.let(AccountWithDetailsUi::asAccountWithDetails)
+        fetchTransactionsJob = getTransactionsUseCase(selectedDateRange, account)
             .onEach { transactions ->
                 val transactionInformation =
                     getTransactionsWithDayUseCase(transactions, selectedDateRange, account)
@@ -60,32 +61,33 @@ class TransactionsViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    suspend fun onDeleteTransaction(transaction: TransactionView) =
-        deleteTransactionUseCase(transaction)
+    fun deleteTransaction(transaction: TransactionDetailsUi) = launchScoped {
+        deleteTransactionUseCase(transaction.asTransactionWithDetails())
+    }
 
-    fun onUpdateSelectedDateRange(from: LocalDate? = null, to: LocalDate? = null) {
-        _selectedDateRange.value = from to to
+    fun onUpdateSelectedDateRange(initialDate: LocalDate? = null, FinalDate: LocalDate? = null) {
+        _selectedDateRange.value = initialDate to FinalDate
         launchGetTransactionsJob()
     }
 
-    fun onUpdateSelectedAccount(account: AccountUi? = null) {
+    fun onUpdateSelectedAccount(account: AccountWithDetailsUi? = null) {
         _selectedAccount.value = account
         launchGetTransactionsJob()
     }
 
-    fun onSelectedDateClick() = launchScoped {
-        _events.emit(TransactionUiEvent.DateSelected)
+    fun onSelectedDate() = launchScoped {
+        _event.emit(TransactionUiEvent.DateSelected)
     }
 
-    fun onAddTransactionClick(account: AccountUi) = launchScoped {
-        _events.emit(TransactionUiEvent.OpenTheAddTransactionSheet(account))
+    fun onAddNewTransaction(account: AccountWithDetailsUi) = launchScoped {
+        _event.emit(TransactionUiEvent.OpenTheAddTransactionSheet(account))
     }
 
-    fun onDeleteButtonClick(transaction: TransactionView) = launchScoped {
-        _events.emit(TransactionUiEvent.ShowTheDeleteTransactionDialog(transaction))
+    fun onDeleteTransaction(transaction: TransactionDetailsUi) = launchScoped {
+        _event.emit(TransactionUiEvent.ShowDeleteTransactionDialog(transaction))
     }
 
-    fun onDeleteTransactionConfirm(transaction: TransactionView) = launchScoped {
-        _events.emit(TransactionUiEvent.DeleteTransaction(transaction))
+    fun onConfirmTransactionDeletion(transaction: TransactionDetailsUi) = launchScoped {
+        _event.emit(TransactionUiEvent.DeleteTransaction(transaction))
     }
 }

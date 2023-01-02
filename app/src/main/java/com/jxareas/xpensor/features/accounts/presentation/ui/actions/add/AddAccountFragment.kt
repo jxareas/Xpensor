@@ -18,7 +18,7 @@ import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.extensions.toast
 import com.jxareas.xpensor.common.utils.PreferenceUtils
 import com.jxareas.xpensor.databinding.FragmentAddAccountBinding
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.ApplyChangesMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -61,7 +61,7 @@ class AddAccountFragment : Fragment() {
     private fun setupEventCollector() {
         var color = PreferenceUtils.MAIN_COLOR
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { addAccountEvent ->
+            viewModel.event.collectLatest { addAccountEvent ->
                 when (addAccountEvent) {
                     is AddAccountUiEvent.CreateNewAccount -> {
                         val name = binding.textInputLayoutName.editText?.text.toString().trim()
@@ -76,11 +76,11 @@ class AddAccountFragment : Fragment() {
                                     .toDoubleOrNull() ?: 0.0
 
                             val account =
-                                AccountUi(
+                                AccountWithDetailsUi(
                                     name = name,
                                     amount = amount,
                                     color = color,
-                                    id = AccountUi.EMPTY_ID
+                                    id = AccountWithDetailsUi.EMPTY_ID
                                 )
                             viewModel.addAccount(account).also { findNavController().navigateUp() }
                         }
@@ -117,7 +117,7 @@ class AddAccountFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(
             ApplyChangesMenu {
-                viewModel.onApplyChangesButtonClick()
+                viewModel.onApplyChanges()
             },
             viewLifecycleOwner, Lifecycle.State.STARTED
         )

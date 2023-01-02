@@ -7,7 +7,7 @@ import com.jxareas.xpensor.common.extensions.mapList
 import com.jxareas.xpensor.common.utils.DateRange
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountWithDetails
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.features.transactions.presentation.mapper.asCategoryWithAmount
@@ -31,12 +31,12 @@ class ChartViewModel @Inject constructor(
     private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
 
-    private val _events = MutableSharedFlow<ChartUiEvent>()
-    val events = _events.asSharedFlow()
+    private val _event = MutableSharedFlow<ChartUiEvent>()
+    val event = _event.asSharedFlow()
 
     private var fetchCategoriesJob: Job? = null
 
-    private val _selectedAccountUi = MutableStateFlow<AccountUi?>(null)
+    private val _selectedAccountUi = MutableStateFlow<AccountWithDetailsUi?>(null)
 
     private val _selectedDateRange = MutableStateFlow<DateRange>(null to null)
 
@@ -47,7 +47,7 @@ class ChartViewModel @Inject constructor(
     private fun launchFetchCategoriesJob() {
         fetchCategoriesJob?.cancel()
         val selectedAccount: AccountWithDetails? =
-            _selectedAccountUi.value?.let(AccountUi::asAccountWithDetails)
+            _selectedAccountUi.value?.let(AccountWithDetailsUi::asAccountWithDetails)
         fetchCategoriesJob =
             getCategoriesUseCase(_selectedDateRange.value, selectedAccount)
                 .mapList(CategoryWithDetails::asCategoryWithAmount)
@@ -55,8 +55,8 @@ class ChartViewModel @Inject constructor(
                 .launchIn(viewModelScope)
     }
 
-    fun onSelectedDateClick() = launchScoped {
-        _events.emit(ChartUiEvent.DateSelected)
+    fun onSelectedDate() = launchScoped {
+        _event.emit(ChartUiEvent.DateSelected)
     }
 
     fun onUpdateSelectedDateRange(from: LocalDate? = null, to: LocalDate? = null) {
@@ -64,7 +64,7 @@ class ChartViewModel @Inject constructor(
         launchFetchCategoriesJob()
     }
 
-    fun onUpdateSelectedAccount(account: AccountUi? = null) {
+    fun onUpdateSelectedAccount(account: AccountWithDetailsUi? = null) {
         _selectedAccountUi.value = account
         launchFetchCategoriesJob()
     }

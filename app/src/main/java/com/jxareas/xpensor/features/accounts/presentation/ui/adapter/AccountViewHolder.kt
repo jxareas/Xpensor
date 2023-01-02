@@ -8,14 +8,14 @@ import com.jxareas.xpensor.common.utils.OnBindViewHolder
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
 import com.jxareas.xpensor.databinding.ListItemAccountBinding
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi
 
 class AccountViewHolder(
     private val preferences: SharedPreferences,
     private val binding: ListItemAccountBinding,
-) : RecyclerView.ViewHolder(binding.root), OnBindViewHolder<AccountUi> {
+) : RecyclerView.ViewHolder(binding.root), OnBindViewHolder<AccountWithDetailsUi> {
 
-    override fun bind(item: AccountUi) = with(binding) {
+    override fun bind(item: AccountWithDetailsUi) = with(binding) {
         textViewName.text = item.name
         textViewAmount.text = item.amount.toAmountFormat(withMinus = false)
         textViewCurrency.text = preferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY)

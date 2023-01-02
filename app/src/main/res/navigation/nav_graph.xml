@@ -78,7 +78,7 @@
         tools:layout="@layout/fragment_edit_account">
         <argument
             android:name="editableAccount"
-            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountUi" />
+            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi" />
     </fragment>
     <dialog
         android:id="@+id/dateSelectorDialogFragment"
@@ -92,7 +92,7 @@
         tools:layout="@layout/bottom_sheet_account_actions">
         <argument
             android:name="selectedAccount"
-            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountUi" />
+            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi" />
         <argument
             android:name="numberOfAccounts"
             app:argType="integer" />
@@ -110,7 +110,7 @@
             app:destination="@id/addTransactionBottomSheet" />
         <argument
             android:name="selectedAccount"
-            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountUi" />
+            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi" />
         <argument
             android:name="amount"
             android:defaultValue="0.0"
@@ -123,7 +123,7 @@
         tools:layout="@layout/bottom_sheet_add_transaction">
         <argument
             android:name="selectedAccount"
-            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountUi" />
+            app:argType="com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi" />
         <argument
             android:name="selectedCategory"
             app:argType="com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi" />

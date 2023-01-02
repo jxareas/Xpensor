@@ -60,8 +60,8 @@ class ConverterFragment : Fragment() {
     }
 
     private fun setupListeners() = binding.run {
-        convertButton.setOnClickListener { viewModel.onConvertButtonClick() }
-        swapButton.setOnClickListener { viewModel.onSwapButtonClick() }
+        convertButton.setOnClickListener { viewModel.onConvertCurrency() }
+        swapButton.setOnClickListener { viewModel.onSwapCurrencies() }
     }
 
     private fun setupConversionCollector() {
@@ -91,7 +91,7 @@ class ConverterFragment : Fragment() {
 
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { currencyConverterEvent ->
+            viewModel.event.collectLatest { currencyConverterEvent ->
                 when (currencyConverterEvent) {
                     is ConvertCurrencyUiEvent.Convert ->
                         handleConvertEvent()

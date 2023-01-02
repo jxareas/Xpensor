@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.extensions.mapList
 import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountWithDetails
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.accounts.presentation.model.AccountWithDetailsUi
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.features.transactions.presentation.mapper.asCategoryWithAmount
@@ -29,10 +29,10 @@ class SelectCategoryViewModel @Inject constructor(
     private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
 
-    private val _events = MutableSharedFlow<SelectCategoryUiEvent>()
-    val events = _events.asSharedFlow()
+    private val _event = MutableSharedFlow<SelectCategoryUiEvent>()
+    val event = _event.asSharedFlow()
 
-    private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
+    private val _selectedAccount = MutableStateFlow<AccountWithDetailsUi?>(null)
     private val _selectedDateRange = MutableStateFlow<Pair<LocalDate?, LocalDate?>>(null to null)
 
     private var getCategoriesJob: Job? = null
@@ -43,7 +43,7 @@ class SelectCategoryViewModel @Inject constructor(
 
     private fun launchGetCategoriesJob() {
         getCategoriesJob?.cancel()
-        val account = _selectedAccount.value?.let(AccountUi::asAccountWithDetails)
+        val account = _selectedAccount.value?.let(AccountWithDetailsUi::asAccountWithDetails)
         getCategoriesJob =
             getCategoriesUseCase(_selectedDateRange.value, account)
                 .mapList(CategoryWithDetails::asCategoryWithAmount)
@@ -56,15 +56,15 @@ class SelectCategoryViewModel @Inject constructor(
         launchGetCategoriesJob()
     }
 
-    fun setSelectedAccount(accountUi: AccountUi? = null) {
+    fun setSelectedAccount(accountUi: AccountWithDetailsUi? = null) {
         _selectedAccount.value = accountUi
         launchGetCategoriesJob()
     }
 
     fun selectCategoryClick(
-        accountUi: AccountUi,
+        accountUi: AccountWithDetailsUi,
         categoryWithAmountUi: CategoryWithAmountUi,
     ) = launchScoped {
-        _events.emit(SelectCategoryUiEvent.SelectCategory(accountUi, categoryWithAmountUi))
+        _event.emit(SelectCategoryUiEvent.SelectCategory(accountUi, categoryWithAmountUi))
     }
 }

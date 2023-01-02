@@ -72,7 +72,7 @@ class EditAccountFragment : Fragment() {
         var color = account.color
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.event.collectLatest { event ->
                 when (event) {
                     is EditAccountUiEvent.UpdateAccount -> {
                         val name = binding.textInputLayoutName.editText?.text.toString().trim()
