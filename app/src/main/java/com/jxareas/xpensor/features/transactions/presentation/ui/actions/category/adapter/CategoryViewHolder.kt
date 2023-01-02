@@ -16,10 +16,10 @@ class CategoryViewHolder(
     private val sharedPreferences: SharedPreferences,
 ) : RecyclerView.ViewHolder(binding.root), OnBindViewHolder<CategoryWithAmountUi> {
     override fun bind(item: CategoryWithAmountUi) = binding.run {
-        icon.setIcon(item.category.icon)
-        iconBackground.setTint(item.category.iconColor)
+        icon.setIcon(item.categoryUi.icon)
+        iconBackground.setTint(item.categoryUi.iconColor)
 
-        name.text = item.category.name
+        name.text = item.categoryUi.name
         amount.text = item.amount.toAmountFormat(withMinus = false)
         currency.text = sharedPreferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY)
 

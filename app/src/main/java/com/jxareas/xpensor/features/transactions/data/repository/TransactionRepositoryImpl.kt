@@ -1,23 +1,22 @@
 package com.jxareas.xpensor.features.transactions.data.repository
 
+import com.jxareas.xpensor.common.extensions.mapList
 import com.jxareas.xpensor.features.transactions.data.local.dao.TransactionDao
-import com.jxareas.xpensor.features.transactions.data.mapper.TransactionAmountPerDayMapper
-import com.jxareas.xpensor.features.transactions.data.mapper.TransactionMapper
-import com.jxareas.xpensor.features.transactions.data.mapper.TransactionViewMapper
+import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
+import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDateView
+import com.jxareas.xpensor.features.transactions.data.mapper.asTransactionAmountPerDay
+import com.jxareas.xpensor.features.transactions.data.mapper.asTransactionEntity
+import com.jxareas.xpensor.features.transactions.data.mapper.asTransactionWithDetails
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionAmountPerDay
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import javax.inject.Inject
 
 class TransactionRepositoryImpl @Inject constructor(
-    private val dao: TransactionDao,
-    private val transactionMapper: TransactionMapper,
-    private val transactionViewMapper: TransactionViewMapper,
-    private val transactionAmountPerDayMapper: TransactionAmountPerDayMapper,
+    private val dao: TransactionDao
 ) : TransactionRepository {
 
     override fun getTransactionDetails(
@@ -25,7 +24,7 @@ class TransactionRepositoryImpl @Inject constructor(
         to: LocalDate,
     ): Flow<List<TransactionWithDetails>> =
         dao.getTransactionViews(from, to)
-            .map { transactionViews -> transactionViewMapper.mapToList(transactionViews) }
+            .mapList(TransactionView::asTransactionWithDetails)
 
     override fun getTransactionDetailsFromAccount(
         from: LocalDate,
@@ -33,14 +32,14 @@ class TransactionRepositoryImpl @Inject constructor(
         id: Int,
     ): Flow<List<TransactionWithDetails>> =
         dao.getTransactionViewsForAccount(from, to, id)
-            .map { transactions -> transactionViewMapper.mapToList(transactions) }
+            .mapList(TransactionView::asTransactionWithDetails)
 
     override fun getTransactionAmountsPerDay(
         from: LocalDate,
         to: LocalDate,
     ): Flow<List<TransactionAmountPerDay>> =
         dao.getTransactionAmountsPerDay(from, to)
-            .map { transactions -> transactionAmountPerDayMapper.mapToList(transactions) }
+            .mapList(TransactionsByDateView::asTransactionAmountPerDay)
 
     override fun getTransactionAmountsPerDayForAccount(
         from: LocalDate,
@@ -48,10 +47,10 @@ class TransactionRepositoryImpl @Inject constructor(
         transactionId: Int,
     ): Flow<List<TransactionAmountPerDay>> =
         dao.getTransactionAmountsPerDayForAccount(from, to, transactionId)
-            .map { transactions -> transactionAmountPerDayMapper.mapToList(transactions) }
+            .mapList(TransactionsByDateView::asTransactionAmountPerDay)
 
     override suspend fun insertTransaction(transaction: Transaction) =
-        dao.insertTransaction(transactionMapper.mapFromDomain(transaction))
+        dao.insertTransaction(transaction.asTransactionEntity())
 
     override suspend fun deleteTransactionById(transactionId: Int) =
         dao.deleteTransactionById(transactionId)

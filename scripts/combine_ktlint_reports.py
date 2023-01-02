@@ -1,6 +1,4 @@
-# Adapted from Joe Birch's post: https://blog.bitrise.io/automating-code-review-tasks-for-multi-module-android-projects
 # This takes all of our ktlint output XML files and combines them into one `ktlint-report.xml` file.
-# This way we can pass one file into danger-checkstyle_format
 
 import sys
 import os.path

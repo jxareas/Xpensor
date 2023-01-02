@@ -23,13 +23,13 @@ fun ListItemCategoryBinding.setCategoryAttributes(
     details: CategoryWithAmountUi,
     currency: String?,
 ) {
-    this.name.text = details.category.name
-    this.icon.setIcon(details.category.icon)
-    this.iconBackground.setTint(details.category.iconColor)
+    this.name.text = details.categoryUi.name
+    this.icon.setIcon(details.categoryUi.icon)
+    this.iconBackground.setTint(details.categoryUi.iconColor)
     this.amount.text = details.amount.toAmountFormat(withMinus = false)
     this.currency.text = currency
 
-    val color = Color.parseColor(details.category.iconColor)
+    val color = Color.parseColor(details.categoryUi.iconColor)
     this.amount.setTextColor(color)
     this.currency.setTextColor(color)
 

@@ -92,7 +92,7 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
         binding.run {
             accountName.text = account.name
             accountAmount.text = account.amount.toAmountFormat(withMinus = false)
-            accountCurrency.text = activityViewModel.getCurrency()
+            accountCurrency.text = activityViewModel.getCurrencyName()
             actionsContainer.setBackgroundColor(Color.parseColor(account.color))
         }
     }

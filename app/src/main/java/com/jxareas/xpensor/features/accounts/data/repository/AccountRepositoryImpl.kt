@@ -1,35 +1,35 @@
 package com.jxareas.xpensor.features.accounts.data.repository
 
+import com.jxareas.xpensor.common.extensions.mapList
 import com.jxareas.xpensor.features.accounts.data.local.dao.AccountDao
-import com.jxareas.xpensor.features.accounts.data.mapper.AccountEntityMapper
+import com.jxareas.xpensor.features.accounts.data.local.entity.AccountEntity
+import com.jxareas.xpensor.features.accounts.data.mapper.asAccountEntity
+import com.jxareas.xpensor.features.accounts.data.mapper.asAccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.repository.AccountRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
     private val dao: AccountDao,
-    private val accountEntityMapper: AccountEntityMapper,
-) :
-    AccountRepository {
+) : AccountRepository {
+
     override fun getAccounts(): Flow<List<AccountWithDetails>> =
-        dao.getAccounts().map { listOfAccounts ->
-            listOfAccounts.map(accountEntityMapper::mapToDomain)
-        }
+        dao.getAccounts().mapList(AccountEntity::asAccountWithDetails)
 
     override suspend fun getAccountById(accountId: Int): AccountWithDetails? =
-        dao.getAccountById(accountId)?.let(accountEntityMapper::mapToDomain)
+        dao.getAccountById(accountId)?.let(AccountEntity::asAccountWithDetails)
 
     override suspend fun insertAccount(account: AccountWithDetails) =
-        dao.insertAccount(accountEntityMapper.mapFromDomain(account))
+        dao.insertAccount(account.asAccountEntity())
 
     override suspend fun updateAccount(account: AccountWithDetails) =
-        dao.updateAccount(accountEntityMapper.mapFromDomain(account))
+        dao.updateAccount(account.asAccountEntity())
 
     override suspend fun updateAccountAmount(accountId: Int, amount: Double) =
         dao.updateAccountAmount(accountId, amount)
 
     override suspend fun deleteAccount(account: AccountWithDetails) =
-        dao.deleteAccount(accountEntityMapper.mapFromDomain(account))
+        dao.deleteAccount(account.asAccountEntity())
+
 }

@@ -1,15 +1,15 @@
 package com.jxareas.xpensor.core.presentation
 
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
+import com.jxareas.xpensor.common.extensions.mapList
 import com.jxareas.xpensor.common.utils.DateUtils
-import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
-import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
+import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountUi
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.converter.domain.usecase.GetPreferredCurrencyNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,8 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
-    private val sharedPreferences: SharedPreferences,
-    private val accountUiMapper: AccountUiMapper,
+    private val getPreferredCurrencyNameUseCase: GetPreferredCurrencyNameUseCase,
 ) : ViewModel() {
 
     private val _accounts = MutableStateFlow(emptyList<AccountUi>())
@@ -49,14 +48,12 @@ class MainActivityViewModel @Inject constructor(
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
-            .onEach { accounts ->
-                _accounts.value = accountUiMapper.mapFromList(accounts)
-            }
+            .mapList(AccountWithDetails::asAccountUi)
+            .onEach(_accounts::value::set)
             .launchIn(viewModelScope)
     }
 
-    fun getCurrency() =
-        sharedPreferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY) ?: MAIN_CURRENCY
+    fun getCurrencyName() = getPreferredCurrencyNameUseCase()
 
     fun onSettingsButtonClick() = launchScoped {
         _events.emit(MainActivityEvent.OpenTheSettingsScreen)

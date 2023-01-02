@@ -71,7 +71,7 @@ class AccountFilterDialogFragment : DialogFragment() {
     }
 
     private fun setupView() = binding.run {
-        allAccountsCurrency.text = mainViewModel.getCurrency()
+        allAccountsCurrency.text = mainViewModel.getCurrencyName()
         allAccountsIconColor.setTint(mainViewModel.selectedAccount.value?.color)
         allAccountsItem.setOnClickListener {
             mainViewModel.onUpdateSelectedAccount(null)

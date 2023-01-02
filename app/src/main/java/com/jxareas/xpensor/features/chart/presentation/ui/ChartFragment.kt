@@ -125,7 +125,7 @@ class ChartFragment : Fragment() {
 
     private fun updateChartData(details: List<CategoryWithAmountUi>) {
         if (details.isNotEmpty()) {
-            val currency = mainViewModel.getCurrency()
+            val currency = mainViewModel.getCurrencyName()
 
             updateCategories(details, currency)
 
@@ -136,7 +136,7 @@ class ChartFragment : Fragment() {
             details.forEach { categoryWithDetails ->
                 if (categoryWithDetails.amount != 0.0) {
                     entries.add(PieEntry(categoryWithDetails.amount.toFloat()))
-                    entryColors.add(Color.parseColor(categoryWithDetails.category.iconColor))
+                    entryColors.add(Color.parseColor(categoryWithDetails.categoryUi.iconColor))
                     amount += categoryWithDetails.amount
                 }
             }

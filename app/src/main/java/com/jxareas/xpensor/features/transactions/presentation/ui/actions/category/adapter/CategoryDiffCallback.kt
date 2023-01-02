@@ -8,7 +8,7 @@ object CategoryDiffCallback : DiffUtil.ItemCallback<CategoryWithAmountUi>() {
     override fun areItemsTheSame(
         oldItem: CategoryWithAmountUi,
         newItem: CategoryWithAmountUi,
-    ): Boolean = oldItem.category.id == newItem.category.id
+    ): Boolean = oldItem.categoryUi.id == newItem.categoryUi.id
 
     override fun areContentsTheSame(
         oldItem: CategoryWithAmountUi,

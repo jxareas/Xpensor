@@ -82,7 +82,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                                 note = note,
                                 amount = amount,
                                 accountId = account.id ?: AccountUi.EMPTY_ID,
-                                categoryId = categoryWithDetails.category.id,
+                                categoryId = categoryWithDetails.categoryUi.id,
                             )
 
                             viewModel.onAddTransaction(transaction)
@@ -108,8 +108,8 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupView() = binding.run {
         accountName.text = args.selectedAccount.name
-        categoryName.text = args.selectedCategory.category.name
-        categoryIcon.setIcon(args.selectedCategory.category.icon)
+        categoryName.text = args.selectedCategory.categoryUi.name
+        categoryIcon.setIcon(args.selectedCategory.categoryUi.icon)
 
         if (args.amount != 0f)
             textInputLayoutExpense.editText?.setText(
@@ -118,7 +118,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
 
         accountBackground.setBackgroundColor(Color.parseColor(args.selectedAccount.color))
         categoryBackground
-            .setBackgroundColor(Color.parseColor(args.selectedCategory.category.iconColor))
+            .setBackgroundColor(Color.parseColor(args.selectedCategory.categoryUi.iconColor))
     }
 
     override fun onDestroyView() {

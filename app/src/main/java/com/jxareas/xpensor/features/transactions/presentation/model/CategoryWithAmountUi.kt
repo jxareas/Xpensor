@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CategoryWithAmountUi(
-    val category: CategoryUi,
+    val categoryUi: CategoryUi,
     val amount: Double,
 ) : Parcelable

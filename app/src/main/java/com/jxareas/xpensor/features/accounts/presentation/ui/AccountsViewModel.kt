@@ -3,8 +3,10 @@ package com.jxareas.xpensor.features.accounts.presentation.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
+import com.jxareas.xpensor.common.extensions.mapList
+import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountUi
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -19,7 +21,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountsViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
-    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
     private val _accounts = MutableStateFlow(emptyList<AccountUi>())
@@ -45,9 +46,8 @@ class AccountsViewModel @Inject constructor(
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
-            .onEach { accounts ->
-                _accounts.value = accountUiMapper.mapFromList(accounts)
-            }
+            .mapList(AccountWithDetails::asAccountUi)
+            .onEach(_accounts::value::set)
             .launchIn(viewModelScope)
     }
 }

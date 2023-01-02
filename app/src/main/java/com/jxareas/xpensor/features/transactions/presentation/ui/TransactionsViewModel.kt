@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.utils.DateRange
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountWithDetails
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
 import com.jxareas.xpensor.features.transactions.domain.usecase.DeleteTransactionUseCase
@@ -26,7 +26,6 @@ class TransactionsViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getTransactionsWithDayUseCase: GetTransactionsWithDayUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
-    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
     private val _transactionState = MutableStateFlow<TransactionState>(TransactionState.Idle)
@@ -51,10 +50,7 @@ class TransactionsViewModel @Inject constructor(
         _transactionState.value = TransactionState.Loading
         getTransactionsJob?.cancel()
 
-        val account = selectedAccount?.let { accountListItem ->
-            accountUiMapper.mapToDomain(accountListItem)
-        }
-
+        val account = selectedAccount?.let(AccountUi::asAccountWithDetails)
         getTransactionsJob = getTransactionsUseCase(selectedDateRange, account)
             .onEach { transactions ->
                 val transactionInformation =

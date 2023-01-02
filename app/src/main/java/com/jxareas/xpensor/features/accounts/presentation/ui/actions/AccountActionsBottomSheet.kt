@@ -98,7 +98,7 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
             actionsContainer.setBackgroundColor(Color.parseColor(account.color))
             accountName.text = account.name
             accountAmount.text = account.amount.toAmountFormat(withMinus = false)
-            accountCurrency.text = mainViewModel.getCurrency()
+            accountCurrency.text = mainViewModel.getCurrencyName()
         }
     }
 

@@ -3,7 +3,7 @@ package com.jxareas.xpensor.features.accounts.presentation.ui.actions
 import androidx.lifecycle.ViewModel
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.features.accounts.domain.usecase.DeleteAccountUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.mapper.asAccountWithDetails
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,15 +13,14 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountActionsViewModel @Inject constructor(
     private val deleteAccountUseCase: DeleteAccountUseCase,
-    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
     private val _events = MutableSharedFlow<AccountActionsUiEvent>()
     val events = _events.asSharedFlow()
 
-    suspend fun removeAccount(accountUi: AccountUi) {
-        val account = accountUiMapper.mapToDomain(accountUi)
-        deleteAccountUseCase(account)
+    fun removeAccount(accountUi: AccountUi) = launchScoped {
+        val accountWithDetails = accountUi.asAccountWithDetails()
+        deleteAccountUseCase(accountWithDetails)
     }
 
     fun onEditAccount(account: AccountUi) = launchScoped {

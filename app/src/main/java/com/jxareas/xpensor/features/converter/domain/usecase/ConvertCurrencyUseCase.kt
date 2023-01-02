@@ -2,12 +2,12 @@ package com.jxareas.xpensor.features.converter.domain.usecase
 
 import com.jxareas.xpensor.common.utils.Resource
 import com.jxareas.xpensor.features.converter.domain.model.Currencies
-import com.jxareas.xpensor.features.converter.domain.repository.ConverterRepository
+import com.jxareas.xpensor.features.converter.domain.repository.CurrencyRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class ConvertCurrencyUseCase @Inject constructor(private val repository: ConverterRepository) {
+class ConvertCurrencyUseCase @Inject constructor(private val repository: CurrencyRepository) {
 
     companion object {
         const val UNEXPECTED_ERROR = -1.0
