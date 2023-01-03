@@ -2,9 +2,9 @@ package com.jxareas.xpensor.features.chart.presentation.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.jxareas.xpensor.common.TestCoroutineRule
+import com.jxareas.sharedtest.data.mockCategoryAmountUi
+import com.jxareas.sharedtest.rule.TestCoroutineRule
 import com.jxareas.xpensor.common.extensions.mapList
-import com.jxareas.xpensor.features.transactions.data.provider.MockCategoriesProvider
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.features.transactions.presentation.mapper.asCategoryWithDetails
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
@@ -27,7 +27,7 @@ class ChartViewModelTest {
     @get:Rule
     val coroutineRule = TestCoroutineRule()
 
-    private val categories = MockCategoriesProvider()
+    private val categories = mockCategoryAmountUi
 
     @Mock
     private lateinit var getCategoriesUseCase: GetCategoriesUseCase

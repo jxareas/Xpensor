@@ -2,8 +2,9 @@ package com.jxareas.xpensor.features.accounts.presentation.ui.actions.filter
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.jxareas.xpensor.common.TestCoroutineRule
-import com.jxareas.xpensor.features.accounts.data.provider.MockAccountsProvider
+import com.jxareas.sharedtest.data.mockAccountDetailsFlow
+import com.jxareas.sharedtest.data.mockAccountDetailsUi
+import com.jxareas.sharedtest.rule.TestCoroutineRule
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -23,8 +24,8 @@ class AccountFilterViewModelTest {
     @get:Rule
     val coroutineRule = TestCoroutineRule()
 
-    private val mockAccounts = MockAccountsProvider.mockAccounts
-    private val mockAccountsFlow = MockAccountsProvider.mockAccountsFlow
+    private val mockAccounts = mockAccountDetailsUi
+    private val mockAccountsFlow = mockAccountDetailsFlow
 
     @Mock
     private lateinit var getAccountsUseCase: GetAccountsUseCase

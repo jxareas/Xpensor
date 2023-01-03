@@ -2,15 +2,12 @@ package com.jxareas.xpensor.features.date.presentation.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.jxareas.xpensor.common.TestCoroutineRule
+import com.jxareas.sharedtest.rule.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.util.*
 
 @ExperimentalCoroutinesApi
 class DateSelectorViewModelTest {
@@ -22,10 +19,6 @@ class DateSelectorViewModelTest {
     val coroutineRule = TestCoroutineRule()
 
     private val viewModel = DateSelectorViewModel()
-
-    private fun getCurrentLocalDate(): LocalDate = LocalDate.parse(
-        SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
-    )
 
     @Test
     fun testEventFlow() = runTest {

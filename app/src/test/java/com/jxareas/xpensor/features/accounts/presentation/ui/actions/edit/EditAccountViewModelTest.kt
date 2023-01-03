@@ -2,7 +2,7 @@ package com.jxareas.xpensor.features.accounts.presentation.ui.actions.edit
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.jxareas.xpensor.common.TestCoroutineRule
+import com.jxareas.sharedtest.rule.TestCoroutineRule
 import com.jxareas.xpensor.features.accounts.domain.usecase.UpdateAccountUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

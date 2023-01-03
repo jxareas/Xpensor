@@ -39,7 +39,7 @@ android {
         getByName(ProjectProperties.DEBUG_BUILD_TYPE) {
             proguardFiles(
                 getDefaultProguardFile(ProjectProperties.PROGUARD_NAME),
-                ProjectProperties.PROGUARD_FILE
+                ProjectProperties.PROGUARD_FILE,
             )
         }
     }
@@ -72,6 +72,8 @@ dependencies {
     coreLibraryDesugaring(Dependencies.Android.DESUGARING_CORE_LIB)
 
     // Testing
+    testImplementation(project(":shared-test"))
+    androidTestImplementation(project(":shared-test"))
     testImplementation(Dependencies.Testing.JUNIT)
     androidTestImplementation(Dependencies.Testing.JUNIT_EXT)
     androidTestImplementation(Dependencies.Testing.ESPRESSO_CORE)

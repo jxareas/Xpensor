@@ -2,15 +2,12 @@ package com.jxareas.xpensor.features.transactions.presentation.ui.actions.catego
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.jxareas.xpensor.common.TestCoroutineRule
-import com.jxareas.xpensor.common.extensions.mapList
-import com.jxareas.xpensor.features.accounts.data.provider.MockAccountsProvider
-import com.jxareas.xpensor.features.transactions.data.provider.MockCategoriesProvider
+import com.jxareas.sharedtest.data.mockAccountDetailsUi
+import com.jxareas.sharedtest.data.mockCategoryAmountFlow
+import com.jxareas.sharedtest.data.mockCategoryAmountUi
+import com.jxareas.sharedtest.rule.TestCoroutineRule
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
-import com.jxareas.xpensor.features.transactions.presentation.mapper.asCategoryWithDetails
-import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -28,8 +25,9 @@ class SelectCategoryViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    private val mockAccounts = MockAccountsProvider.mockAccounts
-    private val mockCategories = MockCategoriesProvider()
+    private val mockAccounts = mockAccountDetailsUi
+    private val mockCategories = mockCategoryAmountUi
+    private val mockCategoriesFlow = mockCategoryAmountFlow
 
     @Mock
     lateinit var getCategoriesUseCase: GetCategoriesUseCase
@@ -38,9 +36,6 @@ class SelectCategoryViewModelTest {
     @Before
     fun setup() {
         getCategoriesUseCase = Mockito.mock(GetCategoriesUseCase::class.java)
-
-        val mockCategoriesFlow = flowOf(mockCategories)
-            .mapList(CategoryWithAmountUi::asCategoryWithDetails)
         Mockito.`when`(getCategoriesUseCase.invoke(null to null, null))
             .thenReturn(mockCategoriesFlow)
 

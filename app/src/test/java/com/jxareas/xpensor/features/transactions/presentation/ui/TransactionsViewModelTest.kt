@@ -2,11 +2,11 @@ package com.jxareas.xpensor.features.transactions.presentation.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.jxareas.xpensor.common.TestCoroutineRule
+import com.jxareas.sharedtest.data.mockTransactionsPerDay
+import com.jxareas.sharedtest.data.mockTransactionDetailsUi
+import com.jxareas.sharedtest.rule.TestCoroutineRule
 import com.jxareas.xpensor.common.utils.DateRange
-import com.jxareas.xpensor.features.accounts.data.provider.MockAccountsProvider.mockAccountDetailsUi
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
-import com.jxareas.xpensor.features.transactions.data.provider.MockTransactionProvider
 import com.jxareas.xpensor.features.transactions.domain.usecase.DeleteTransactionUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsWithDayUseCase
@@ -30,10 +30,11 @@ class TransactionsViewModelTest {
     val coroutineRule = TestCoroutineRule()
 
     // Mock Data
-    private val mockTransaction = MockTransactionProvider.mockTransaction
-    private val mockTransactionDetails = MockTransactionProvider.mockTransactionDetails
-    private val mockTransactionsFlow = MockTransactionProvider.mockTransactionsFlow
-    private val mockTransactionAmountsPerDay = MockTransactionProvider.mockTransactionAmountsPerDay
+    private val mockAccountDetailsUi = com.jxareas.sharedtest.data.mockAccountDetailsUi.first()
+    private val mockTransaction = mockTransactionDetailsUi.first()
+    private val mockTransactionDetails = com.jxareas.sharedtest.data.mockTransactionDetails
+    private val mockTransactionsFlow = com.jxareas.sharedtest.data.mockTransactionsFlow
+    private val mockTransactionAmountsPerDay = mockTransactionsPerDay
 
     // Mocks
     @Mock
@@ -56,7 +57,7 @@ class TransactionsViewModelTest {
 
         val (emptyDateRange, emptyAccount) = Pair<DateRange, AccountWithDetails?>(
             null to null,
-            null
+            null,
         )
 
         Mockito.`when`(getTransactionsUseCase.invoke(emptyDateRange, emptyAccount))
@@ -66,13 +67,13 @@ class TransactionsViewModelTest {
             getTransactionsWithDayUseCase.invoke(
                 mockTransactionDetails,
                 emptyDateRange,
-                emptyAccount
-            )
+                emptyAccount,
+            ),
         ).thenReturn(mockTransactionAmountsPerDay)
 
 
         viewModel = TransactionsViewModel(
-            getTransactionsUseCase, getTransactionsWithDayUseCase, deleteTransactionUseCase
+            getTransactionsUseCase, getTransactionsWithDayUseCase, deleteTransactionUseCase,
         )
     }
 

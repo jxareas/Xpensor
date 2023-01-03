@@ -1,4 +1,4 @@
-package com.jxareas.xpensor.common
+package com.jxareas.sharedtest.rule
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,7 +11,7 @@ import org.junit.runner.Description
 
 @ExperimentalCoroutinesApi
 class TestCoroutineRule(
-    val testDispatcher : TestDispatcher = StandardTestDispatcher()
+    val testDispatcher: TestDispatcher = StandardTestDispatcher(),
 ) : TestWatcher() {
 
     override fun starting(description: Description) {
@@ -25,3 +25,4 @@ class TestCoroutineRule(
     }
 
 }
+

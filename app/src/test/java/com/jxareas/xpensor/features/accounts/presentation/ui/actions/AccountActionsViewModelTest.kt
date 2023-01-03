@@ -2,8 +2,8 @@ package com.jxareas.xpensor.features.accounts.presentation.ui.actions
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.jxareas.xpensor.common.TestCoroutineRule
-import com.jxareas.xpensor.features.accounts.data.provider.MockAccountsProvider
+import com.jxareas.sharedtest.data.mockAccountDetailsUi
+import com.jxareas.sharedtest.rule.TestCoroutineRule
 import com.jxareas.xpensor.features.accounts.domain.usecase.DeleteAccountUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -22,8 +22,6 @@ class AccountActionsViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    private val mockAccounts = MockAccountsProvider.mockAccounts
-
     private lateinit var viewModel: AccountActionsViewModel
 
     @Before
@@ -35,7 +33,7 @@ class AccountActionsViewModelTest {
     @Test
     fun testEventFlow() = runTest {
         viewModel.event.test {
-            val (firstAccount, secondAccount) = mockAccounts.take(2)
+            val (firstAccount, secondAccount) = mockAccountDetailsUi.take(2)
 
             // Edit Account Event
             viewModel.onEditAccount(firstAccount)

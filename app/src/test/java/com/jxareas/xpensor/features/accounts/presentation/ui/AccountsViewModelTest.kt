@@ -2,8 +2,9 @@ package com.jxareas.xpensor.features.accounts.presentation.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.jxareas.xpensor.common.TestCoroutineRule
-import com.jxareas.xpensor.features.accounts.data.provider.MockAccountsProvider
+import com.jxareas.sharedtest.data.mockAccountDetailsFlow
+import com.jxareas.sharedtest.data.mockAccountDetailsUi
+import com.jxareas.sharedtest.rule.TestCoroutineRule
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -23,10 +24,6 @@ class AccountsViewModelTest {
     @get:Rule
     val coroutineRule = TestCoroutineRule()
 
-    // Mock Data
-    private val mockAccounts = MockAccountsProvider.mockAccounts
-    private val mockAccountsFlow = MockAccountsProvider.mockAccountsFlow
-
     @Mock
     private lateinit var getAccountsUseCase: GetAccountsUseCase
     private lateinit var viewModel: AccountsViewModel
@@ -34,7 +31,8 @@ class AccountsViewModelTest {
     @Before
     fun setup() {
         getAccountsUseCase = Mockito.mock(GetAccountsUseCase::class.java)
-        Mockito.`when`(getAccountsUseCase.invoke()).thenReturn(mockAccountsFlow)
+        Mockito.`when`(getAccountsUseCase.invoke())
+            .thenReturn(mockAccountDetailsFlow)
 
         viewModel = AccountsViewModel(getAccountsUseCase)
     }
@@ -42,7 +40,7 @@ class AccountsViewModelTest {
     @Test
     fun testEventFlow() = runTest {
         viewModel.event.test {
-            val firstAccount = mockAccounts.first()
+            val firstAccount = mockAccountDetailsUi.first()
 
             // Account Selection
             viewModel.onAccountSelected(firstAccount)

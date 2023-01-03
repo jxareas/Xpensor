@@ -2,10 +2,10 @@ package com.jxareas.xpensor.core.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
-import com.jxareas.xpensor.common.TestCoroutineRule
-import com.jxareas.xpensor.features.accounts.data.provider.MockAccountsProvider
+import com.jxareas.sharedtest.data.mockAccountDetailsFlow
+import com.jxareas.sharedtest.data.mockPreferredCurrencyName
+import com.jxareas.sharedtest.rule.TestCoroutineRule
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
-import com.jxareas.xpensor.features.converter.data.MockCurrencyProvider
 import com.jxareas.xpensor.features.converter.domain.usecase.GetPreferredCurrencyNameUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -25,11 +25,6 @@ class MainViewModelTest {
     @get:Rule
     val coroutineRule = TestCoroutineRule()
 
-    // Mock Data
-    private val mockAccounts = MockAccountsProvider.mockAccounts
-    private val mockAccountsFlow = MockAccountsProvider.mockAccountsFlow
-    private val mockPreferredCurrencyName = MockCurrencyProvider.mockPreferredCurrencyName
-
     // Mocks
     @Mock
     private lateinit var getAccountsUseCase: GetAccountsUseCase
@@ -44,7 +39,7 @@ class MainViewModelTest {
         getAccountsUseCase = Mockito.mock(GetAccountsUseCase::class.java)
         getPreferredCurrencyNameUseCase = Mockito.mock(GetPreferredCurrencyNameUseCase::class.java)
 
-        Mockito.`when`(getAccountsUseCase.invoke()).thenReturn(mockAccountsFlow)
+        Mockito.`when`(getAccountsUseCase.invoke()).thenReturn(mockAccountDetailsFlow)
         Mockito.`when`(getPreferredCurrencyNameUseCase.invoke())
             .thenReturn(mockPreferredCurrencyName)
 
