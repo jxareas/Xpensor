@@ -13,13 +13,17 @@ android {
     compileSdk = ProjectProperties.COMPILE_SDK
 
     defaultConfig {
+
         namespace = ProjectProperties.APPLICATION_ID
         minSdk = ProjectProperties.MIN_SDK
         targetSdk = ProjectProperties.TARGET_SDK
+
         versionCode = ProjectProperties.VERSION_CODE
         versionName = ProjectProperties.VERSION_NAME
         multiDexEnabled = ProjectProperties.IS_MULTIDEX_ENABLED
-        vectorDrawables.useSupportLibrary = true
+
+        vectorDrawables.useSupportLibrary =
+            ProjectProperties.IS_VECTOR_DRAWABLES_SUPPORT_LIBRARY_ENABLED
         testInstrumentationRunner = ProjectProperties.TEST_RUNNER
 
         val currencyApiKey = ProjectProperties.CURRENCY_API_KEY
@@ -69,8 +73,8 @@ dependencies {
 
     // Testing
     testImplementation(Dependencies.Testing.JUNIT)
-    androidTestImplementation(Dependencies.Testing.JUNIT_ANDROID)
-    androidTestImplementation(Dependencies.Testing.ESPRESSO_ANDROID)
+    androidTestImplementation(Dependencies.Testing.JUNIT_EXT)
+    androidTestImplementation(Dependencies.Testing.ESPRESSO_CORE)
     testImplementation(Dependencies.Testing.ANDROID_TEST_CORE)
     testImplementation(Dependencies.Testing.ANDROID_ARCH_TEST_CORE)
     testImplementation(Dependencies.Testing.TURBINE)

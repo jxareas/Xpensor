@@ -1,7 +1,7 @@
 object Versions {
     const val KOTLIN_CORE_KTX = "1.7.0"
     const val KOTLINX_COROUTINES = "1.6.0"
-    const val APP_COMPAT = "1.4.1"
+    const val APP_COMPAT = "1.5.1"
     const val LEGACY_SUPPORT_VERSION = "1.0.0"
     const val ROOM = "2.4.2"
     const val SPLASH_SCREEN = "1.0.0"

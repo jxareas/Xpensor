@@ -20,6 +20,7 @@ object ProjectProperties {
     const val PROGUARD_FILE = "proguard-rules.pro"
 
     // Configuration
+    const val IS_VECTOR_DRAWABLES_SUPPORT_LIBRARY_ENABLED = true
     const val IS_MULTIDEX_ENABLED = true
     const val IS_MINIFY_ENABLED = false
     const val IS_VIEW_BINDING_ENABLED = true
@@ -36,5 +37,8 @@ object ProjectProperties {
 
     // API Keys
     const val CURRENCY_API_KEY = "CURRENCY_API_KEY"
+
+    // Libraries
+    const val LIBRARY_SHARED_TEST_NAMESPACE = "com.jxareas.sharedtest"
 
 }
