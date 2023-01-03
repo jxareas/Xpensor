@@ -40,4 +40,5 @@ object Versions {
     const val ANDROID_TEST_CORE = "1.4.0"
     const val ANDROID_ARCH_TEST_CORE = "2.1.0"
     const val TURBINE = "0.7.0"
+    const val TRUTH = "1.1.3"
 }

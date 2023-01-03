@@ -16,7 +16,7 @@ import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEn
 @Database(
     entities = [AccountEntity::class, CategoryEntity::class, TransactionEntity::class],
     version = DATABASE_VERSION,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(TimeConverter::class, DateConverter::class)
 abstract class XpensorDatabase : RoomDatabase() {
@@ -26,7 +26,7 @@ abstract class XpensorDatabase : RoomDatabase() {
     abstract val transactionDao: TransactionDao
 
     companion object {
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
         const val DATABASE_NAME = "xpensor.db"
     }
 }

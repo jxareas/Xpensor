@@ -21,15 +21,15 @@ class AccountRepositoryImpl @Inject constructor(
         dao.getAccountById(accountId)?.let(AccountEntity::asAccountWithDetails)
 
     override suspend fun insertAccount(account: AccountWithDetails) =
-        dao.insertAccount(account.asAccountEntity())
+        dao.insert(account.asAccountEntity())
 
     override suspend fun updateAccount(account: AccountWithDetails) =
-        dao.updateAccount(account.asAccountEntity())
+        dao.update(account.asAccountEntity())
 
     override suspend fun updateAccountAmount(accountId: Int, amount: Double) =
         dao.updateAccountAmount(accountId, amount)
 
     override suspend fun deleteAccount(account: AccountWithDetails) =
-        dao.deleteAccount(account.asAccountEntity())
+        dao.delete(account.asAccountEntity())
 
 }

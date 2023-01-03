@@ -79,7 +79,10 @@ dependencies {
     androidTestImplementation(Dependencies.Testing.ESPRESSO_CORE)
     testImplementation(Dependencies.Testing.ANDROID_TEST_CORE)
     testImplementation(Dependencies.Testing.ANDROID_ARCH_TEST_CORE)
+    androidTestImplementation(Dependencies.Testing.ANDROID_ARCH_TEST_CORE)
     testImplementation(Dependencies.Testing.TURBINE)
+    androidTestImplementation(Dependencies.Testing.TURBINE)
+    androidTestImplementation(Dependencies.Testing.TRUTH)
     testImplementation(Dependencies.Mockito.KOTLIN)
     testImplementation(Dependencies.Mockito.CORE)
     testImplementation(Dependencies.Mockito.INLINE)
@@ -97,6 +100,7 @@ dependencies {
     // Kotlin Coroutines
     implementation(Dependencies.Kotlin.KOTLINX_COROUTINES)
     testImplementation(Dependencies.Kotlin.KOTLIN_COROUTINES_TEST)
+    androidTestImplementation(Dependencies.Kotlin.KOTLIN_COROUTINES_TEST)
 
     // Dagger-Hilt
     implementation(Dependencies.Dagger.HILT)

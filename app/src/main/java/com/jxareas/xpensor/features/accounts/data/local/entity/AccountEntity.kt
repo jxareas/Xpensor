@@ -15,6 +15,6 @@ data class AccountEntity(
     val color: String,
 ) : Parcelable {
     companion object {
-        const val EMPTY_ID = 0
+        const val EMPTY_ID = -287
     }
 }

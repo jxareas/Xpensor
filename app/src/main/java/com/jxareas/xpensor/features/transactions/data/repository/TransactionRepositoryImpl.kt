@@ -50,7 +50,7 @@ class TransactionRepositoryImpl @Inject constructor(
             .mapList(TransactionsByDateView::asTransactionAmountPerDay)
 
     override suspend fun insertTransaction(transaction: Transaction) =
-        dao.insertTransaction(transaction.asTransactionEntity())
+        dao.insert(transaction.asTransactionEntity())
 
     override suspend fun deleteTransactionById(transactionId: Int) =
         dao.deleteTransactionById(transactionId)

@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalDate
 import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalTime
@@ -26,7 +27,8 @@ import java.time.LocalTime
             childColumns = ["account_id"],
             onDelete = CASCADE
         )
-    ]
+    ],
+    indices = [Index("account_id"), Index("category_id")]
 )
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)

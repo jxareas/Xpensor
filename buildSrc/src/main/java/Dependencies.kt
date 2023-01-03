@@ -59,6 +59,8 @@ object Dependencies {
             "androidx.arch.core:core-testing:${Versions.ANDROID_ARCH_TEST_CORE}"
         const val TURBINE =
             "app.cash.turbine:turbine:${Versions.TURBINE}"
+        const val TRUTH =
+            "com.google.truth:truth:${Versions.TRUTH}"
     }
 
     object Mockito {
