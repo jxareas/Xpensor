@@ -12,15 +12,15 @@ android {
         targetSdk = ProjectProperties.TARGET_SDK
 
         testInstrumentationRunner = ProjectProperties.TEST_RUNNER
-        consumerProguardFiles("consumer-rules.pro")
+        consumerProguardFiles(ProjectProperties.CONSUMER_RULES)
     }
 
     buildTypes {
         release {
             isMinifyEnabled = ProjectProperties.IS_MINIFY_ENABLED
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile(ProjectProperties.PROGUARD_ANDROID_OPTIMIZE),
+                ProjectProperties.PROGUARD_RULES
             )
         }
     }
@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-    implementation(project(path = ":app"))
+    implementation(project(ProjectProperties.LIBRARY_APP_PATH))
     implementation(Dependencies.Android.KOTLIN_CORE)
     implementation(Dependencies.Android.APP_COMPAT)
     implementation(Dependencies.Android.MATERIAL)

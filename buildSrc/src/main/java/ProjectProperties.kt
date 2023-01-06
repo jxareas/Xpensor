@@ -12,12 +12,14 @@ object ProjectProperties {
 
     // Application
     const val APPLICATION_ID = "com.jxareas.xpensor"
-    const val VERSION_CODE = 2
-    const val VERSION_NAME = "0.1.0-alpha01"
+    const val VERSION_CODE = 3
+    const val VERSION_NAME = "0.1.0-alpha02"
 
     // ProGuard
-    const val PROGUARD_NAME = "proguard-android.txt"
-    const val PROGUARD_FILE = "proguard-rules.pro"
+    const val PROGUARD_ANDROID = "proguard-android.txt"
+    const val PROGUARD_ANDROID_OPTIMIZE = "proguard-android-optimize.txt"
+    const val PROGUARD_RULES = "proguard-rules.pro"
+    const val CONSUMER_RULES = "consumer-rules.pro"
 
     // Configuration
     const val IS_VECTOR_DRAWABLES_SUPPORT_LIBRARY_ENABLED = true
@@ -39,6 +41,8 @@ object ProjectProperties {
     const val CURRENCY_API_KEY = "CURRENCY_API_KEY"
 
     // Libraries
+    const val LIBRARY_APP_PATH = ":app"
     const val LIBRARY_SHARED_TEST_NAMESPACE = "com.jxareas.sharedtest"
+    const val LIBRARY_SHARED_TEST_PATH = ":shared-test"
 
 }
