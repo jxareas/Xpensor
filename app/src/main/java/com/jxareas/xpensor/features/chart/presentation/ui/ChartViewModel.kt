@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.extensions.mapEach
-import com.jxareas.xpensor.features.accounts.presentation.mapper.toDomain
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountWithDetails
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
-import com.jxareas.xpensor.features.transactions.presentation.mapper.toUi
+import com.jxareas.xpensor.features.transactions.presentation.mapper.toCategoryWithAmountUi
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -45,10 +45,10 @@ class ChartViewModel @Inject constructor(
     private fun launchGetCategoriesJob() {
         getCategoriesJob?.cancel()
         val selectedAccount =
-            _selectedAccountUi.value?.toDomain()
+            _selectedAccountUi.value?.toAccountWithDetails()
         getCategoriesJob =
             getCategoriesUseCase(_selectedDateRange.value, selectedAccount)
-                .mapEach(CategoryWithDetails::toUi)
+                .mapEach(CategoryWithDetails::toCategoryWithAmountUi)
                 .onEach { categories -> _categories.value = categories }
                 .launchIn(viewModelScope)
     }

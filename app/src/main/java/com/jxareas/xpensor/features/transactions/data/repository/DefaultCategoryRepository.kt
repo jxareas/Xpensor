@@ -3,7 +3,7 @@ package com.jxareas.xpensor.features.transactions.data.repository
 import com.jxareas.xpensor.common.extensions.mapEach
 import com.jxareas.xpensor.features.transactions.data.local.dao.CategoryDao
 import com.jxareas.xpensor.features.transactions.data.local.views.CategoryView
-import com.jxareas.xpensor.features.transactions.data.mapper.toDomain
+import com.jxareas.xpensor.features.transactions.data.mapper.toCategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.CategoryRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,10 +20,10 @@ class DefaultCategoryRepository @Inject constructor(
         id: Int,
     ): Flow<List<CategoryWithDetails>> =
         dao.getCategoryViewsForAccount(from, to, id)
-            .mapEach(CategoryView::toDomain)
+            .mapEach(CategoryView::toCategoryWithDetails)
 
     override fun getCategoryViews(from: LocalDate, to: LocalDate): Flow<List<CategoryWithDetails>> =
         dao.getCategoryViews(from, to)
-            .mapEach(CategoryView::toDomain)
+            .mapEach(CategoryView::toCategoryWithDetails)
 
 }

@@ -9,7 +9,7 @@ import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionAmountPerDay
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
 
-fun Transaction.toEntity(): TransactionEntity =
+fun Transaction.toTransactionEntity(): TransactionEntity =
     TransactionEntity(
         id = id,
         note = note,
@@ -20,7 +20,7 @@ fun Transaction.toEntity(): TransactionEntity =
         categoryId = categoryId,
     )
 
-fun TransactionView.toDomain() : TransactionWithDetails =
+fun TransactionView.toTransactionWithDetails() : TransactionWithDetails =
     TransactionWithDetails(
         id = id,
         note = note,
@@ -36,7 +36,7 @@ fun TransactionView.toDomain() : TransactionWithDetails =
         account = Account(accountId, accountName)
     )
 
-fun TransactionsByDateView.toDomain(): TransactionAmountPerDay =
+fun TransactionsByDateView.toTransactionAmountPerDay(): TransactionAmountPerDay =
     TransactionAmountPerDay(
         date = transactionDate,
         amount = amountPerDay,

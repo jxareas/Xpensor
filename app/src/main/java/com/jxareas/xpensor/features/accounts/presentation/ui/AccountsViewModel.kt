@@ -6,7 +6,7 @@ import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.extensions.mapEach
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.toUi
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountUi
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -46,7 +46,7 @@ class AccountsViewModel @Inject constructor(
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
-            .mapEach(AccountWithDetails::toUi)
+            .mapEach(AccountWithDetails::toAccountUi)
             .onEach { accounts ->
                 _accounts.value = accounts
             }

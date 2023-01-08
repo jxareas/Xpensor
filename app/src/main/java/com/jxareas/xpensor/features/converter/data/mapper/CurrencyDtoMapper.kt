@@ -9,10 +9,10 @@ import com.jxareas.xpensor.features.converter.domain.model.Currency
 import com.jxareas.xpensor.features.converter.domain.model.CurrencyComparison
 import com.jxareas.xpensor.features.converter.domain.model.CurrencyRates
 
-fun BaseCurrencyDto.toDomain(): BaseCurrency =
+fun BaseCurrencyDto.toBaseCurrency(): BaseCurrency =
     BaseCurrency(name = currencyName)
 
-fun CurrencyRatesDto.toDomain(): CurrencyRates =
+fun CurrencyRatesDto.toCurrencyRates(): CurrencyRates =
     CurrencyRates(
         crc = Currency(Currencies.CRC, crc),
         usd = Currency(Currencies.USD, usd),
@@ -21,8 +21,8 @@ fun CurrencyRatesDto.toDomain(): CurrencyRates =
         gbp = Currency(Currencies.GBP, gbp),
     )
 
-fun CurrencyDto.toDomain(): CurrencyComparison =
+fun CurrencyDto.toCurrencyComparison(): CurrencyComparison =
     CurrencyComparison(
-        baseCurrency = baseCurrency.toDomain(),
-        currencyRates = rates.toDomain(),
+        baseCurrency = baseCurrency.toBaseCurrency(),
+        currencyRates = rates.toCurrencyRates(),
     )

@@ -20,7 +20,7 @@ android {
         versionName = ProjectProperties.VERSION_NAME
         multiDexEnabled = ProjectProperties.IS_MULTIDEX_ENABLED
         vectorDrawables.useSupportLibrary = ProjectProperties.IS_VECTOR_DRAWABLES_SUPPORT_ENABLED
-        testInstrumentationRunner = ProjectProperties.TEST_RUNNER
+        testInstrumentationRunner = ProjectProperties.TEST_RUNNER_ANDROID_JUNIT
 
         val currencyApiKey = ProjectProperties.CURRENCY_API_KEY
         // Read CURRENCY_API_TOKEN key from local.properties
@@ -34,8 +34,8 @@ android {
         }
         getByName(ProjectProperties.DEBUG_BUILD_TYPE) {
             proguardFiles(
-                getDefaultProguardFile(ProjectProperties.PROGUARD_NAME),
-                ProjectProperties.PROGUARD_FILE
+                getDefaultProguardFile(ProjectProperties.PROGUARD_ANDROID),
+                ProjectProperties.PROGUARD_RULES
             )
         }
     }
@@ -68,6 +68,8 @@ dependencies {
     coreLibraryDesugaring(Dependencies.Android.DESUGARING_CORE_LIB)
 
     // Testing
+    testImplementation(project(ProjectProperties.SHARED_TEST_PATH))
+    androidTestImplementation(project(ProjectProperties.SHARED_TEST_PATH))
     testImplementation(Dependencies.Testing.TRUTH)
     androidTestImplementation(Dependencies.Testing.TRUTH)
     testImplementation(Dependencies.Testing.JUNIT)

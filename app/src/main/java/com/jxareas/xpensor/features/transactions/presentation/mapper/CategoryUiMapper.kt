@@ -5,7 +5,7 @@ import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetail
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryUi
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 
-fun Category.toUi(): CategoryUi =
+fun Category.toCategoryUi(): CategoryUi =
     CategoryUi(
         id = id,
         name = name,
@@ -13,7 +13,7 @@ fun Category.toUi(): CategoryUi =
         iconColor = iconColor,
     )
 
-fun CategoryUi.toDomain(): Category =
+fun CategoryUi.toCategory(): Category =
     Category(
         id = id,
         name = name,
@@ -21,14 +21,14 @@ fun CategoryUi.toDomain(): Category =
         iconColor = iconColor,
     )
 
-fun CategoryWithAmountUi.toDomain(): CategoryWithDetails =
+fun CategoryWithAmountUi.toCategoryWithDetails(): CategoryWithDetails =
     CategoryWithDetails(
-        category = category.toDomain(),
+        category = category.toCategory(),
         amount = amount,
     )
 
-fun CategoryWithDetails.toUi(): CategoryWithAmountUi =
+fun CategoryWithDetails.toCategoryWithAmountUi(): CategoryWithAmountUi =
     CategoryWithAmountUi(
-        category = category.toUi(),
+        category = category.toCategoryUi(),
         amount = amount,
     )

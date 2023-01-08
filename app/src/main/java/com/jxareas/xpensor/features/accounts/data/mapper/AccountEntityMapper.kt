@@ -3,7 +3,7 @@ package com.jxareas.xpensor.features.accounts.data.mapper
 import com.jxareas.xpensor.features.accounts.data.local.entity.AccountEntity
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 
-fun AccountWithDetails.toEntity() : AccountEntity =
+fun AccountWithDetails.toAccountEntity() : AccountEntity =
     AccountEntity(
             id = if (id == AccountEntity.EMPTY_ID) null else id,
             name = name,
@@ -11,7 +11,7 @@ fun AccountWithDetails.toEntity() : AccountEntity =
             color = color
         )
 
-fun AccountEntity.toDomain() : AccountWithDetails =
+fun AccountEntity.toAccountWithDetails() : AccountWithDetails =
     AccountWithDetails(
             id = id ?: 0,
             name = name,

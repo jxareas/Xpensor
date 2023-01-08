@@ -28,5 +28,6 @@ abstract class XpensorDatabase : RoomDatabase() {
     companion object {
         const val DATABASE_VERSION = 1
         const val DATABASE_NAME = "xpensor.db"
+        const val DATABASE_PATH = "database/$DATABASE_NAME"
     }
 }

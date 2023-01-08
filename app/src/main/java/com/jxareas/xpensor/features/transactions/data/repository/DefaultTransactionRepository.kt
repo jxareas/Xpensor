@@ -4,8 +4,9 @@ import com.jxareas.xpensor.common.extensions.mapEach
 import com.jxareas.xpensor.features.transactions.data.local.dao.TransactionDao
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDateView
-import com.jxareas.xpensor.features.transactions.data.mapper.toDomain
-import com.jxareas.xpensor.features.transactions.data.mapper.toEntity
+import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionAmountPerDay
+import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionWithDetails
+import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionEntity
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionAmountPerDay
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
@@ -23,7 +24,7 @@ class DefaultTransactionRepository @Inject constructor(
         to: LocalDate,
     ): Flow<List<TransactionWithDetails>> =
         dao.getTransactionViews(from, to)
-            .mapEach(TransactionView::toDomain)
+            .mapEach(TransactionView::toTransactionWithDetails)
 
     override fun getTransactionDetailsFromAccount(
         from: LocalDate,
@@ -31,14 +32,14 @@ class DefaultTransactionRepository @Inject constructor(
         id: Int,
     ): Flow<List<TransactionWithDetails>> =
         dao.getTransactionViewsForAccount(from, to, id)
-            .mapEach(TransactionView::toDomain)
+            .mapEach(TransactionView::toTransactionWithDetails)
 
     override fun getTransactionAmountsPerDay(
         from: LocalDate,
         to: LocalDate,
     ): Flow<List<TransactionAmountPerDay>> =
         dao.getTransactionAmountsPerDay(from, to)
-            .mapEach(TransactionsByDateView::toDomain)
+            .mapEach(TransactionsByDateView::toTransactionAmountPerDay)
 
     override fun getTransactionAmountsPerDayForAccount(
         from: LocalDate,
@@ -46,10 +47,10 @@ class DefaultTransactionRepository @Inject constructor(
         transactionId: Int,
     ): Flow<List<TransactionAmountPerDay>> =
         dao.getTransactionAmountsPerDayForAccount(from, to, transactionId)
-            .mapEach(TransactionsByDateView::toDomain)
+            .mapEach(TransactionsByDateView::toTransactionAmountPerDay)
 
     override suspend fun insertTransaction(transaction: Transaction) {
-        val transactionEntity = transaction.toEntity()
+        val transactionEntity = transaction.toTransactionEntity()
         dao.insertTransaction(transactionEntity)
     }
 

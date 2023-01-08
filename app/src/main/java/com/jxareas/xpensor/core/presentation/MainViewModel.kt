@@ -10,7 +10,7 @@ import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
 import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.toUi
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountUi
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
-            .mapEach(AccountWithDetails::toUi)
+            .mapEach(AccountWithDetails::toAccountUi)
             .onEach { accounts ->
                 _accounts.value = accounts
             }
