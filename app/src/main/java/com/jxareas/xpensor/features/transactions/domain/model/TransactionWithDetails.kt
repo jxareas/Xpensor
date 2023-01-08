@@ -1,6 +1,5 @@
 package com.jxareas.xpensor.features.transactions.domain.model
 
-import com.jxareas.xpensor.core.domain.model.Domain
 import com.jxareas.xpensor.features.accounts.domain.model.Account
 import java.time.LocalDate
 import java.time.LocalTime
@@ -13,4 +12,4 @@ data class TransactionWithDetails(
     val time: LocalTime,
     val category: Category,
     val account: Account,
-) : Domain
+)

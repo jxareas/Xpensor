@@ -13,7 +13,7 @@ import com.jxareas.xpensor.features.converter.domain.repository.CurrencyReposito
 import java.io.IOException
 import javax.inject.Inject
 
-class CurrencyRepositoryImpl @Inject constructor(
+class DefaultCurrencyRepository @Inject constructor(
     private val context: Context,
     private val converterApi: ConverterApi,
     private val preferences: SharedPreferences,

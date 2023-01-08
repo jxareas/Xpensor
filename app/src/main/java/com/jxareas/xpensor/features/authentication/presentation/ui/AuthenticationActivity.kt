@@ -4,7 +4,11 @@ import android.animation.ObjectAnimator
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnticipateOvershootInterpolator
@@ -63,7 +67,7 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     private fun setupView() = binding.run {
-        if (viewModel.isAppLaunchedFirstTime()) {
+        if (viewModel.isFirstAppLaunch()) {
             textViewEnterPin.text = getString(R.string.set_the_pin)
             buttonForgotCode.isVisible = false
         }

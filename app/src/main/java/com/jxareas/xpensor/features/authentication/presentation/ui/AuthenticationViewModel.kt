@@ -1,13 +1,12 @@
 package com.jxareas.xpensor.features.authentication.presentation.ui
 
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.common.utils.PreferenceUtils.FIRST_TIME_PREFERENCE_KEY
 import com.jxareas.xpensor.features.authentication.domain.model.PinCode
 import com.jxareas.xpensor.features.authentication.domain.usecase.AddUserAuthenticationPin
 import com.jxareas.xpensor.features.authentication.domain.usecase.GetAuthenticationPinUseCase
+import com.jxareas.xpensor.features.authentication.domain.usecase.ValidateFirstTimeLaunchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +19,7 @@ import javax.inject.Inject
 class AuthenticationViewModel @Inject constructor(
     private val addUserAuthenticationPin: AddUserAuthenticationPin,
     private val getAuthenticationPinUseCase: GetAuthenticationPinUseCase,
-    private val preferences: SharedPreferences,
+    private val validateFirstTimeLaunchUseCase: ValidateFirstTimeLaunchUseCase,
 ) : ViewModel() {
 
     private val _pinCode = MutableStateFlow(PinCode.EMPTY_CODE)
@@ -40,7 +39,7 @@ class AuthenticationViewModel @Inject constructor(
 
     private fun checkTheCode() {
         viewModelScope.launch {
-            if (!isAppLaunchedFirstTime()) {
+            if (!isFirstAppLaunch()) {
                 val currentUserPinCode = getAuthenticationPinUseCase().code
 
                 val authenticationEvent = if (_pinCode.value == currentUserPinCode)
@@ -54,7 +53,7 @@ class AuthenticationViewModel @Inject constructor(
     private suspend fun checkUserAuthentication() {
         if (_temporaryPinCode.value != PinCode.EMPTY_CODE) {
             if (_temporaryPinCode.value == _pinCode.value) {
-                addUserAuthenticationPin(_temporaryPinCode.value)
+                addUserAuthenticationPin(PinCode(_temporaryPinCode.value))
                 _events.emit(AuthenticationUiEvent.OpenMainActivity)
             } else {
                 _temporaryPinCode.value = PinCode.EMPTY_CODE
@@ -85,6 +84,5 @@ class AuthenticationViewModel @Inject constructor(
         _events.emit(AuthenticationUiEvent.EraseAppData)
     }
 
-    fun isAppLaunchedFirstTime(): Boolean =
-        preferences.getBoolean(FIRST_TIME_PREFERENCE_KEY, true)
+    fun isFirstAppLaunch(): Boolean = validateFirstTimeLaunchUseCase()
 }

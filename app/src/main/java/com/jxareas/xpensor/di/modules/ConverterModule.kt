@@ -1,7 +1,7 @@
 package com.jxareas.xpensor.di.modules
 
 import com.jxareas.xpensor.features.converter.data.api.ConverterApi
-import com.jxareas.xpensor.features.converter.data.repository.CurrencyRepositoryImpl
+import com.jxareas.xpensor.features.converter.data.repository.DefaultCurrencyRepository
 import com.jxareas.xpensor.features.converter.domain.repository.CurrencyRepository
 import dagger.Binds
 import dagger.Module
@@ -18,7 +18,7 @@ interface ConverterModule {
 
     @Binds
     @Singleton
-    fun bindConverterRepository(repository: CurrencyRepositoryImpl): CurrencyRepository
+    fun bindConverterRepository(repository: DefaultCurrencyRepository): CurrencyRepository
 
     companion object {
 
