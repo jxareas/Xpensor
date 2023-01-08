@@ -8,7 +8,6 @@ import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
 import com.jxareas.xpensor.features.transactions.presentation.mapper.CategoryWithAmountUiMapper
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
-import com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.event.SelectCategoryEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,7 +29,7 @@ class SelectCategoryViewModel @Inject constructor(
     private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
 
-    private val _events = MutableSharedFlow<SelectCategoryEvent>()
+    private val _events = MutableSharedFlow<CategorySelectionEvent>()
     val events = _events.asSharedFlow()
 
     private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
@@ -67,6 +66,6 @@ class SelectCategoryViewModel @Inject constructor(
         accountUi: AccountUi,
         categoryWithAmountUi: CategoryWithAmountUi,
     ) = launchScoped {
-        _events.emit(SelectCategoryEvent.SelectCategory(accountUi, categoryWithAmountUi))
+        _events.emit(CategorySelectionEvent.SelectCategory(accountUi, categoryWithAmountUi))
     }
 }

@@ -21,7 +21,7 @@ import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
@@ -39,7 +39,7 @@ class TransactionsFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: TransactionsViewModel by viewModels()
-    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     @Inject
     lateinit var transactionAdapter: TransactionAdapter

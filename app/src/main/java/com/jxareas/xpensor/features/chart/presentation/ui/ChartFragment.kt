@@ -26,7 +26,7 @@ import com.jxareas.xpensor.common.extensions.getThemeColor
 import com.jxareas.xpensor.common.extensions.setCategoryAttributes
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_COLOR
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.FragmentChartBinding
 import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
@@ -41,7 +41,7 @@ class ChartFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: ChartViewModel by viewModels()
-    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

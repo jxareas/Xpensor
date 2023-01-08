@@ -17,8 +17,6 @@ import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.databinding.BottomSheetAddTransactionBinding
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
-import com.jxareas.xpensor.features.transactions.presentation.ui.actions.add.event.AddTransactionEvent
-import com.jxareas.xpensor.features.transactions.presentation.ui.actions.add.state.AddTransactionState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

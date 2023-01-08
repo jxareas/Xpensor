@@ -12,7 +12,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.utils.DateUtils.DAY_IN_MS
 import com.jxareas.xpensor.common.utils.DateUtils.toLocalDate
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.DialogFragmentDateSelectorBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -25,7 +25,7 @@ class DateSelectorDialogFragment : DialogFragment() {
         get() = _binding!!
 
     private val viewModel: DateSelectorViewModel by viewModels()
-    private val activityViewModel: MainActivityViewModel by activityViewModels()
+    private val activityViewModel: MainViewModel by activityViewModels()
 
     private companion object {
         const val DATE_PICKER_TAG = "date_picker_tag"
