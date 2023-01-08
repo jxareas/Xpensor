@@ -19,7 +19,7 @@ android {
         versionCode = ProjectProperties.VERSION_CODE
         versionName = ProjectProperties.VERSION_NAME
         multiDexEnabled = ProjectProperties.IS_MULTIDEX_ENABLED
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables.useSupportLibrary = ProjectProperties.IS_VECTOR_DRAWABLES_SUPPORT_ENABLED
         testInstrumentationRunner = ProjectProperties.TEST_RUNNER
 
         val currencyApiKey = ProjectProperties.CURRENCY_API_KEY
@@ -67,10 +67,19 @@ dependencies {
     // Desugaring
     coreLibraryDesugaring(Dependencies.Android.DESUGARING_CORE_LIB)
 
-    // Testing Dependencies
+    // Testing
+    testImplementation(Dependencies.Testing.TRUTH)
+    androidTestImplementation(Dependencies.Testing.TRUTH)
     testImplementation(Dependencies.Testing.JUNIT)
-    androidTestImplementation(Dependencies.Testing.JUNIT_ANDROID)
-    androidTestImplementation(Dependencies.Testing.ESPRESSO_ANDROID)
+    androidTestImplementation(Dependencies.Testing.JUNIT_EXT)
+    androidTestImplementation(Dependencies.Testing.ESPRESSO_CORE)
+    testImplementation(Dependencies.Testing.ANDROID_TEST_CORE)
+    testImplementation(Dependencies.Testing.ANDROID_ARCH_TEST_CORE)
+    testImplementation(Dependencies.Testing.TURBINE)
+    testImplementation(Dependencies.Mockito.KOTLIN)
+    testImplementation(Dependencies.Mockito.CORE)
+    testImplementation(Dependencies.Mockito.INLINE)
+    testImplementation(Dependencies.Mockito.MOCKK)
 
     // AndroidX
     implementation(Dependencies.Android.SPLASH_SCREEN)
@@ -83,6 +92,8 @@ dependencies {
 
     // Kotlin Coroutines
     implementation(Dependencies.Kotlin.KOTLINX_COROUTINES)
+    testImplementation(Dependencies.Kotlin.KOTLIN_COROUTINES_TEST)
+    androidTestImplementation(Dependencies.Kotlin.KOTLIN_COROUTINES_TEST)
 
     // Dagger-Hilt
     implementation(Dependencies.Dagger.HILT)
@@ -94,6 +105,7 @@ dependencies {
     // Navigation
     implementation(Dependencies.Navigation.FRAGMENT_KTX)
     implementation(Dependencies.Navigation.UI_KTX)
+    androidTestImplementation(Dependencies.Navigation.TESTING)
 
     // Lifecycle
     implementation(Dependencies.Android.LIFECYCLE_VIEWMODEL_KTX)
@@ -105,7 +117,7 @@ dependencies {
     kapt(Dependencies.Room.ROOM_COMPILER)
 
     // Preferences
-    implementation(Dependencies.Preference.PREFERENCEX)
+    implementation(Dependencies.Preferences.PREFERENCEX)
 
     // OkHttp3
     implementation(Dependencies.Square.OKHTTP_CLIENT)

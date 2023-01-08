@@ -20,6 +20,7 @@ object ProjectProperties {
     const val PROGUARD_FILE = "proguard-rules.pro"
 
     // Configuration
+    const val IS_VECTOR_DRAWABLES_SUPPORT_ENABLED = true
     const val IS_MULTIDEX_ENABLED = true
     const val IS_MINIFY_ENABLED = false
     const val IS_VIEW_BINDING_ENABLED = true

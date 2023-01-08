@@ -1,7 +1,7 @@
 object Versions {
     const val KOTLIN_CORE_KTX = "1.7.0"
-    const val KOTLINX_COROUTINES = "1.6.0"
-    const val APP_COMPAT = "1.4.1"
+    const val KOTLIN_COROUTINES = "1.6.4"
+    const val APP_COMPAT = "1.5.1"
     const val LEGACY_SUPPORT_VERSION = "1.0.0"
     const val ROOM = "2.4.2"
     const val SPLASH_SCREEN = "1.0.0"
@@ -34,4 +34,11 @@ object Versions {
     const val DESUGAR_JDK_LIB = "1.1.5"
     const val VERSIONS_PLUGIN = "0.44.0"
     const val DETEKT = "1.21.0"
+    const val MOCKITO_KOTLIN = "4.0.0"
+    const val MOCKITO_CORE = "3.3.3"
+    const val MOCKITO_MOCKK = "1.12.1"
+    const val ANDROID_TEST_CORE = "1.4.0"
+    const val ANDROID_ARCH_TEST_CORE = "2.1.0"
+    const val TURBINE = "0.7.0"
+    const val TRUTH = "1.1.3"
 }
