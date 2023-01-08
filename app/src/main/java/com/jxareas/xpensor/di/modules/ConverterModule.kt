@@ -1,7 +1,7 @@
 package com.jxareas.xpensor.di.modules
 
 import com.jxareas.xpensor.features.converter.data.api.ConverterApi
-import com.jxareas.xpensor.features.converter.data.repository.ConverterRepositoryImpl
+import com.jxareas.xpensor.features.converter.data.repository.DefaultConverterRepository
 import com.jxareas.xpensor.features.converter.domain.repository.ConverterRepository
 import dagger.Binds
 import dagger.Module
@@ -18,7 +18,7 @@ interface ConverterModule {
 
     @Binds
     @Singleton
-    fun bindConverterRepository(repository: ConverterRepositoryImpl): ConverterRepository
+    fun bindConverterRepository(repository: DefaultConverterRepository): ConverterRepository
 
     companion object {
 

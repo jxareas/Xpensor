@@ -2,7 +2,7 @@ package com.jxareas.xpensor.di.modules
 
 import com.jxareas.xpensor.core.data.database.XpensorDatabase
 import com.jxareas.xpensor.features.transactions.data.local.dao.CategoryDao
-import com.jxareas.xpensor.features.transactions.data.repository.CategoryRepositoryImpl
+import com.jxareas.xpensor.features.transactions.data.repository.DefaultCategoryRepository
 import com.jxareas.xpensor.features.transactions.domain.repository.CategoryRepository
 import dagger.Binds
 import dagger.Module
@@ -17,7 +17,7 @@ interface CategoryModule {
 
     @Binds
     @Singleton
-    fun bindCategoryRepository(repository: CategoryRepositoryImpl): CategoryRepository
+    fun bindCategoryRepository(repository: DefaultCategoryRepository): CategoryRepository
 
     companion object {
 

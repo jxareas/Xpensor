@@ -38,7 +38,7 @@ class GetTransactionsWithDayUseCase @Inject constructor(
             var index = 0
             for (transaction in transactions) {
                 result.add(transaction)
-                if (transaction.date != amountsPerDay[index].transactionDate) {
+                if (transaction.date != amountsPerDay[index].date) {
                     result.add(result.size - 1, amountsPerDay[index])
                     index++
                 }

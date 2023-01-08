@@ -4,5 +4,5 @@ import com.squareup.moshi.Json
 
 data class BaseCurrencyDto(
     @Json(name = "base_currency")
-    val base: String,
+    val currencyName: String,
 )

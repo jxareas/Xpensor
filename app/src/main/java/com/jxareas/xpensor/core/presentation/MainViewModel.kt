@@ -4,11 +4,13 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
+import com.jxareas.xpensor.common.extensions.mapEach
 import com.jxareas.xpensor.common.utils.DateUtils
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
+import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toUi
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -25,7 +27,6 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val sharedPreferences: SharedPreferences,
-    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
     private val _accounts = MutableStateFlow(emptyList<AccountUi>())
@@ -49,8 +50,9 @@ class MainViewModel @Inject constructor(
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
+            .mapEach(AccountWithDetails::toUi)
             .onEach { accounts ->
-                _accounts.value = accountUiMapper.mapFromList(accounts)
+                _accounts.value = accounts
             }
             .launchIn(viewModelScope)
     }

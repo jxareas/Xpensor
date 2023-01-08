@@ -3,10 +3,12 @@ package com.jxareas.xpensor.features.transactions.presentation.ui.actions.catego
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.common.extensions.mapEach
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toDomain
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
-import com.jxareas.xpensor.features.transactions.presentation.mapper.CategoryWithAmountUiMapper
+import com.jxareas.xpensor.features.transactions.presentation.mapper.toUi
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -22,8 +24,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectCategoryViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val accountUiMapper: AccountUiMapper,
-    private val categoryUiMapper: CategoryWithAmountUiMapper,
 ) : ViewModel() {
 
     private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
@@ -43,11 +43,12 @@ class SelectCategoryViewModel @Inject constructor(
 
     private fun launchGetCategoriesJob() {
         getCategoriesJob?.cancel()
-        val account = _selectedAccount.value?.let(accountUiMapper::mapToDomain)
+        val account = _selectedAccount.value?.toDomain()
         getCategoriesJob =
             getCategoriesUseCase(_selectedDateRange.value, account)
+                .mapEach(CategoryWithDetails::toUi)
                 .onEach { categories ->
-                    _categories.value = categoryUiMapper.mapFromList(categories)
+                    _categories.value = categories
                 }
                 .launchIn(viewModelScope)
     }

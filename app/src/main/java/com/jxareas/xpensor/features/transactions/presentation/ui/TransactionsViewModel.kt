@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.utils.DateRange
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toDomain
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
 import com.jxareas.xpensor.features.transactions.domain.usecase.DeleteTransactionUseCase
@@ -12,7 +12,12 @@ import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsU
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsWithDayUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -21,7 +26,6 @@ class TransactionsViewModel @Inject constructor(
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getTransactionsWithDayUseCase: GetTransactionsWithDayUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
-    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
     private val _transactionState = MutableStateFlow<TransactionState>(TransactionState.Idle)
@@ -46,9 +50,7 @@ class TransactionsViewModel @Inject constructor(
         _transactionState.value = TransactionState.Loading
         getTransactionsJob?.cancel()
 
-        val account = selectedAccount?.let { accountListItem ->
-            accountUiMapper.mapToDomain(accountListItem)
-        }
+        val account = selectedAccount?.toDomain()
 
         getTransactionsJob = getTransactionsUseCase(selectedDateRange, account)
             .onEach { transactions ->

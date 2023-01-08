@@ -8,7 +8,7 @@ object TransactionDiffCallback : DiffUtil.ItemCallback<Any>() {
 
     override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean =
         if (oldItem is TransactionAmountPerDay && newItem is TransactionAmountPerDay)
-            oldItem.transactionDate == newItem.transactionDate
+            oldItem.date == newItem.date
         else if (oldItem is TransactionWithDetails && newItem is TransactionWithDetails)
             oldItem.id == newItem.id
         else false

@@ -8,7 +8,7 @@ import androidx.annotation.IntegerRes
 import androidx.viewbinding.ViewBinding
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
-import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
+import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 
 internal inline infix operator fun <reified VB : ViewBinding> ViewGroup.invoke(
     crossinline bindingInflater: LayoutInflater.(parent: ViewGroup, attachToParent: Boolean) -> VB,
@@ -20,7 +20,7 @@ fun Resources.getLong(@IntegerRes integerRes: Int): Long =
     getInteger(integerRes).toLong()
 
 fun ListItemCategoryBinding.setCategoryAttributes(
-    details: CategoryWithDetails,
+    details: CategoryWithAmountUi,
     currency: String?,
 ) {
     this.name.text = details.category.name

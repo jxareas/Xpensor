@@ -3,11 +3,13 @@ package com.jxareas.xpensor.features.chart.presentation.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.common.extensions.mapEach
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toDomain
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
+import com.jxareas.xpensor.features.transactions.presentation.mapper.toUi
+import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,10 +24,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ChartViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
-    private val _categories = MutableStateFlow(emptyList<CategoryWithDetails>())
+    private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
 
     private val _events = MutableSharedFlow<ChartEvent>()
@@ -43,12 +44,11 @@ class ChartViewModel @Inject constructor(
 
     private fun launchGetCategoriesJob() {
         getCategoriesJob?.cancel()
-        val selectedAccount: AccountWithDetails? =
-            _selectedAccountUi.value?.let { accountListItem ->
-                accountUiMapper.mapToDomain(accountListItem)
-            }
+        val selectedAccount =
+            _selectedAccountUi.value?.toDomain()
         getCategoriesJob =
             getCategoriesUseCase(_selectedDateRange.value, selectedAccount)
+                .mapEach(CategoryWithDetails::toUi)
                 .onEach { categories -> _categories.value = categories }
                 .launchIn(viewModelScope)
     }

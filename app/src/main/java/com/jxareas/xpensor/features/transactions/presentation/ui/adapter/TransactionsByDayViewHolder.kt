@@ -15,8 +15,8 @@ class TransactionsByDayViewHolder(
     override fun bind(item: Any) {
         val dayInfo = item as TransactionAmountPerDay
 
-        val dateValue = dayInfo.transactionDate
-        val amountValue = dayInfo.amountPerDay
+        val dateValue = dayInfo.date
+        val amountValue = dayInfo.amount
         val monthAndYearValue = "${dateValue.month} ${dateValue.year}"
 
         with(binding) {
