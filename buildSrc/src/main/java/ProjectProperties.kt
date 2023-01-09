@@ -21,6 +21,9 @@ object ProjectProperties {
     const val PROGUARD_RULES = "proguard-rules.pro"
     const val PROGUARD_CONSUMER_RULES = "consumer-rules.pro"
 
+    // ROOM Schemas for AutoMigration
+    const val ROOM_SCHEMA_LOCATION = "room.schemaLocation"
+    const val ROOM_SCHEMA_DIR = "schemas"
 
     // Configuration
     const val IS_VECTOR_DRAWABLES_SUPPORT_ENABLED = true

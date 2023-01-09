@@ -26,6 +26,13 @@ android {
         // Read CURRENCY_API_TOKEN key from local.properties
         val currencyApiToken: String = gradleLocalProperties(rootDir).getProperty(currencyApiKey)
         buildConfigField("String", currencyApiKey, currencyApiToken)
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments[ProjectProperties.ROOM_SCHEMA_LOCATION] =
+                    "$projectDir/${ProjectProperties.ROOM_SCHEMA_DIR}"
+            }
+        }
     }
 
     buildTypes {
