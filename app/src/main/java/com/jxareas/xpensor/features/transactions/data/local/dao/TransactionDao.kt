@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEntity
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDateView
+import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDayView
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
@@ -15,27 +15,19 @@ interface TransactionDao {
 
     @Query(
         """
-    SELECT transactions.id, transactions.note, transactions.amount, transactions.date,
-    transactions.time, categories.id AS category_id, categories.name AS category_name, accounts.id AS account_id, 
-    accounts.name AS account_name, categories.icon, categories.icon_color    
-    FROM transactions 
-    JOIN accounts ON accounts.id = transactions.account_id 
-    JOIN categories ON categories.id = transactions.category_id 
-    WHERE date >= :from AND date <= :to ORDER BY date ASC, time ASC
-    """
+    SELECT * FROM view_transactions
+    WHERE transaction_date >= :from AND transaction_date <= :to
+    ORDER BY transaction_date ASC, transaction_date ASC
+    """,
     )
     fun getTransactionViews(from: LocalDate, to: LocalDate): Flow<List<TransactionView>>
 
     @Query(
         """
-    SELECT transactions.id, transactions.note, transactions.amount, transactions.date, transactions.time, 
-    categories.id AS category_id, categories.name AS category_name, accounts.id AS account_id, 
-    accounts.name AS account_name, categories.icon, categories.icon_color
-    FROM transactions
-    JOIN accounts ON accounts.id = transactions.account_id 
-    JOIN categories ON categories.id = transactions.category_id
-    WHERE date >= :from AND date <= :to AND account_id = :id ORDER BY date ASC, time ASC
-    """
+    SELECT * FROM view_transactions
+    WHERE transaction_date >= :from AND transaction_date <= :to AND account_id = :id
+    ORDER BY transaction_date ASC, transaction_time ASC
+    """,
     )
     fun getTransactionViewsForAccount(
         from: LocalDate,
@@ -45,30 +37,29 @@ interface TransactionDao {
 
     @Query(
         """
-    SELECT date, SUM(amount) AS amount_per_day 
-    FROM transactions 
-    WHERE date >= :from AND date <= :to 
-    GROUP BY date 
+    SELECT * FROM view_transactions_by_day
+    WHERE date >= :from AND date <= :to
+    GROUP BY date
     ORDER BY date ASC
-    """
+    """,
     )
     fun getTransactionAmountsPerDay(from: LocalDate, to: LocalDate):
-        Flow<List<TransactionsByDateView>>
+            Flow<List<TransactionsByDayView>>
 
     @Query(
         """
-    SELECT date, SUM(amount) AS amount_per_day  
-    FROM transactions 
+    SELECT date, SUM(amount) AS amount_per_day
+    FROM transactions
     WHERE date >= :from AND date <= :to AND account_id = :id
     GROUP BY date
     ORDER BY date ASC
-    """
+    """,
     )
     fun getTransactionAmountsPerDayForAccount(
         from: LocalDate,
         to: LocalDate,
         id: Int,
-    ): Flow<List<TransactionsByDateView>>
+    ): Flow<List<TransactionsByDayView>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(transaction: TransactionEntity)

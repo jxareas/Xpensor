@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalDate
 import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalTime
@@ -18,15 +19,19 @@ import java.time.LocalTime
             entity = CategoryEntity::class,
             parentColumns = ["id"],
             childColumns = ["category_id"],
-            onDelete = CASCADE
+            onDelete = CASCADE,
         ),
         ForeignKey(
             entity = AccountEntity::class,
             parentColumns = ["id"],
             childColumns = ["account_id"],
-            onDelete = CASCADE
-        )
-    ]
+            onDelete = CASCADE,
+        ),
+    ],
+    indices = [
+        Index(value = ["account_id"], name = "IX_FK_account", unique = false),
+        Index(value = ["category_id"], name = "IX_FK_category", unique = false),
+    ],
 )
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
@@ -38,5 +43,5 @@ data class TransactionEntity(
     @ColumnInfo(name = "account_id")
     val accountId: Int,
     @ColumnInfo(name = "category_id")
-    val categoryId: Int
+    val categoryId: Int,
 )

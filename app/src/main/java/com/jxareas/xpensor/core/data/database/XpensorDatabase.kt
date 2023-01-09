@@ -1,5 +1,6 @@
 package com.jxareas.xpensor.core.data.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -12,11 +13,17 @@ import com.jxareas.xpensor.features.transactions.data.local.dao.CategoryDao
 import com.jxareas.xpensor.features.transactions.data.local.dao.TransactionDao
 import com.jxareas.xpensor.features.transactions.data.local.entity.CategoryEntity
 import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEntity
+import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
+import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDayView
 
 @Database(
     entities = [AccountEntity::class, CategoryEntity::class, TransactionEntity::class],
     version = DATABASE_VERSION,
-    exportSchema = true
+    exportSchema = true,
+    views = [TransactionView::class, TransactionsByDayView::class],
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+    ],
 )
 @TypeConverters(TimeConverter::class, DateConverter::class)
 abstract class XpensorDatabase : RoomDatabase() {
@@ -26,7 +33,7 @@ abstract class XpensorDatabase : RoomDatabase() {
     abstract val transactionDao: TransactionDao
 
     companion object {
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
         const val DATABASE_NAME = "xpensor.db"
         const val DATABASE_PATH = "database/$DATABASE_NAME"
     }
