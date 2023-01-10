@@ -10,7 +10,7 @@ import com.jxareas.xpensor.common.extensions.invoke
 import com.jxareas.xpensor.common.utils.OnBindViewHolder
 import com.jxareas.xpensor.databinding.CardItemTransactionBinding
 import com.jxareas.xpensor.databinding.ListItemDayInformationBinding
-import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import javax.inject.Inject
 
 class TransactionAdapter @Inject constructor(
@@ -54,7 +54,7 @@ class TransactionAdapter @Inject constructor(
         }
 
     override fun getItemViewType(position: Int): Int =
-        if (currentList[position] is TransactionWithDetails)
+        if (currentList[position] is TransactionDetails)
             TRANSACTION_VIEW_TYPE
         else DAY_INFO_VIEW_TYPE
 }

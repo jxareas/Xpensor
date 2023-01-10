@@ -25,7 +25,7 @@ import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import com.jxareas.xpensor.features.transactions.presentation.ui.adapter.TransactionAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -86,7 +86,7 @@ class TransactionsFragment : Fragment() {
             adapter = transactionAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(
-                DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL),
             )
         }
     }
@@ -115,18 +115,20 @@ class TransactionsFragment : Fragment() {
         }
     }
 
-    private fun showAlertDialog(transaction: TransactionView) =
+    private fun showAlertDialog(details: TransactionDetails) =
         MaterialAlertDialogBuilder(requireContext())
             .setIcon(R.drawable.ic_warning)
             .setTitle(R.string.delete_transaction_alert_title)
             .setMessage(
                 getString(
-                    R.string.transaction_summary_dialog, transaction.categoryName,
-                    transaction.accountName, transaction.amount.toString()
-                )
+                    R.string.transaction_summary_dialog,
+                    details.category.name,
+                    details.account.name,
+                    details.transaction.amount.toString(),
+                ),
             )
             .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                viewModel.onDeleteTransactionConfirm(transaction)
+                viewModel.onDeleteTransactionConfirm(details)
                 isAlertShowing = false
             }
             .setNegativeButton(getString(R.string.cancel)) { _, _ ->
@@ -140,7 +142,7 @@ class TransactionsFragment : Fragment() {
     private fun navigateToAddTransactionSheet(accountUi: AccountUi) {
         val direction =
             TransactionsFragmentDirections.actionTransactionsFragmentToSelectCategoryBottomSheet(
-                accountUi
+                accountUi,
             )
         findNavController().navigate(direction)
     }
@@ -157,7 +159,7 @@ class TransactionsFragment : Fragment() {
             SelectDateMenu {
                 viewModel.onSelectedDateClick()
             },
-            viewLifecycleOwner, Lifecycle.State.STARTED
+            viewLifecycleOwner, Lifecycle.State.STARTED,
         )
     }
 

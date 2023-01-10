@@ -15,7 +15,6 @@ import com.jxareas.xpensor.common.extensions.setIcon
 import com.jxareas.xpensor.common.extensions.showSnackbar
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.databinding.BottomSheetAddTransactionBinding
-import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -68,7 +67,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                 when (event) {
                     is AddTransactionEvent.CreateNewTransaction -> {
                         val account = args.selectedAccount
-                        val categoryWithDetails = args.selectedCategory
+                        val details = args.selectedCategory
                         val amount =
                             binding.textInputLayoutExpense.editText?.text.toString()
                                 .toDoubleOrNull()
@@ -81,11 +80,9 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
                             val transaction = Transaction(
                                 note = note,
                                 amount = amount,
-                                accountId = account.id ?: AccountUi.EMPTY_ID,
-                                categoryId = categoryWithDetails.category.id,
                             )
 
-                            viewModel.onAddTransaction(transaction)
+                            viewModel.onAddTransaction(transaction, account.id, details.category.id)
                         }
                     }
                 }

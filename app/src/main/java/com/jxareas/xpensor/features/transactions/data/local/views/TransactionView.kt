@@ -22,23 +22,23 @@ import java.time.LocalTime
 )
 data class TransactionView(
     @ColumnInfo(name = "transaction_id")
-    val id: Int,
+    val transactionId: Int,
     @ColumnInfo(name = "transaction_note")
-    val note: String,
+    val transactionNote: String,
     @ColumnInfo(name = "transaction_amount")
-    val amount: Double,
+    val transactionAmount: Double,
     @ColumnInfo(name = "transaction_date")
-    val date: LocalDate,
+    val transactionDate: LocalDate,
     @ColumnInfo(name = "transaction_time")
-    val time: LocalTime,
+    val transactionTime: LocalTime,
     @ColumnInfo(name = "category_id")
     val categoryId: Int,
     @ColumnInfo(name = "category_name")
     val categoryName: String,
     @ColumnInfo(name = "category_icon")
-    val icon: Int,
+    val categoryIcon: Int,
     @ColumnInfo(name = "category_icon_color")
-    val iconColor: String,
+    val categoryIconColor: String,
     @ColumnInfo(name = "account_id")
     val accountId: Int,
     @ColumnInfo(name = "account_name")

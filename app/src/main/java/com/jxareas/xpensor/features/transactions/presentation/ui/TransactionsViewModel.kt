@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.utils.DateRange
-import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountWithDetails
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.DeleteTransactionUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsWithDayUseCase
@@ -50,7 +50,7 @@ class TransactionsViewModel @Inject constructor(
         _transactionState.value = TransactionState.Loading
         getTransactionsJob?.cancel()
 
-        val account = selectedAccount?.toAccountWithDetails()
+        val account = selectedAccount?.toAccount()
 
         getTransactionsJob = getTransactionsUseCase(selectedDateRange, account)
             .onEach { transactions ->
@@ -61,16 +61,17 @@ class TransactionsViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    suspend fun onDeleteTransaction(transaction: TransactionView) =
-        deleteTransactionUseCase(transaction)
+    fun onDeleteTransaction(transactionDetails: TransactionDetails) = launchScoped {
+        deleteTransactionUseCase(transactionDetails)
+    }
 
     fun onUpdateSelectedDateRange(from: LocalDate? = null, to: LocalDate? = null) {
         _selectedDateRange.value = from to to
         launchGetTransactionsJob()
     }
 
-    fun onUpdateSelectedAccount(account: AccountUi? = null) {
-        _selectedAccount.value = account
+    fun onUpdateSelectedAccount(accountUi: AccountUi? = null) {
+        _selectedAccount.value = accountUi
         launchGetTransactionsJob()
     }
 
@@ -78,15 +79,15 @@ class TransactionsViewModel @Inject constructor(
         _events.emit(TransactionEvent.DateSelected)
     }
 
-    fun onAddTransactionClick(account: AccountUi) = launchScoped {
-        _events.emit(TransactionEvent.OpenTheAddTransactionSheet(account))
+    fun onAddTransactionClick(accountUi: AccountUi) = launchScoped {
+        _events.emit(TransactionEvent.OpenTheAddTransactionSheet(accountUi))
     }
 
-    fun onDeleteButtonClick(transaction: TransactionView) = launchScoped {
-        _events.emit(TransactionEvent.ShowTheDeleteTransactionDialog(transaction))
+    fun onDeleteButtonClick(transactionDetails: TransactionDetails) = launchScoped {
+        _events.emit(TransactionEvent.ShowTheDeleteTransactionDialog(transactionDetails))
     }
 
-    fun onDeleteTransactionConfirm(transaction: TransactionView) = launchScoped {
-        _events.emit(TransactionEvent.DeleteTransaction(transaction))
+    fun onDeleteTransactionConfirm(transactionDetails: TransactionDetails) = launchScoped {
+        _events.emit(TransactionEvent.DeleteTransaction(transactionDetails))
     }
 }

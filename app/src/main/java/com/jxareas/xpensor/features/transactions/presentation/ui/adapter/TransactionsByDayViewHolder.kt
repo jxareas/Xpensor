@@ -5,7 +5,7 @@ import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
 import com.jxareas.xpensor.databinding.ListItemDayInformationBinding
-import com.jxareas.xpensor.features.transactions.domain.model.TransactionAmountPerDay
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionByDay
 
 class TransactionsByDayViewHolder(
     private val binding: ListItemDayInformationBinding,
@@ -13,7 +13,7 @@ class TransactionsByDayViewHolder(
 ) : TransactionAdapter.ViewHolder(binding) {
 
     override fun bind(item: Any) {
-        val dayInfo = item as TransactionAmountPerDay
+        val dayInfo = item as TransactionByDay
 
         val dateValue = dayInfo.date
         val amountValue = dayInfo.amount

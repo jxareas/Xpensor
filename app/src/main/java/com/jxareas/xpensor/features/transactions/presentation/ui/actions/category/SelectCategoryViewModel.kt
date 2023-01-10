@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.extensions.mapEach
-import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountWithDetails
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
@@ -43,7 +43,7 @@ class SelectCategoryViewModel @Inject constructor(
 
     private fun launchGetCategoriesJob() {
         getCategoriesJob?.cancel()
-        val account = _selectedAccount.value?.toAccountWithDetails()
+        val account = _selectedAccount.value?.toAccount()
         getCategoriesJob =
             getCategoriesUseCase(_selectedDateRange.value, account)
                 .mapEach(CategoryWithDetails::toCategoryWithAmountUi)

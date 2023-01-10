@@ -62,7 +62,7 @@ class DateSelectorDialogFragment : DialogFragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.events.collectLatest { event ->
                 when (event) {
-                    is DateSelectedEvent.CustomDate -> {
+                    is SelectDateEvent.CustomDate -> {
                         val datePicker = MaterialDatePicker.Builder.datePicker()
                             .setTitleText(getString(R.string.select_date))
                             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
@@ -76,27 +76,27 @@ class DateSelectorDialogFragment : DialogFragment() {
                         }
                         datePicker.show(childFragmentManager, DATE_PICKER_TAG)
                     }
-                    is DateSelectedEvent.Today -> {
+                    is SelectDateEvent.Today -> {
                         val date = viewModel.getDate()
                         activityViewModel.onUpdateCurrentDateRange(date, date)
                         dismiss()
                     }
-                    is DateSelectedEvent.Week -> {
+                    is SelectDateEvent.Week -> {
                         val from = viewModel.getDate(WEEK)
                         activityViewModel.onUpdateCurrentDateRange(from, null)
                         dismiss()
                     }
-                    is DateSelectedEvent.Month -> {
+                    is SelectDateEvent.Month -> {
                         val from = viewModel.getDate(MONTH)
                         activityViewModel.onUpdateCurrentDateRange(from, null)
                         dismiss()
                     }
-                    is DateSelectedEvent.Year -> {
+                    is SelectDateEvent.Year -> {
                         val from = viewModel.getDate(YEAR)
                         activityViewModel.onUpdateCurrentDateRange(from, null)
                         dismiss()
                     }
-                    is DateSelectedEvent.AllTime -> {
+                    is SelectDateEvent.AllTime -> {
                         activityViewModel.onUpdateCurrentDateRange(null, null)
                         dismiss()
                     }

@@ -8,7 +8,7 @@ import com.jxareas.xpensor.common.extensions.mapEach
 import com.jxareas.xpensor.common.utils.DateUtils
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
 import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
+import com.jxareas.xpensor.features.accounts.domain.model.Account
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
 import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountUi
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
         getAccountsJob = getAccountsUseCase()
-            .mapEach(AccountWithDetails::toAccountUi)
+            .mapEach(Account::toAccountUi)
             .onEach { accounts ->
                 _accounts.value = accounts
             }

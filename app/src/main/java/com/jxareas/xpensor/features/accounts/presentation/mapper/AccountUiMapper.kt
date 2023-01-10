@@ -1,9 +1,9 @@
 package com.jxareas.xpensor.features.accounts.presentation.mapper
 
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
+import com.jxareas.xpensor.features.accounts.domain.model.Account
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 
-fun AccountWithDetails.toAccountUi(): AccountUi =
+fun Account.toAccountUi(): AccountUi =
     AccountUi(
         id = id,
         name = name,
@@ -11,9 +11,9 @@ fun AccountWithDetails.toAccountUi(): AccountUi =
         color = color,
     )
 
-fun AccountUi.toAccountWithDetails(): AccountWithDetails =
-    AccountWithDetails(
-        id = id ?: AccountUi.EMPTY_ID,
+fun AccountUi.toAccount(): Account =
+    Account(
+        id = id,
         name = name,
         amount = amount,
         color = color,

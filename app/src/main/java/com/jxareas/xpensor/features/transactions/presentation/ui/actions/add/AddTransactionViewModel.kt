@@ -22,10 +22,10 @@ class AddTransactionViewModel @Inject constructor(
     private val _events = MutableSharedFlow<AddTransactionEvent>()
     val events = _events.asSharedFlow()
 
-    suspend fun onAddTransaction(transaction: Transaction) {
-        val isTransactionValid = validateTransactionUseCase(transaction)
+    fun onAddTransaction(transaction: Transaction, accountId: Int, categoryId: Int) = launchScoped {
+        val isTransactionValid = validateTransactionUseCase(transaction, accountId)
         if (isTransactionValid)
-            addTransactionUseCase(transaction).also {
+            addTransactionUseCase(transaction, accountId, categoryId).also {
                 _transactionState.emit(AddTransactionState.ValidTransaction)
             }
         else _transactionState.emit(AddTransactionState.InvalidTransaction)

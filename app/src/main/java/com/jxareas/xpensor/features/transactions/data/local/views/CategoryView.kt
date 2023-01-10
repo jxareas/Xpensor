@@ -1,9 +1,7 @@
 package com.jxareas.xpensor.features.transactions.data.local.views
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
 
-@Entity
 data class CategoryView(
     val id: Int,
     val name: String,

@@ -5,7 +5,6 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Singleton
 
-@Singleton
 object AuthenticationInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {

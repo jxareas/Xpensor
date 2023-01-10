@@ -2,8 +2,8 @@ package com.jxareas.xpensor.features.transactions.domain.usecase
 
 import com.jxareas.xpensor.common.utils.DateRange
 import com.jxareas.xpensor.common.utils.DateUtils
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
-import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
+import com.jxareas.xpensor.features.accounts.domain.model.Account
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRepository
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,9 +18,9 @@ class GetTransactionsWithDayUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        transactions: List<TransactionWithDetails>,
+        transactions: List<TransactionDetails>,
         dateRange: DateRange,
-        account: AccountWithDetails?,
+        account: Account?,
     ): List<Any> {
         val minDate = dateRange.first ?: DateUtils.DEFAULT_LOCAL_DATE
         val maxDate = dateRange.second ?: DateUtils.getCurrentLocalDate()
@@ -36,9 +36,9 @@ class GetTransactionsWithDayUseCase @Inject constructor(
 
         if (amountsPerDay.isNotEmpty()) {
             var index = 0
-            for (transaction in transactions) {
-                result.add(transaction)
-                if (transaction.date != amountsPerDay[index].date) {
+            for (details in transactions) {
+                result.add(details)
+                if (details.transaction.date != amountsPerDay[index].date) {
                     result.add(result.size - 1, amountsPerDay[index])
                     index++
                 }

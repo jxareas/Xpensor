@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.jxareas.xpensor.common.extensions.getImageViewTint
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.features.accounts.domain.usecase.AddAccountUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountWithDetails
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +21,7 @@ class AddAccountViewModel @Inject constructor(
     val events = _events.asSharedFlow()
 
     fun addAccount(accountUi: AccountUi) = launchScoped {
-        val account = accountUi.toAccountWithDetails()
+        val account = accountUi.toAccount()
         addAccountUseCase(account)
     }
 

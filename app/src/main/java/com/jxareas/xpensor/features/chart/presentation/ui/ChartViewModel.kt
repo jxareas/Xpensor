@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.extensions.mapEach
-import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountWithDetails
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
@@ -45,7 +45,7 @@ class ChartViewModel @Inject constructor(
     private fun launchGetCategoriesJob() {
         getCategoriesJob?.cancel()
         val selectedAccount =
-            _selectedAccountUi.value?.toAccountWithDetails()
+            _selectedAccountUi.value?.toAccount()
         getCategoriesJob =
             getCategoriesUseCase(_selectedDateRange.value, selectedAccount)
                 .mapEach(CategoryWithDetails::toCategoryWithAmountUi)

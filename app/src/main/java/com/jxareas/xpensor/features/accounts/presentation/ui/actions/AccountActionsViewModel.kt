@@ -3,7 +3,7 @@ package com.jxareas.xpensor.features.accounts.presentation.ui.actions
 import androidx.lifecycle.ViewModel
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.features.accounts.domain.usecase.DeleteAccountUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountWithDetails
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +19,7 @@ class AccountActionsViewModel @Inject constructor(
     val events = _events.asSharedFlow()
 
     suspend fun removeAccount(accountUi: AccountUi) {
-        val account = accountUi.toAccountWithDetails()
+        val account = accountUi.toAccount()
         deleteAccountUseCase(account)
     }
 
