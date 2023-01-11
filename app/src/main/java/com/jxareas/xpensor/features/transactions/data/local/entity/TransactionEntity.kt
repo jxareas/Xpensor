@@ -35,7 +35,7 @@ import java.time.LocalTime
 )
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Int = 0,
     val note: String,
     val amount: Double,
     val date: LocalDate = getCurrentLocalDate(),

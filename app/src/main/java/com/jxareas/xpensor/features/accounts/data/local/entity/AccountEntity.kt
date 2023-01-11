@@ -6,12 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "accounts")
 data class AccountEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Int = 0,
     val name: String,
     val amount: Double = 0.0,
     val color: String,
-) {
-    companion object {
-        const val EMPTY_ID = 0
-    }
-}
+)
