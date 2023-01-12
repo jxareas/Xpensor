@@ -16,11 +16,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
+import com.jxareas.xpensor.core.presentation.MainActivity
 import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
@@ -37,6 +40,8 @@ class TransactionsFragment : Fragment() {
     private var _binding: FragmentTransactionsBinding? = null
     private val binding: FragmentTransactionsBinding
         get() = _binding!!
+
+    private lateinit var bottomNavigation: BottomNavigationView
 
     private val viewModel: TransactionsViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -58,6 +63,7 @@ class TransactionsFragment : Fragment() {
             duration = resources.getLong(R.integer.material_motion_duration_long_1)
             setPathMotion(MaterialArcMotion())
         }
+        bottomNavigation = (requireActivity() as MainActivity).binding.bottomNavigation
     }
 
     override fun onCreateView(
@@ -82,17 +88,31 @@ class TransactionsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.transactionsRecyclerView.apply {
+        binding.recyclerViewTransactions.apply {
             adapter = transactionAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(
                 DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL),
             )
+
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        val fab = binding.fabAddNewTransaction
+
+                        if (dy > 0 && fab.isExtended)
+                            fab.shrink()
+                        else if (dy < 0 && !fab.isExtended)
+                            fab.extend()
+                    }
+                },
+            )
         }
     }
 
     private fun setupListeners() = binding.run {
-        buttonNewTransaction.setOnClickListener {
+        fabAddNewTransaction.setOnClickListener {
             val account = mainViewModel.selectedAccount.value ?: mainViewModel.accounts.value[0]
             viewModel.onAddTransactionClick(account)
         }
@@ -169,13 +189,14 @@ class TransactionsFragment : Fragment() {
             viewModel.transactionState.collectLatest { state ->
                 when (state) {
                     is TransactionState.Ready -> {
-                        binding.progressBar.isVisible = false
-                        binding.noTransaction.visibility = if (state.transactions.isEmpty())
-                            View.VISIBLE else View.INVISIBLE
+                        binding.progressBarTransactions.isVisible = false
+                        binding.textViewNoTransactions.visibility =
+                            if (state.transactions.isEmpty())
+                                View.VISIBLE else View.INVISIBLE
                         transactionAdapter.submitList(state.transactions)
                     }
                     is TransactionState.Loading -> {
-                        binding.progressBar.isVisible = true
+                        binding.progressBarTransactions.isVisible = true
                     }
                     is TransactionState.Idle -> Unit
                 }

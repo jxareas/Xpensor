@@ -70,17 +70,17 @@ class ConverterFragment : Fragment() {
                 when (conversionState) {
                     is ConversionState.Ready -> {
                         with(binding) {
-                            progressBar.isVisible = false
+                            progressBarConverter.isVisible = false
                             resultText.text = conversionState.result
                             addTransactionButton.isClickable = true
                             addTransactionButton.alpha = 1f
                         }
                     }
                     is ConversionState.Loading -> {
-                        binding.progressBar.isVisible = true
+                        binding.progressBarConverter.isVisible = true
                     }
                     is ConversionState.Error -> {
-                        binding.progressBar.isVisible = false
+                        binding.progressBarConverter.isVisible = false
                         toast(requireContext(), conversionState.error)
                     }
                     else -> Unit

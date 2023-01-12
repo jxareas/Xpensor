@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.jxareas.xpensor.features.transactions.presentation.ui.TransactionsFragment">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/transactions_recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/recycler_view_transactions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clipToPadding="false"
         android:overScrollMode="never"
         android:paddingBottom="?attr/actionBarSize"
@@ -17,23 +16,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="5"
+        tools:itemCount="15"
         tools:listitem="@layout/card_item_transaction" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_new_transaction"
+    <ProgressBar
+        android:id="@+id/progress_bar_transactions"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:contentDescription="@string/add_transaction_button"
-        android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="?attr/colorOnPrimarySurface" />
+        android:layout_gravity="center" />
 
     <TextView
-        android:id="@+id/no_transaction"
+        android:id="@+id/text_view_no_transactions"
         android:layout_width="300dp"
         android:layout_height="230dp"
         android:layout_gravity="center"
@@ -42,19 +36,21 @@
         android:textSize="18sp"
         android:visibility="invisible"
         app:drawableTopCompat="@drawable/ic_no_transaction"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:visibility="visible" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyle"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_add_new_transaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/margin_standard"
+        android:backgroundTint="?attr/colorPrimary"
+        android:contentDescription="@string/add_transaction_button"
+        android:text="@string/add_transaction"
+        android:textColor="?attr/colorOnPrimarySurface"
+        app:icon="@drawable/ic_add"
+        app:iconTint="?attr/colorOnPrimarySurface"
+        app:layout_anchorGravity="bottom|right|end"
+        app:tint="?attr/colorOnPrimarySurface" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
