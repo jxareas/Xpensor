@@ -14,13 +14,12 @@ import com.jxareas.xpensor.features.transactions.data.local.dao.TransactionDao
 import com.jxareas.xpensor.features.transactions.data.local.entity.CategoryEntity
 import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEntity
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDayView
 
 @Database(
     entities = [AccountEntity::class, CategoryEntity::class, TransactionEntity::class],
     version = DATABASE_VERSION,
     exportSchema = true,
-    views = [TransactionView::class, TransactionsByDayView::class],
+    views = [TransactionView::class],
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
     ],

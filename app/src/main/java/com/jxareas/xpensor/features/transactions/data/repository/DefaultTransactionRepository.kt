@@ -3,7 +3,7 @@ package com.jxareas.xpensor.features.transactions.data.repository
 import com.jxareas.xpensor.common.extensions.mapEach
 import com.jxareas.xpensor.features.transactions.data.local.dao.TransactionDao
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDayView
+import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDay
 import com.jxareas.xpensor.features.transactions.data.mapper.toEntity
 import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionAmountPerDay
 import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionEntity
@@ -40,7 +40,7 @@ class DefaultTransactionRepository @Inject constructor(
         to: LocalDate,
     ): Flow<List<TransactionByDay>> =
         dao.getTransactionAmountsPerDay(from, to)
-            .mapEach(TransactionsByDayView::toTransactionAmountPerDay)
+            .mapEach(TransactionsByDay::toTransactionAmountPerDay)
 
     override fun getTransactionAmountsPerDayForAccount(
         from: LocalDate,
@@ -48,7 +48,7 @@ class DefaultTransactionRepository @Inject constructor(
         transactionId: Int,
     ): Flow<List<TransactionByDay>> =
         dao.getTransactionAmountsPerDayForAccount(from, to, transactionId)
-            .mapEach(TransactionsByDayView::toTransactionAmountPerDay)
+            .mapEach(TransactionsByDay::toTransactionAmountPerDay)
 
     override suspend fun insertTransaction(
         transaction: Transaction,

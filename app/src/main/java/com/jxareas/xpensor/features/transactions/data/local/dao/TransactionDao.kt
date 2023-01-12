@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEntity
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDayView
+import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDay
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
@@ -37,14 +37,14 @@ interface TransactionDao {
 
     @Query(
         """
-    SELECT * FROM view_transactions_by_day
+    SELECT date, SUM(amount) AS amount_per_day
+    FROM transactions
     WHERE date >= :from AND date <= :to
     GROUP BY date
-    ORDER BY date ASC
     """,
     )
     fun getTransactionAmountsPerDay(from: LocalDate, to: LocalDate):
-            Flow<List<TransactionsByDayView>>
+            Flow<List<TransactionsByDay>>
 
     @Query(
         """
@@ -59,7 +59,7 @@ interface TransactionDao {
         from: LocalDate,
         to: LocalDate,
         id: Int,
-    ): Flow<List<TransactionsByDayView>>
+    ): Flow<List<TransactionsByDay>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(transaction: TransactionEntity)
