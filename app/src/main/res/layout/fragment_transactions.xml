@@ -46,7 +46,7 @@
         android:layout_margin="@dimen/margin_standard"
         android:backgroundTint="?attr/colorPrimary"
         android:contentDescription="@string/add_transaction_button"
-        android:text="@string/add_transaction"
+        android:text="@string/add"
         android:textColor="?attr/colorOnPrimarySurface"
         app:icon="@drawable/ic_add"
         app:iconTint="?attr/colorOnPrimarySurface"
