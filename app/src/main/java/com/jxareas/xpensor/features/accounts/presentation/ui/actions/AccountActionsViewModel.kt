@@ -20,7 +20,7 @@ class AccountActionsViewModel @Inject constructor(
 
     suspend fun removeAccount(accountUi: AccountUi) {
         val account = accountUi.toAccount()
-        deleteAccountUseCase(account)
+        deleteAccountUseCase.invoke(account)
     }
 
     fun onEditAccount(account: AccountUi) = launchScoped {

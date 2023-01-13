@@ -13,7 +13,7 @@ class AddTransactionUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) {
 
-    suspend operator fun invoke(transaction: Transaction, accountId: Int, categoryId: Int) {
+    suspend fun invoke(transaction: Transaction, accountId: Int, categoryId: Int) {
         accountRepository.getAccountById(accountId)?.let { account ->
             val amount = account.amount - transaction.amount
             accountRepository.updateAccountAmount(accountId, amount)
@@ -21,14 +21,13 @@ class AddTransactionUseCase @Inject constructor(
         }
     }
 
-    suspend operator fun invoke(details : TransactionDetails) {
+    suspend fun invoke(details: TransactionDetails) {
         accountRepository.getAccountById(details.account.id)?.let { account ->
             val amount = account.amount - details.transaction.amount
             accountRepository.updateAccountAmount(account.id, amount)
             transactionRepository.insertTransaction(details)
         }
     }
-
 
 
 }

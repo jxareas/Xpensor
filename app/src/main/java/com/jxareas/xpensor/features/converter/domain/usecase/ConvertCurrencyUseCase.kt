@@ -14,7 +14,7 @@ class ConvertCurrencyUseCase @Inject constructor(private val repository: Convert
         const val NO_INTERNET_CONNECTION = -2.0
     }
 
-    suspend operator fun invoke(amount: Double, from: String, to: String): Double =
+    suspend fun invoke(amount: Double, from: String, to: String): Double =
         if (from == to)
             amount
         else getCurrencyRate(amount, from, to)

@@ -14,7 +14,7 @@ class GetTransactionsUseCase @Inject constructor(
     private val repository: TransactionRepository,
 ) {
 
-    operator fun invoke(
+     fun invoke(
         dateRange: DateRange,
         account: Account?,
     ): Flow<List<TransactionDetails>> {

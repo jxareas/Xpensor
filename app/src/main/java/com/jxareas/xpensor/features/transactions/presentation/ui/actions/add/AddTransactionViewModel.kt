@@ -23,9 +23,9 @@ class AddTransactionViewModel @Inject constructor(
     val events = _events.asSharedFlow()
 
     fun onAddTransaction(transaction: Transaction, accountId: Int, categoryId: Int) = launchScoped {
-        val isTransactionValid = validateTransactionUseCase(transaction, accountId)
+        val isTransactionValid = validateTransactionUseCase.invoke(transaction, accountId)
         if (isTransactionValid)
-            addTransactionUseCase(transaction, accountId, categoryId).also {
+            addTransactionUseCase.invoke(transaction, accountId, categoryId).also {
                 _transactionState.emit(AddTransactionState.ValidTransaction)
             }
         else _transactionState.emit(AddTransactionState.InvalidTransaction)

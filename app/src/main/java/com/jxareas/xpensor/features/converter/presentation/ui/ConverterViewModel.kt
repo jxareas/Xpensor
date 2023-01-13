@@ -26,7 +26,7 @@ class ConverterViewModel @Inject constructor(
 
     fun convert(amount: Double, from: String, to: String) = launchScoped {
         _conversion.value = ConversionState.Loading
-        conversionResult = convertCurrencyUseCase(amount, from, to)
+        conversionResult = convertCurrencyUseCase.invoke(amount, from, to)
         _conversion.value =
             when (conversionResult) {
                 ConvertCurrencyUseCase.UNEXPECTED_ERROR ->

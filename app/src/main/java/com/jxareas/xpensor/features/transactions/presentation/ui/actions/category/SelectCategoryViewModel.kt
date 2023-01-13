@@ -45,7 +45,7 @@ class SelectCategoryViewModel @Inject constructor(
         getCategoriesJob?.cancel()
         val account = _selectedAccount.value?.toAccount()
         getCategoriesJob =
-            getCategoriesUseCase(_selectedDateRange.value, account)
+            getCategoriesUseCase.invoke(_selectedDateRange.value, account)
                 .mapEach(CategoryWithDetails::toCategoryWithAmountUi)
                 .onEach { categories ->
                     _categories.value = categories

@@ -22,7 +22,7 @@ class AddAccountViewModel @Inject constructor(
 
     fun addAccount(accountUi: AccountUi) = launchScoped {
         val account = accountUi.toAccount()
-        addAccountUseCase(account)
+        addAccountUseCase.invoke(account)
     }
 
     fun onApplyChangesButtonClick() = launchScoped {

@@ -10,7 +10,7 @@ class ValidateTransactionUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
 ) {
 
-    suspend operator fun invoke(transaction: Transaction, accountId : Int) =
+    suspend fun invoke(transaction: Transaction, accountId: Int) =
         accountRepository.getAccountById(accountId).let { account ->
             if (account != null)
                 account.amount > transaction.amount

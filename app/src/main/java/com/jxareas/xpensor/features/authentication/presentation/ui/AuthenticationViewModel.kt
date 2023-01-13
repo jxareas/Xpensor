@@ -41,7 +41,7 @@ class AuthenticationViewModel @Inject constructor(
     private fun checkTheCode() {
         viewModelScope.launch {
             if (!isAppLaunchedFirstTime()) {
-                val currentUserPinCode = getAuthenticationPinUseCase().code
+                val currentUserPinCode = getAuthenticationPinUseCase.invoke().code
 
                 val authenticationEvent = if (_pinCode.value == currentUserPinCode)
                     AuthenticationEvent.OpenMainActivity
@@ -54,7 +54,7 @@ class AuthenticationViewModel @Inject constructor(
     private suspend fun checkUserAuthentication() {
         if (_temporaryPinCode.value != PinCode.EMPTY_CODE) {
             if (_temporaryPinCode.value == _pinCode.value) {
-                addUserAuthenticationPin(_temporaryPinCode.value)
+                addUserAuthenticationPin.invoke(_temporaryPinCode.value)
                 _events.emit(AuthenticationEvent.OpenMainActivity)
             } else {
                 _temporaryPinCode.value = PinCode.EMPTY_CODE

@@ -8,6 +8,6 @@ import javax.inject.Inject
 @ViewModelScoped
 class AddAccountUseCase @Inject constructor(private val repository: AccountRepository) {
 
-    suspend operator fun invoke(account: Account) =
+    suspend fun invoke(account: Account) =
         repository.insertAccount(account)
 }

@@ -14,7 +14,7 @@ class GetCategoriesUseCase @Inject constructor(
     private val repository: CategoryRepository,
 ) {
 
-    operator fun invoke(dateRange: DateRange, account: Account?):
+     fun invoke(dateRange: DateRange, account: Account?):
         Flow<List<CategoryWithDetails>> {
 
         val minDate = dateRange.first ?: DateUtils.DEFAULT_LOCAL_DATE

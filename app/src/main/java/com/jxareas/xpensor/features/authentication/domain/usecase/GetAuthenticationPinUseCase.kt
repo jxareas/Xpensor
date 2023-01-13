@@ -9,7 +9,7 @@ import javax.inject.Inject
 @ViewModelScoped
 class GetAuthenticationPinUseCase @Inject constructor(private val preferences: SharedPreferences) {
 
-    operator fun invoke(): PinCode {
+    fun invoke(): PinCode {
         val code =
             preferences.getString(PreferenceUtils.AUTH_CODE_PREFERENCE_KEY, PinCode.EMPTY_CODE)
                 ?: PinCode.EMPTY_CODE

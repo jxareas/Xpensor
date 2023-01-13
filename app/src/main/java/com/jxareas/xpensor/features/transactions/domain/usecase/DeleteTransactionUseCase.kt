@@ -12,7 +12,7 @@ class DeleteTransactionUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
 ) {
 
-    suspend operator fun invoke(details: TransactionDetails) {
+    suspend fun invoke(details: TransactionDetails) {
 
         val account = accountRepository.getAccountById(details.account.id)
         if (account != null) {

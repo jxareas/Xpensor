@@ -37,7 +37,7 @@ class AccountFilterViewModel @Inject constructor(
 
     private fun getAccounts() {
         getAccountsJob?.cancel()
-        getAccountsJob = getAccountsUseCase()
+        getAccountsJob = getAccountsUseCase.invoke()
             .mapEach(Account::toAccountUi)
             .onEach { accounts ->
                 _accounts.value = accounts

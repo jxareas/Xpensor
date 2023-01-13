@@ -49,7 +49,7 @@ class MainViewModel @Inject constructor(
 
     private fun launchGetAccountsJob() {
         getAccountsJob?.cancel()
-        getAccountsJob = getAccountsUseCase()
+        getAccountsJob = getAccountsUseCase.invoke()
             .mapEach(Account::toAccountUi)
             .onEach { accounts ->
                 _accounts.value = accounts

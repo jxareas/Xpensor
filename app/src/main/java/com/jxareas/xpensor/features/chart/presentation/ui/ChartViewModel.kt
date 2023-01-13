@@ -47,7 +47,7 @@ class ChartViewModel @Inject constructor(
         val selectedAccount =
             _selectedAccountUi.value?.toAccount()
         getCategoriesJob =
-            getCategoriesUseCase(_selectedDateRange.value, selectedAccount)
+            getCategoriesUseCase.invoke(_selectedDateRange.value, selectedAccount)
                 .mapEach(CategoryWithDetails::toCategoryWithAmountUi)
                 .onEach { categories -> _categories.value = categories }
                 .launchIn(viewModelScope)

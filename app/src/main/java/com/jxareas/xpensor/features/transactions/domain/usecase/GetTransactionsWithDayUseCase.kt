@@ -5,19 +5,16 @@ import com.jxareas.xpensor.common.utils.DateUtils
 import com.jxareas.xpensor.features.accounts.domain.model.Account
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRepository
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
+@ViewModelScoped
 class GetTransactionsWithDayUseCase @Inject constructor(
     private val repository: TransactionRepository,
 ) {
 
-    suspend operator fun invoke(
+    suspend fun invoke(
         transactions: List<TransactionDetails>,
         dateRange: DateRange,
         account: Account?,

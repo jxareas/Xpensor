@@ -52,17 +52,17 @@ class TransactionsViewModel @Inject constructor(
 
         val account = selectedAccount?.toAccount()
 
-        getTransactionsJob = getTransactionsUseCase(selectedDateRange, account)
+        getTransactionsJob = getTransactionsUseCase.invoke(selectedDateRange, account)
             .onEach { transactions ->
                 val transactionInformation =
-                    getTransactionsWithDayUseCase(transactions, selectedDateRange, account)
+                    getTransactionsWithDayUseCase.invoke(transactions, selectedDateRange, account)
                 _transactionState.value = TransactionState.Ready(transactionInformation)
             }
             .launchIn(viewModelScope)
     }
 
     fun onDeleteTransaction(transactionDetails: TransactionDetails) = launchScoped {
-        deleteTransactionUseCase(transactionDetails)
+        deleteTransactionUseCase.invoke(transactionDetails)
     }
 
     fun onUpdateSelectedDateRange(from: LocalDate? = null, to: LocalDate? = null) {
