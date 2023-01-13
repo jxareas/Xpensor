@@ -18,20 +18,20 @@ class AccountActionsViewModel @Inject constructor(
     private val _events = MutableSharedFlow<AccountActionsEvent>()
     val events = _events.asSharedFlow()
 
-    suspend fun removeAccount(accountUi: AccountUi) {
+    fun removeAccount(accountUi: AccountUi) = launchScoped {
         val account = accountUi.toAccount()
         deleteAccountUseCase.invoke(account)
     }
 
-    fun onEditAccount(account: AccountUi) = launchScoped {
+    fun onEditAccountClick(account: AccountUi) = launchScoped {
         _events.emit(AccountActionsEvent.NavigateToEditAccountsScreen(account))
     }
 
-    fun onDeleteAccount(account: AccountUi) = launchScoped {
+    fun onDeleteAccountClick(account: AccountUi) = launchScoped {
         _events.emit(AccountActionsEvent.ShowDeleteAccountDialog(account))
     }
 
-    fun onDeleteAccountConfirmation() = launchScoped {
+    fun onConfirmAccountDeletionClick() = launchScoped {
         _events.emit(AccountActionsEvent.DeleteAccount)
     }
 }

@@ -88,7 +88,7 @@ dependencies {
     testImplementation(Dependencies.Mockito.KOTLIN)
     testImplementation(Dependencies.Mockito.CORE)
     testImplementation(Dependencies.Mockito.INLINE)
-    testImplementation(Dependencies.Mockito.MOCKK)
+    testImplementation(Dependencies.Testing.MOCKK)
 
     // AndroidX
     implementation(Dependencies.Android.SPLASH_SCREEN)

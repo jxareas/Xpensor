@@ -115,7 +115,7 @@ class EditAccountFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(
             ApplyChangesMenu {
-                viewModel.onApplyChanges()
+                viewModel.onAccountEditionConfirmation()
             },
             viewLifecycleOwner, Lifecycle.State.STARTED
         )

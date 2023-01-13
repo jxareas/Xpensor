@@ -74,7 +74,7 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
         adapter = categoryAdapter
         categoryAdapter.setOnClickListener(
             CategoryAdapter.OnClickListener { category ->
-                viewModel.selectCategoryClick(args.selectedAccount, category)
+                viewModel.onSelectCategoryClick(args.selectedAccount, category)
             }
         )
     }

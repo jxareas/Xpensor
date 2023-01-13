@@ -63,6 +63,9 @@ object Dependencies {
 
         const val TRUTH =
             "com.google.truth:truth:${Versions.TRUTH}"
+
+        const val MOCKK =
+            "io.mockk:mockk:${Versions.MOCKITO_MOCKK}"
     }
 
     object Mockito {
@@ -72,8 +75,6 @@ object Dependencies {
             "org.mockito:mockito-core:${Versions.MOCKITO_CORE}"
         const val INLINE =
             "org.mockito:mockito-inline:${Versions.MOCKITO_CORE}"
-        const val MOCKK =
-            "io.mockk:mockk:${Versions.MOCKITO_MOCKK}"
     }
 
     object Navigation {

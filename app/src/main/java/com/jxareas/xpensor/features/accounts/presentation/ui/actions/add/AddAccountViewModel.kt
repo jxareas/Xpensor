@@ -25,7 +25,7 @@ class AddAccountViewModel @Inject constructor(
         addAccountUseCase.invoke(account)
     }
 
-    fun onApplyChangesButtonClick() = launchScoped {
+    fun onCreateAccountConfirmation() = launchScoped {
         _events.emit(AddAccountEvent.CreateNewAccount)
     }
 

@@ -31,7 +31,7 @@ class AddTransactionViewModel @Inject constructor(
         else _transactionState.emit(AddTransactionState.InvalidTransaction)
     }
 
-    fun onApplyChanges() = launchScoped {
+    fun onConfirmTransactionCreation() = launchScoped {
         _events.emit(AddTransactionEvent.CreateNewTransaction)
     }
 }

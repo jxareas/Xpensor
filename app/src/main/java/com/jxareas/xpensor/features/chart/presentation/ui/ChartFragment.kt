@@ -109,7 +109,7 @@ class ChartFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(
             SelectDateMenu {
-                viewModel.onSelectedDateClick()
+                viewModel.onDateSelectedClick()
             },
             viewLifecycleOwner, Lifecycle.State.STARTED,
         )

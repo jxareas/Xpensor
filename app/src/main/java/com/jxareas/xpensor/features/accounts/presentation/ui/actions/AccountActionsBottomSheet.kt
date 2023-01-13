@@ -48,8 +48,8 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun setupListeners() = binding.run {
-        editButton.setOnClickListener { viewModel.onEditAccount(args.selectedAccount) }
-        deleteButton.setOnClickListener { viewModel.onDeleteAccount(args.selectedAccount) }
+        editButton.setOnClickListener { viewModel.onEditAccountClick(args.selectedAccount) }
+        deleteButton.setOnClickListener { viewModel.onDeleteAccountClick(args.selectedAccount) }
     }
 
     private fun setupEventCollector() {
@@ -82,7 +82,7 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
         .setTitle(getString(R.string.delete_account_alert_title))
         .setMessage(getString(R.string.delete_account_alert_message))
         .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-            viewModel.onDeleteAccountConfirmation()
+            viewModel.onConfirmAccountDeletionClick()
         }
         .setNegativeButton(getString(R.string.cancel)) { _, _ ->
             this@AccountActionsBottomSheet.dismiss()

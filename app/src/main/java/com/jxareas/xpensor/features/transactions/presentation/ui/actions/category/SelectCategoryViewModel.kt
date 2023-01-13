@@ -63,7 +63,7 @@ class SelectCategoryViewModel @Inject constructor(
         launchGetCategoriesJob()
     }
 
-    fun selectCategoryClick(
+    fun onSelectCategoryClick(
         accountUi: AccountUi,
         categoryWithAmountUi: CategoryWithAmountUi,
     ) = launchScoped {

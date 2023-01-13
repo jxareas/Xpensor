@@ -31,6 +31,11 @@ android {
     kotlinOptions {
         jvmTarget = ProjectProperties.JVM_TARGET
     }
+    android {
+        compileOptions {
+            isCoreLibraryDesugaringEnabled = ProjectProperties.IS_CORE_LIBRARY_DESUGARING_ENABLED
+        }
+    }
 }
 
 dependencies {
@@ -41,4 +46,6 @@ dependencies {
     implementation(Dependencies.Android.APP_COMPAT)
     implementation(Dependencies.Testing.JUNIT)
     implementation(Dependencies.Kotlin.KOTLIN_COROUTINES_TEST)
+    implementation(Dependencies.Testing.MOCKK)
+    coreLibraryDesugaring(Dependencies.Android.DESUGARING_CORE_LIB)
 }

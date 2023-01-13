@@ -25,7 +25,7 @@ class EditAccountViewModel @Inject constructor(
         updateAccountUseCase.invoke(account)
     }
 
-    fun onApplyChanges() = launchScoped {
+    fun onAccountEditionConfirmation() = launchScoped {
         _events.emit(EditAccountEvent.UpdateAccount)
     }
 

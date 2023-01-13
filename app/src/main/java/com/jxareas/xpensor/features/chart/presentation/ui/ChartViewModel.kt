@@ -53,7 +53,7 @@ class ChartViewModel @Inject constructor(
                 .launchIn(viewModelScope)
     }
 
-    fun onSelectedDateClick() = launchScoped {
+    fun onDateSelectedClick() = launchScoped {
         _events.emit(ChartEvent.DateSelected)
     }
 

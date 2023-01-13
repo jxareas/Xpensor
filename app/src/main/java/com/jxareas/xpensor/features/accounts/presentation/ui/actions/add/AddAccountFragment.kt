@@ -117,7 +117,7 @@ class AddAccountFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(
             ApplyChangesMenu {
-                viewModel.onApplyChangesButtonClick()
+                viewModel.onCreateAccountConfirmation()
             },
             viewLifecycleOwner, Lifecycle.State.STARTED
         )

@@ -19,7 +19,7 @@ class ConverterViewModel @Inject constructor(
     private val _conversion = MutableStateFlow<ConversionState>(ConversionState.Idle)
     val conversion = _conversion.asStateFlow()
 
-    private val _events = MutableSharedFlow<CurrencyConverterEvent>()
+    private val _events = MutableSharedFlow<CurrencyConversionEvent>()
     val events = _events.asSharedFlow()
 
     var conversionResult: Double = 0.0
@@ -38,11 +38,11 @@ class ConverterViewModel @Inject constructor(
             }
     }
 
-    fun onSwapButtonClick() = launchScoped {
-        _events.emit(CurrencyConverterEvent.Swap)
+    fun onSwapCurrenciesClick() = launchScoped {
+        _events.emit(CurrencyConversionEvent.Swap)
     }
 
     fun onConvertButtonClick() = launchScoped {
-        _events.emit(CurrencyConverterEvent.Convert)
+        _events.emit(CurrencyConversionEvent.Convert)
     }
 }
