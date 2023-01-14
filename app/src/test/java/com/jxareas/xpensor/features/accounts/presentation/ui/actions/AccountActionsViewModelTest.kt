@@ -37,7 +37,7 @@ class AccountActionsViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
             val accountUi = mockk<AccountUi>()
 
             // Account Edition Event

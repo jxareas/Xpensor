@@ -8,8 +8,8 @@ import com.jxareas.xpensor.features.accounts.domain.usecase.UpdateAccountUseCase
 import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,20 +17,20 @@ class EditAccountViewModel @Inject constructor(
     private val updateAccountUseCase: UpdateAccountUseCase,
 ) : ViewModel() {
 
-    private val _events = MutableSharedFlow<EditAccountEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = Channel<EditAccountEvent>(Channel.UNLIMITED)
+    val eventSource = _eventEmitter.receiveAsFlow()
 
-    fun onAccountUpdate(accountUi: AccountUi) = launchScoped {
+    fun updateAccount(accountUi: AccountUi) = launchScoped {
         val account = accountUi.toAccount()
         updateAccountUseCase.invoke(account)
     }
 
     fun onAccountEditionConfirmation() = launchScoped {
-        _events.emit(EditAccountEvent.UpdateAccount)
+        _eventEmitter.send(EditAccountEvent.UpdateAccount)
     }
 
     fun onSelectColorButtonClick(image: ImageView) = launchScoped {
         val color = getImageViewTint(image)
-        _events.emit(EditAccountEvent.UpdateCurrentColor(color))
+        _eventEmitter.send(EditAccountEvent.UpdateCurrentColor(color))
     }
 }

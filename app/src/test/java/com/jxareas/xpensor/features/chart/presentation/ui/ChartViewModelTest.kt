@@ -41,7 +41,7 @@ class ChartViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
 
             // Date Selection Event
             viewModel.onDateSelectedClick()

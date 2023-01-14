@@ -22,7 +22,7 @@ class DateSelectorViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
             viewModel.onSelectDate()
             assertEquals(SelectDateEvent.CustomDate, awaitItem())
 

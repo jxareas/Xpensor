@@ -72,7 +72,7 @@ class EditAccountFragment : Fragment() {
         var color = account.color
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.eventSource.collectLatest { event ->
                 when (event) {
                     is EditAccountEvent.UpdateAccount -> {
                         val name = binding.textInputLayoutName.editText?.text.toString().trim()
@@ -86,7 +86,7 @@ class EditAccountFragment : Fragment() {
                             val newAccount =
                                 account.copy(name = name, amount = amount, color = color)
 
-                            viewModel.onAccountUpdate(newAccount)
+                            viewModel.updateAccount(newAccount)
                             findNavController().navigateUp()
                         }
                     }

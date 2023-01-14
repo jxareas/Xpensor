@@ -35,7 +35,7 @@ class ConverterViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
 
             // Currency Swap
             viewModel.onSwapCurrenciesClick()

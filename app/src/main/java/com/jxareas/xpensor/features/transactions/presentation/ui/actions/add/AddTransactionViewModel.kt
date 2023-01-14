@@ -7,7 +7,9 @@ import com.jxareas.xpensor.features.transactions.domain.usecase.AddTransactionUs
 import com.jxareas.xpensor.features.transactions.domain.usecase.ValidateTransactionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,22 +18,23 @@ class AddTransactionViewModel @Inject constructor(
     private val validateTransactionUseCase: ValidateTransactionUseCase,
 ) : ViewModel() {
 
-    private val _transactionState = MutableSharedFlow<AddTransactionState>()
-    val transactionState = _transactionState.asSharedFlow()
+    private val _transactionState =
+        MutableStateFlow<AddTransactionState>(AddTransactionState.Idle)
+    val transactionState = _transactionState.asStateFlow()
 
-    private val _events = MutableSharedFlow<AddTransactionEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = MutableSharedFlow<AddTransactionEvent>()
+    val eventSource = _eventEmitter.asSharedFlow()
 
     fun onAddTransaction(transaction: Transaction, accountId: Int, categoryId: Int) = launchScoped {
         val isTransactionValid = validateTransactionUseCase.invoke(transaction, accountId)
         if (isTransactionValid)
             addTransactionUseCase.invoke(transaction, accountId, categoryId).also {
-                _transactionState.emit(AddTransactionState.ValidTransaction)
+                _transactionState.emit(AddTransactionState.Valid)
             }
-        else _transactionState.emit(AddTransactionState.InvalidTransaction)
+        else _transactionState.emit(AddTransactionState.NotEnoughFunds)
     }
 
     fun onConfirmTransactionCreation() = launchScoped {
-        _events.emit(AddTransactionEvent.CreateNewTransaction)
+        _eventEmitter.emit(AddTransactionEvent.CreateNewTransaction)
     }
 }

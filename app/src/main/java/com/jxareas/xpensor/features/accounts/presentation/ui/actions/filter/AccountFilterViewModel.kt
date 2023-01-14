@@ -29,19 +29,17 @@ class AccountFilterViewModel @Inject constructor(
     private val _events = MutableSharedFlow<AccountFilterEvent>()
     val events = _events.asSharedFlow()
 
-    private var getAccountsJob: Job? = null
+    private var fetchAccountsJob: Job? = null
 
     init {
-        getAccounts()
+        launchFetchAccountsJob()
     }
 
-    private fun getAccounts() {
-        getAccountsJob?.cancel()
-        getAccountsJob = getAccountsUseCase.invoke()
+    private fun launchFetchAccountsJob() {
+        fetchAccountsJob?.cancel()
+        fetchAccountsJob = getAccountsUseCase.invoke()
             .mapEach(Account::toAccountUi)
-            .onEach { accounts ->
-                _accounts.value = accounts
-            }
+            .onEach(_accounts::value::set)
             .launchIn(viewModelScope)
     }
 

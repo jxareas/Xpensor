@@ -73,7 +73,7 @@ class AccountsFragment : Fragment() {
 
     private fun setupEventCollectors() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.eventSource.collectLatest { event ->
                 when (event) {
                     is AccountEvent.NavigateToAddAccountScreen -> {
                         val addAccountFragmentAction =

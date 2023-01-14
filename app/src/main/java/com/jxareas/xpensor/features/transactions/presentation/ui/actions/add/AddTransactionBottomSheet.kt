@@ -50,8 +50,9 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.transactionState.collectLatest { state ->
                 when (state) {
-                    is AddTransactionState.ValidTransaction -> navigateBackToTransactionFragment()
-                    is AddTransactionState.InvalidTransaction -> showInvalidTransactionSnackbar()
+                    is AddTransactionState.Idle -> Unit
+                    is AddTransactionState.Valid -> navigateBackToTransactionFragment()
+                    is AddTransactionState.NotEnoughFunds -> showInvalidTransactionSnackbar()
                 }
             }
         }
@@ -63,7 +64,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupEventCollector() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.eventSource.collectLatest { event ->
                 when (event) {
                     is AddTransactionEvent.CreateNewTransaction -> {
                         val account = args.selectedAccount
@@ -110,7 +111,7 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
 
         if (args.amount != 0f)
             textInputLayoutExpense.editText?.setText(
-                args.amount.toDouble().toAmountFormat(withMinus = false)
+                args.amount.toDouble().toAmountFormat(withMinus = false),
             )
 
         accountBackground.setBackgroundColor(Color.parseColor(args.selectedAccount.color))

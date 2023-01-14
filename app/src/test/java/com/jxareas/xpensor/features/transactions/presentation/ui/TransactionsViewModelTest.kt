@@ -66,7 +66,7 @@ class TransactionsViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
 
             val accountUi = mockk<AccountUi>()
             val transactionDetails = mockk<TransactionDetails>()

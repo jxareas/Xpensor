@@ -54,7 +54,7 @@ class AccountActionsBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.eventSource.collectLatest { event ->
                 when (event) {
                     is AccountActionsEvent.DeleteAccount -> {
                         if (args.selectedAccount == mainViewModel.selectedAccount.value) {

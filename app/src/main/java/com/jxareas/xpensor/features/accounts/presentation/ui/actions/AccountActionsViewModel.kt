@@ -6,8 +6,8 @@ import com.jxareas.xpensor.features.accounts.domain.usecase.DeleteAccountUseCase
 import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,8 +15,8 @@ class AccountActionsViewModel @Inject constructor(
     private val deleteAccountUseCase: DeleteAccountUseCase,
 ) : ViewModel() {
 
-    private val _events = MutableSharedFlow<AccountActionsEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = Channel<AccountActionsEvent>(Channel.UNLIMITED)
+    val eventSource = _eventEmitter.receiveAsFlow()
 
     fun removeAccount(accountUi: AccountUi) = launchScoped {
         val account = accountUi.toAccount()
@@ -24,14 +24,14 @@ class AccountActionsViewModel @Inject constructor(
     }
 
     fun onEditAccountClick(account: AccountUi) = launchScoped {
-        _events.emit(AccountActionsEvent.NavigateToEditAccountsScreen(account))
+        _eventEmitter.send(AccountActionsEvent.NavigateToEditAccountsScreen(account))
     }
 
     fun onDeleteAccountClick(account: AccountUi) = launchScoped {
-        _events.emit(AccountActionsEvent.ShowDeleteAccountDialog(account))
+        _eventEmitter.send(AccountActionsEvent.ShowDeleteAccountDialog(account))
     }
 
     fun onConfirmAccountDeletionClick() = launchScoped {
-        _events.emit(AccountActionsEvent.DeleteAccount)
+        _eventEmitter.send(AccountActionsEvent.DeleteAccount)
     }
 }

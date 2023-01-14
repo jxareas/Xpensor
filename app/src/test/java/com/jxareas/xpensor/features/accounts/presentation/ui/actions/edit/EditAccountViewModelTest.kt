@@ -36,7 +36,7 @@ class EditAccountViewModelTest {
     @Test
     fun testEventFlow() = runTest {
 
-        viewModel.events.test {
+        viewModel.eventSource.test {
             // Account Edition Confirmation
             viewModel.onAccountEditionConfirmation()
             val accountEditionConfirmation = EditAccountEvent.UpdateAccount

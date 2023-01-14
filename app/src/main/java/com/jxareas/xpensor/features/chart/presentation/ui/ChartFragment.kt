@@ -78,23 +78,11 @@ class ChartFragment : Fragment() {
 
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.eventSource.collectLatest { event ->
                 when (event) {
                     is ChartEvent.DateSelected ->
                         navigateToSelectDateDialogFragment()
                 }
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedDateRange.collectLatest { dateRange ->
-                viewModel.onUpdateSelectedDateRange(dateRange.first, dateRange.second)
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedAccount.collectLatest { account ->
-                viewModel.onUpdateSelectedAccount(account)
             }
         }
     }
@@ -120,6 +108,14 @@ class ChartFragment : Fragment() {
             viewModel.categories.collectLatest { newCategories ->
                 updateChartData(newCategories)
             }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.selectedDateRange.collectLatest(viewModel::onUpdateSelectedDateRange)
+        }
+
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.selectedAccount.collectLatest(viewModel::onUpdateSelectedAccount)
         }
     }
 

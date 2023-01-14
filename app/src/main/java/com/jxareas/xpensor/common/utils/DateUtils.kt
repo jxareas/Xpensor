@@ -33,6 +33,15 @@ object DateUtils {
     fun Long.toLocalDate(): LocalDate =
         Instant.ofEpochMilli(this).atZone(ZoneId.systemDefault()).toLocalDate()
 
+    fun Long.toDateRange() : DateRange =
+        toLocalDate() to toLocalDate()
+
+    fun LocalDate.toDateRange() : DateRange =
+        this to this
+
+    fun LocalDate.fromDate() : DateRange =
+        this to null
+
     fun LocalDate.toMilliseconds(): Long =
         this.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 

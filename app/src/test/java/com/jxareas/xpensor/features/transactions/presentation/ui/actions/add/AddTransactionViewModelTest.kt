@@ -39,7 +39,7 @@ class AddTransactionViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
 
             // Transaction Creation Event
             viewModel.onConfirmTransactionCreation()

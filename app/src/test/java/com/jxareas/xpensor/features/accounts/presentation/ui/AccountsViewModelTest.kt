@@ -42,7 +42,7 @@ class AccountsViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
             val accountUi = getAccountsUseCase.invoke().first().first().toAccountUi()
 
             // Account Selection Event

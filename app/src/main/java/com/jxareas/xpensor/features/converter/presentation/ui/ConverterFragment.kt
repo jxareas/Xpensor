@@ -91,7 +91,7 @@ class ConverterFragment : Fragment() {
 
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { currencyConverterEvent ->
+            viewModel.eventSource.collectLatest { currencyConverterEvent ->
                 when (currencyConverterEvent) {
                     is CurrencyConversionEvent.Convert ->
                         handleConvertEvent()
@@ -123,7 +123,7 @@ class ConverterFragment : Fragment() {
         val to = binding.spinnerTo.selectedItem.toString()
 
         if (amount != null) {
-            viewModel.convert(amount, from, to)
+            viewModel.convertCurrency(amount, from, to)
         } else toast(requireContext(), getString(R.string.enter_amount_error))
     }
 

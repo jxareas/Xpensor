@@ -12,6 +12,7 @@ import com.jxareas.xpensor.features.accounts.domain.model.Account
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
 import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountUi
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.date.domain.model.DateRange
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -72,7 +72,8 @@ class MainViewModel @Inject constructor(
         _selectedAccount.value = account
     }
 
-    fun onUpdateCurrentDateRange(begin: LocalDate?, end: LocalDate?) = launchScoped {
+    fun onUpdateCurrentDateRange(dateRange: DateRange) = launchScoped {
+        val (begin, end) = dateRange
         _selectedDateRange.value = begin to end
     }
 }

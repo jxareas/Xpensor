@@ -3,22 +3,22 @@ package com.jxareas.xpensor.features.transactions.presentation.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.features.date.domain.model.DateRange
 import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.date.domain.model.DateRange
+import com.jxareas.xpensor.features.date.domain.model.EmptyDateRange
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.DeleteTransactionUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetTransactionsWithDayUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.time.LocalDate
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,8 +31,8 @@ class TransactionsViewModel @Inject constructor(
     private val _transactionState = MutableStateFlow<TransactionState>(TransactionState.Idle)
     val transactionState = _transactionState.asStateFlow()
 
-    private val _events = MutableSharedFlow<TransactionEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = Channel<TransactionEvent>(Channel.UNLIMITED)
+    val eventSource = _eventEmitter.receiveAsFlow()
 
     private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
     private val selectedAccount get() = _selectedAccount.value
@@ -61,12 +61,13 @@ class TransactionsViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun onDeleteTransaction(transactionDetails: TransactionDetails) = launchScoped {
+    fun deleteTransaction(transactionDetails: TransactionDetails) = launchScoped {
         deleteTransactionUseCase.invoke(transactionDetails)
     }
 
-    fun onUpdateSelectedDateRange(from: LocalDate? = null, to: LocalDate? = null) {
-        _selectedDateRange.value = from to to
+    fun onUpdateSelectedDateRange(dateRange: DateRange = EmptyDateRange) {
+        val (initialDate, finalDate) = dateRange
+        _selectedDateRange.value = initialDate to finalDate
         launchGetTransactionsJob()
     }
 
@@ -76,18 +77,18 @@ class TransactionsViewModel @Inject constructor(
     }
 
     fun onSelectedDateClick() = launchScoped {
-        _events.emit(TransactionEvent.DateSelected)
+        _eventEmitter.send(TransactionEvent.DateSelected)
     }
 
     fun onAddTransactionClick(accountUi: AccountUi) = launchScoped {
-        _events.emit(TransactionEvent.OpenTheAddTransactionSheet(accountUi))
+        _eventEmitter.send(TransactionEvent.OpenTheAddTransactionSheet(accountUi))
     }
 
     fun onDeleteButtonClick(transactionDetails: TransactionDetails) = launchScoped {
-        _events.emit(TransactionEvent.ShowTheDeleteTransactionDialog(transactionDetails))
+        _eventEmitter.send(TransactionEvent.ShowTheDeleteTransactionDialog(transactionDetails))
     }
 
     fun onDeleteTransactionConfirm(transactionDetails: TransactionDetails) = launchScoped {
-        _events.emit(TransactionEvent.DeleteTransaction(transactionDetails))
+        _eventEmitter.send(TransactionEvent.DeleteTransaction(transactionDetails))
     }
 }

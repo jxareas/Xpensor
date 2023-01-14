@@ -53,7 +53,7 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
 
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.eventSource.collectLatest { event ->
                 when (event) {
                     is CategorySelectionEvent.SelectCategory -> {
                         val direction =
@@ -61,7 +61,7 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
                                 .actionSelectCategoryBottomSheetToAddTransactionBottomSheet(
                                     event.account,
                                     event.category,
-                                    args.amount
+                                    args.amount,
                                 )
                         findNavController().navigate(direction)
                     }
@@ -75,7 +75,7 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
         categoryAdapter.setOnClickListener(
             CategoryAdapter.OnClickListener { category ->
                 viewModel.onSelectCategoryClick(args.selectedAccount, category)
-            }
+            },
         )
     }
 
@@ -84,6 +84,13 @@ class SelectCategoryBottomSheet : BottomSheetDialogFragment() {
             viewModel.categories.collectLatest { newCategories ->
                 categoryAdapter.submitList(newCategories)
             }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            activityViewModel.selectedAccount.collectLatest(viewModel::onUpdateSelectedAccount)
+        }
+        lifecycleScope.launchWhenStarted {
+            activityViewModel.selectedDateRange.collectLatest(viewModel::onUpdateSelectedDateRange)
         }
     }
 

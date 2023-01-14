@@ -120,14 +120,14 @@ class TransactionsFragment : Fragment() {
 
     private fun setupEventCollector() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.eventSource.collectLatest { event ->
                 when (event) {
                     is TransactionEvent.DateSelected ->
                         navigateToSelectDialogFragment()
                     is TransactionEvent.OpenTheAddTransactionSheet ->
                         navigateToAddTransactionSheet(event.account)
                     is TransactionEvent.DeleteTransaction ->
-                        viewModel.onDeleteTransaction(event.transaction)
+                        viewModel.deleteTransaction(event.transaction)
                     is TransactionEvent.ShowTheDeleteTransactionDialog ->
                         if (!isAlertShowing) showAlertDialog(event.transaction)
                 }
@@ -204,15 +204,11 @@ class TransactionsFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedDateRange.collectLatest { dateRange ->
-                viewModel.onUpdateSelectedDateRange(dateRange.first, dateRange.second)
-            }
+            mainViewModel.selectedDateRange.collectLatest(viewModel::onUpdateSelectedDateRange)
         }
 
         lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedAccount.collectLatest { account ->
-                viewModel.onUpdateSelectedAccount(account)
-            }
+            mainViewModel.selectedAccount.collectLatest(viewModel::onUpdateSelectedAccount)
         }
     }
 

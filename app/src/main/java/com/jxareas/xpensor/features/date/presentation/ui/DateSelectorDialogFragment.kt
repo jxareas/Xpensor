@@ -11,9 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.utils.DateUtils.DAY_IN_MS
-import com.jxareas.xpensor.common.utils.DateUtils.toLocalDate
+import com.jxareas.xpensor.common.utils.DateUtils.fromDate
+import com.jxareas.xpensor.common.utils.DateUtils.toDateRange
 import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.DialogFragmentDateSelectorBinding
+import com.jxareas.xpensor.features.date.domain.model.EmptyDateRange
+import com.jxareas.xpensor.features.date.domain.model.MONTH
+import com.jxareas.xpensor.features.date.domain.model.WEEK
+import com.jxareas.xpensor.features.date.domain.model.YEAR
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -29,9 +34,6 @@ class DateSelectorDialogFragment : DialogFragment() {
 
     private companion object {
         const val DATE_PICKER_TAG = "date_picker_tag"
-        const val WEEK = 7
-        const val MONTH = 30
-        const val YEAR = 365
     }
 
     override fun onCreateView(
@@ -60,7 +62,7 @@ class DateSelectorDialogFragment : DialogFragment() {
 
     private fun setupEventCollector() {
         lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.eventSource.collectLatest { event ->
                 when (event) {
                     is SelectDateEvent.CustomDate -> {
                         val datePicker = MaterialDatePicker.Builder.datePicker()
@@ -70,34 +72,34 @@ class DateSelectorDialogFragment : DialogFragment() {
                             .build()
 
                         datePicker.addOnPositiveButtonClickListener { milliseconds ->
-                            val date = (milliseconds + DAY_IN_MS).toLocalDate()
-                            activityViewModel.onUpdateCurrentDateRange(date, date)
+                            val customDay = (milliseconds + DAY_IN_MS).toDateRange()
+                            activityViewModel.onUpdateCurrentDateRange(customDay)
                             dismiss()
                         }
                         datePicker.show(childFragmentManager, DATE_PICKER_TAG)
                     }
                     is SelectDateEvent.Today -> {
-                        val date = viewModel.getDate()
-                        activityViewModel.onUpdateCurrentDateRange(date, date)
+                        val date = viewModel.getDate().toDateRange()
+                        activityViewModel.onUpdateCurrentDateRange(date)
                         dismiss()
                     }
                     is SelectDateEvent.Week -> {
-                        val from = viewModel.getDate(WEEK)
-                        activityViewModel.onUpdateCurrentDateRange(from, null)
+                        val lastWeek = viewModel.getDate(WEEK).fromDate()
+                        activityViewModel.onUpdateCurrentDateRange(lastWeek)
                         dismiss()
                     }
                     is SelectDateEvent.Month -> {
-                        val from = viewModel.getDate(MONTH)
-                        activityViewModel.onUpdateCurrentDateRange(from, null)
+                        val lastMonth = viewModel.getDate(MONTH).fromDate()
+                        activityViewModel.onUpdateCurrentDateRange(lastMonth)
                         dismiss()
                     }
                     is SelectDateEvent.Year -> {
-                        val from = viewModel.getDate(YEAR)
-                        activityViewModel.onUpdateCurrentDateRange(from, null)
+                        val lastYear = viewModel.getDate(YEAR).fromDate()
+                        activityViewModel.onUpdateCurrentDateRange(lastYear)
                         dismiss()
                     }
                     is SelectDateEvent.AllTime -> {
-                        activityViewModel.onUpdateCurrentDateRange(null, null)
+                        activityViewModel.onUpdateCurrentDateRange(EmptyDateRange)
                         dismiss()
                     }
                 }

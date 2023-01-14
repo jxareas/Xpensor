@@ -36,7 +36,7 @@ class AddAccountViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
 
             // Account Creation Confirmation
             viewModel.onCreateAccountConfirmation()

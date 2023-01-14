@@ -50,7 +50,7 @@ class SelectCategoryViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
 
             val accountUi = mockk<AccountUi>()
             val categoryWithAmountUi = mockk<CategoryWithAmountUi>()
