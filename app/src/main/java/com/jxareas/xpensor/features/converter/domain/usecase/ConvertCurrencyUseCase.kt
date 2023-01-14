@@ -1,13 +1,14 @@
 package com.jxareas.xpensor.features.converter.domain.usecase
 
 import com.jxareas.xpensor.common.utils.Resource
+import com.jxareas.xpensor.features.converter.domain.model.BaseCurrency
 import com.jxareas.xpensor.features.converter.domain.model.Currencies
-import com.jxareas.xpensor.features.converter.domain.repository.ConverterRepository
+import com.jxareas.xpensor.features.converter.domain.repository.CurrencyRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class ConvertCurrencyUseCase @Inject constructor(private val repository: ConverterRepository) {
+class ConvertCurrencyUseCase @Inject constructor(private val repository: CurrencyRepository) {
 
     companion object {
         const val UNEXPECTED_ERROR = -1.0
@@ -19,12 +20,16 @@ class ConvertCurrencyUseCase @Inject constructor(private val repository: Convert
             amount
         else getCurrencyRate(amount, from, to)
 
-    private suspend fun getCurrencyRate(amount: Double, from: String, to: String): Double =
-        when (val response = repository.getCurrencyRates(from)) {
+    private suspend fun getCurrencyRate(
+        amount: Double,
+        fromCurrency: String,
+        toCurrency: String,
+    ): Double =
+        when (val response = repository.getCurrencyRates(BaseCurrency(fromCurrency))) {
             is Resource.Success -> {
                 val rates = response.data?.currencyRates
                 if (rates != null) {
-                    val currencyRate = when (to) {
+                    val currencyRate = when (toCurrency) {
                         Currencies.USD.name -> rates.usd
                         Currencies.EUR.name -> rates.eur
                         Currencies.NIO.name -> rates.nio

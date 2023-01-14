@@ -1,6 +1,6 @@
 package com.jxareas.xpensor.features.transactions.domain.usecase
 
-import com.jxareas.xpensor.common.utils.DateRange
+import com.jxareas.xpensor.features.date.domain.model.DateRange
 import com.jxareas.xpensor.common.utils.DateUtils
 import com.jxareas.xpensor.features.accounts.domain.model.Account
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails

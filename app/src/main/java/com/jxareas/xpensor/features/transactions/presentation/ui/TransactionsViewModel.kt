@@ -3,7 +3,7 @@ package com.jxareas.xpensor.features.transactions.presentation.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.common.utils.DateRange
+import com.jxareas.xpensor.features.date.domain.model.DateRange
 import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails

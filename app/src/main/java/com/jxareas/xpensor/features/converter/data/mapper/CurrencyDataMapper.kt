@@ -1,8 +1,8 @@
 package com.jxareas.xpensor.features.converter.data.mapper
 
-import com.jxareas.xpensor.features.converter.data.api.dto.BaseCurrencyDto
-import com.jxareas.xpensor.features.converter.data.api.dto.CurrencyDto
-import com.jxareas.xpensor.features.converter.data.api.dto.CurrencyRatesDto
+import com.jxareas.xpensor.features.converter.data.remote.dto.BaseCurrencyDto
+import com.jxareas.xpensor.features.converter.data.remote.dto.CurrencyConversionDto
+import com.jxareas.xpensor.features.converter.data.remote.dto.CurrencyRatesDto
 import com.jxareas.xpensor.features.converter.domain.model.BaseCurrency
 import com.jxareas.xpensor.features.converter.domain.model.Currencies
 import com.jxareas.xpensor.features.converter.domain.model.Currency
@@ -21,8 +21,8 @@ fun CurrencyRatesDto.toCurrencyRates(): CurrencyRates =
         gbp = Currency(Currencies.GBP, gbp),
     )
 
-fun CurrencyDto.toCurrencyComparison(): CurrencyComparison =
+fun CurrencyConversionDto.toCurrencyComparison(): CurrencyComparison =
     CurrencyComparison(
-        baseCurrency = baseCurrency.toBaseCurrency(),
-        currencyRates = rates.toCurrencyRates(),
+        baseCurrency = baseCurrencyDto.toBaseCurrency(),
+        currencyRates = ratesDto.toCurrencyRates(),
     )

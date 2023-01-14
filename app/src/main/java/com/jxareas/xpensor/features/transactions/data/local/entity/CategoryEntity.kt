@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "categories")
+@Entity(tableName = CategoryEntity.TABLE_NAME)
 data class CategoryEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = PK, typeAffinity = ColumnInfo.INTEGER)
@@ -17,6 +17,7 @@ data class CategoryEntity(
     val iconColor: String,
 ) {
     companion object {
+        const val TABLE_NAME = "categories"
         const val PK = "id"
     }
 }

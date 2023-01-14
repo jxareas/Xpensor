@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "9e98c852960f96093b883f5b71d3dc91",
+    "identityHash": "f66f797664c48062e13c5818702e0317",
     "entities": [
       {
         "tableName": "accounts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `amount` REAL NOT NULL, `color` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL COLLATE BINARY, `amount` REAL NOT NULL, `color` TEXT NOT NULL COLLATE BINARY)",
         "fields": [
           {
             "fieldPath": "id",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "categories",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `icon` INTEGER NOT NULL, `icon_color` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL COLLATE BINARY, `icon` INTEGER NOT NULL, `icon_color` TEXT NOT NULL COLLATE BINARY)",
         "fields": [
           {
             "fieldPath": "id",
@@ -82,7 +82,7 @@
       },
       {
         "tableName": "transactions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `note` TEXT NOT NULL, `amount` REAL NOT NULL, `date` TEXT NOT NULL, `time` TEXT NOT NULL, `account_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, FOREIGN KEY(`category_id`) REFERENCES `categories`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`account_id`) REFERENCES `accounts`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `note` TEXT NOT NULL COLLATE BINARY, `amount` REAL NOT NULL, `date` TEXT NOT NULL COLLATE RTRIM, `time` TEXT NOT NULL COLLATE RTRIM, `account_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, FOREIGN KEY(`category_id`) REFERENCES `categories`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`account_id`) REFERENCES `accounts`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -183,15 +183,11 @@
       {
         "viewName": "view_transactions",
         "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT transactions.id AS transaction_id, transactions.note AS transaction_note,\n    transactions.amount AS transaction_amount, transactions.date AS transaction_date,\n    transactions.time AS transaction_time,\n    accounts.id AS account_id,   accounts.name AS account_name, accounts.amount AS account_amount,\n    accounts.color AS account_color,\n    categories.id AS category_id, categories.name AS category_name,\n    categories.icon AS category_icon, categories.icon_color AS category_icon_color\n    FROM transactions\n    JOIN accounts ON accounts.id = transactions.account_id\n    JOIN categories ON categories.id = transactions.category_id"
-      },
-      {
-        "viewName": "view_transactions_by_day",
-        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT date, SUM(amount) AS amount_per_day\n    FROM transactions"
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9e98c852960f96093b883f5b71d3dc91')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f66f797664c48062e13c5818702e0317')"
     ]
   }
 }

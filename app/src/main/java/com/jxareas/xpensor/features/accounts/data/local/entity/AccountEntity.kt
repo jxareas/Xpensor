@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "accounts")
+@Entity(tableName = AccountEntity.TABLE_NAME)
 data class AccountEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = PK, typeAffinity = ColumnInfo.INTEGER)
@@ -17,6 +17,7 @@ data class AccountEntity(
     val color: String,
 ) {
     companion object {
+        const val TABLE_NAME = "accounts"
         const val PK = "id"
     }
 }

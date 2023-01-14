@@ -1,8 +1,8 @@
 package com.jxareas.xpensor.features.transactions.data.repository
 
 import com.jxareas.xpensor.common.extensions.mapEach
-import com.jxareas.xpensor.features.transactions.data.local.dao.CategoryDao
-import com.jxareas.xpensor.features.transactions.data.local.views.CategoryView
+import com.jxareas.xpensor.features.transactions.data.local.source.CategoryLocalDataSource
+import com.jxareas.xpensor.features.transactions.data.local.views.TransactionAmountByCategory
 import com.jxareas.xpensor.features.transactions.data.mapper.toCategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.CategoryRepository
@@ -11,7 +11,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 class DefaultCategoryRepository @Inject constructor(
-    private val dao: CategoryDao,
+    private val categoryLocalDataSource: CategoryLocalDataSource,
 ) : CategoryRepository {
 
     override fun getCategoryViewsFromAccount(
@@ -19,11 +19,11 @@ class DefaultCategoryRepository @Inject constructor(
         to: LocalDate,
         id: Int,
     ): Flow<List<CategoryWithDetails>> =
-        dao.getCategoryViewsForAccount(from, to, id)
-            .mapEach(CategoryView::toCategoryWithDetails)
+        categoryLocalDataSource.getTransactionAmountByCategoryForAccountBetween(from, to, id)
+            .mapEach(TransactionAmountByCategory::toCategoryWithDetails)
 
     override fun getCategoryViews(from: LocalDate, to: LocalDate): Flow<List<CategoryWithDetails>> =
-        dao.getCategoryViews(from, to)
-            .mapEach(CategoryView::toCategoryWithDetails)
+        categoryLocalDataSource.getTransactionAmountByCategoryBetween(from, to)
+            .mapEach(TransactionAmountByCategory::toCategoryWithDetails)
 
 }

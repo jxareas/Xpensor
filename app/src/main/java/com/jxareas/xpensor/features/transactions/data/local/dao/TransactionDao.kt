@@ -1,17 +1,16 @@
 package com.jxareas.xpensor.features.transactions.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.jxareas.xpensor.core.data.local.dao.RoomDao
 import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEntity
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDay
+import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDayView
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 @Dao
-interface TransactionDao {
+interface TransactionDao : RoomDao<TransactionEntity> {
 
     @Query(
         """
@@ -44,7 +43,7 @@ interface TransactionDao {
     """,
     )
     fun getTransactionAmountsPerDay(from: LocalDate, to: LocalDate):
-            Flow<List<TransactionsByDay>>
+            Flow<List<TransactionsByDayView>>
 
     @Query(
         """
@@ -59,11 +58,8 @@ interface TransactionDao {
         from: LocalDate,
         to: LocalDate,
         id: Int,
-    ): Flow<List<TransactionsByDay>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTransaction(transaction: TransactionEntity)
+    ): Flow<List<TransactionsByDayView>>
 
     @Query("DELETE FROM transactions WHERE id = :id")
-    suspend fun deleteTransactionById(id: Int)
+    suspend fun deleteById(id: Int)
 }

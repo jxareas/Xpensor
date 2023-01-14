@@ -15,7 +15,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Entity(
-    tableName = "transactions",
+    tableName = TransactionEntity.TABLE_NAME,
     foreignKeys = [
         ForeignKey(
             entity = CategoryEntity::class,
@@ -53,6 +53,7 @@ data class TransactionEntity(
     val categoryId: Int,
 ) {
     companion object {
+        const val TABLE_NAME = "transactions"
         const val PK = "id"
         const val FK_ACCOUNT = "account_id"
         const val FK_CATEGORY = "category_id"

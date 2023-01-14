@@ -3,7 +3,7 @@ package com.jxareas.xpensor.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.jxareas.xpensor.core.data.database.XpensorDatabase
+import com.jxareas.xpensor.core.data.local.database.XpensorDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
