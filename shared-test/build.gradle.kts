@@ -41,11 +41,10 @@ android {
 dependencies {
 
     implementation(project(ProjectProperties.APP_PATH))
-    implementation(Dependencies.Android.KOTLIN_CORE)
+    implementation(Dependencies.Android.KOTLIN_CORE_KTX)
     implementation(Dependencies.Android.APP_COMPAT)
     implementation(Dependencies.Android.APP_COMPAT)
     implementation(Dependencies.Testing.JUNIT)
-    implementation(Dependencies.Kotlin.KOTLIN_COROUTINES_TEST)
-    implementation(Dependencies.Testing.MOCKK)
+    implementation(Dependencies.Kotlin.COROUTINES_TEST)
     coreLibraryDesugaring(Dependencies.Android.DESUGARING_CORE_LIB)
 }

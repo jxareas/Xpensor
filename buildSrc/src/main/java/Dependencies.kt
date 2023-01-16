@@ -1,14 +1,14 @@
 object Dependencies {
     object Kotlin {
-        const val KOTLINX_COROUTINES =
+        const val COROUTINES_ANDROID =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLIN_COROUTINES}"
-        const val KOTLIN_COROUTINES_TEST =
+        const val COROUTINES_TEST =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLIN_COROUTINES}"
     }
 
     object Android {
 
-        const val KOTLIN_CORE =
+        const val KOTLIN_CORE_KTX =
             "androidx.core:core-ktx:${Versions.KOTLIN_CORE_KTX}"
 
         const val APP_COMPAT =

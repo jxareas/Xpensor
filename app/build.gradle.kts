@@ -42,7 +42,7 @@ android {
         getByName(ProjectProperties.DEBUG_BUILD_TYPE) {
             proguardFiles(
                 getDefaultProguardFile(ProjectProperties.PROGUARD_ANDROID),
-                ProjectProperties.PROGUARD_RULES
+                ProjectProperties.PROGUARD_RULES,
             )
         }
     }
@@ -66,7 +66,7 @@ android {
 dependencies {
 
     // Support Libraries
-    implementation(Dependencies.Android.KOTLIN_CORE)
+    implementation(Dependencies.Android.KOTLIN_CORE_KTX)
     implementation(Dependencies.Android.APP_COMPAT)
     implementation(Dependencies.Android.LEGACY_SUPPORT)
     implementation(Dependencies.Android.FRAGMENT_KTX)
@@ -84,7 +84,9 @@ dependencies {
     androidTestImplementation(Dependencies.Testing.ESPRESSO_CORE)
     testImplementation(Dependencies.Testing.ANDROID_TEST_CORE)
     testImplementation(Dependencies.Testing.ANDROID_ARCH_TEST_CORE)
+    androidTestImplementation(Dependencies.Testing.ANDROID_ARCH_TEST_CORE)
     testImplementation(Dependencies.Testing.TURBINE)
+    androidTestImplementation(Dependencies.Testing.TURBINE)
     testImplementation(Dependencies.Mockito.KOTLIN)
     testImplementation(Dependencies.Mockito.CORE)
     testImplementation(Dependencies.Mockito.INLINE)
@@ -100,9 +102,9 @@ dependencies {
     implementation(Dependencies.Android.VIEWPAGER2)
 
     // Kotlin Coroutines
-    implementation(Dependencies.Kotlin.KOTLINX_COROUTINES)
-    testImplementation(Dependencies.Kotlin.KOTLIN_COROUTINES_TEST)
-    androidTestImplementation(Dependencies.Kotlin.KOTLIN_COROUTINES_TEST)
+    implementation(Dependencies.Kotlin.COROUTINES_ANDROID)
+    testImplementation(Dependencies.Kotlin.COROUTINES_TEST)
+    androidTestImplementation(Dependencies.Kotlin.COROUTINES_TEST)
 
     // Dagger-Hilt
     implementation(Dependencies.Dagger.HILT)
