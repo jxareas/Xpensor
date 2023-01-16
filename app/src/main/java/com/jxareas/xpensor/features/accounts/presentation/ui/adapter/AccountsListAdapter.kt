@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class AccountsListAdapter @Inject constructor(
-    private val preferences: SharedPreferences,
+    private val userPreferences: SharedPreferences,
 ) : ListAdapter<AccountUi, AccountsViewHolder>(
     AsyncDifferConfig.Builder(AccountDiffCallback).build()
 ) {
@@ -25,7 +25,7 @@ class AccountsListAdapter @Inject constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountsViewHolder =
         AccountsViewHolder(
-            preferences,
+            userPreferences,
             parent invoke ListItemAccountBinding::inflate
         ).apply {
             val account by lazy { currentList[bindingAdapterPosition] }

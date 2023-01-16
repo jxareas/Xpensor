@@ -3,6 +3,7 @@ package com.jxareas.xpensor.common.extensions
 import android.content.Context
 import android.util.TypedValue
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -11,15 +12,15 @@ import com.jxareas.xpensor.R
 
 fun Fragment.getDivider(context: Context) = DividerItemDecoration(
     context,
-    DividerItemDecoration.VERTICAL
+    DividerItemDecoration.VERTICAL,
 ).apply {
     setDrawable(
         requireNotNull(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.divider_layer
-            )
-        )
+                R.drawable.divider_layer,
+            ),
+        ),
     )
 }
 
@@ -46,6 +47,15 @@ fun Fragment.getThemeColor(color: Int): Int {
     return value.data
 }
 
-fun toast(context: Context?, text: String) {
-    Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+fun Fragment.showToast(text: String, duration: Int = Toast.LENGTH_SHORT) {
+    showToast(requireContext(), text, duration)
+}
+
+fun Fragment.showToast(@StringRes stringRes: Int, duration: Int = Toast.LENGTH_SHORT) {
+    val text = resources.getString(stringRes)
+    showToast(requireContext(), text, duration)
+}
+
+private fun showToast(context: Context?, text: String, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(context, text, duration).show()
 }

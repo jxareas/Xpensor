@@ -5,7 +5,7 @@ import com.jxareas.xpensor.common.extensions.setIcon
 import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
-import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences.Companion.DEFAULT_CURRENCY
 import com.jxareas.xpensor.databinding.CardItemTransactionBinding
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 
@@ -26,7 +26,7 @@ class TransactionViewHolder(
             note.text = details.transaction.note
             textAmount.text = details.transaction.amount.toAmountFormat(withMinus = true)
             textCurrency.text =
-                preferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY)
+                preferences.getString(CURRENCY_PREFERENCE_KEY, DEFAULT_CURRENCY)
 
             note.isSelected = true
             categoryName.isSelected = true

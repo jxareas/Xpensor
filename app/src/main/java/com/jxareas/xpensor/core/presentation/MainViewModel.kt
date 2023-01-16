@@ -7,7 +7,8 @@ import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.common.extensions.mapEach
 import com.jxareas.xpensor.common.utils.DateUtils
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
-import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences.Companion.DEFAULT_CURRENCY
 import com.jxareas.xpensor.features.accounts.domain.model.Account
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
 import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountUi
@@ -26,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
-    private val sharedPreferences: SharedPreferences,
+    private val userPreferences: UserPreferences,
 ) : ViewModel() {
 
     private val _accounts = MutableStateFlow(emptyList<AccountUi>())
@@ -58,7 +59,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun getCurrency() =
-        sharedPreferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY) ?: MAIN_CURRENCY
+        userPreferences.getPreferredCurrencyName()
 
     fun onSettingsButtonClick() = launchScoped {
         _events.emit(MainActivityEvent.OpenTheSettingsScreen)

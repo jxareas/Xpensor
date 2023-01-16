@@ -6,7 +6,7 @@ import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.common.utils.OnBindViewHolder
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
-import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences.Companion.DEFAULT_CURRENCY
 import com.jxareas.xpensor.databinding.ListItemAccountBinding
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 
@@ -18,7 +18,7 @@ class AccountsViewHolder(
     override fun bind(item: AccountUi) = with(binding) {
         textViewName.text = item.name
         textViewAmount.text = item.amount.toAmountFormat(withMinus = false)
-        textViewCurrency.text = preferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY)
+        textViewCurrency.text = preferences.getString(CURRENCY_PREFERENCE_KEY, DEFAULT_CURRENCY)
         iconBackground.setTint(item.color)
     }
 }

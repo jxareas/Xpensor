@@ -19,7 +19,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
 import com.jxareas.xpensor.common.extensions.setTint
-import com.jxareas.xpensor.common.extensions.toast
+import com.jxareas.xpensor.common.extensions.showToast
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.databinding.FragmentEditAccountBinding
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.ApplyChangesMenu
@@ -77,7 +77,7 @@ class EditAccountFragment : Fragment() {
                     is EditAccountEvent.UpdateAccount -> {
                         val name = binding.textInputLayoutName.editText?.text.toString().trim()
                         if (name.isEmpty()) {
-                            toast(context, getString(R.string.account_empty_name_error))
+                            showToast(R.string.account_empty_name_error)
                         } else {
                             val amount =
                                 binding.textInputLayoutMoneyAmount.editText?.text.toString()

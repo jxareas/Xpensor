@@ -25,7 +25,7 @@ import com.jxareas.xpensor.common.extensions.getLong
 import com.jxareas.xpensor.common.extensions.getThemeColor
 import com.jxareas.xpensor.common.extensions.setCategoryAttributes
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_COLOR
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences.Companion.DEFAULT_COLOR
 import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.FragmentChartBinding
 import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
@@ -139,7 +139,7 @@ class ChartFragment : Fragment() {
 
             if (amount == 0.0) {
                 entries.add(PieEntry(1f))
-                entryColors.add(Color.parseColor(MAIN_COLOR))
+                entryColors.add(Color.parseColor(DEFAULT_COLOR))
                 binding.chart.alpha = 0.3f
             } else binding.chart.alpha = 1f
 

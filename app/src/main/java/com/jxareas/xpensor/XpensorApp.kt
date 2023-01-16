@@ -2,28 +2,27 @@ package com.jxareas.xpensor
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.preference.PreferenceManager
-import com.jxareas.xpensor.common.utils.PreferenceUtils.THEME_DARK
-import com.jxareas.xpensor.common.utils.PreferenceUtils.THEME_DEFAULT
-import com.jxareas.xpensor.common.utils.PreferenceUtils.THEME_LIGHT
-import com.jxareas.xpensor.common.utils.PreferenceUtils.THEME_PREFERENCE_KEY
+import com.jxareas.xpensor.core.data.local.preferences.DefaultUserPreferences.Companion.THEME_DARK
+import com.jxareas.xpensor.core.data.local.preferences.DefaultUserPreferences.Companion.THEME_LIGHT
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
 class XpensorApp : Application() {
 
+    @Inject
+    internal lateinit var userPreferences: UserPreferences
+
     override fun onCreate() {
         super.onCreate()
 
-        val selectedTheme = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-            .getString(THEME_PREFERENCE_KEY, THEME_DEFAULT)
+        val isNightMode = when (userPreferences.getPreferredTheme()) {
+            THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
 
-        AppCompatDelegate.setDefaultNightMode(
-            when (selectedTheme) {
-                THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-                THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
-                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            }
-        )
+        AppCompatDelegate.setDefaultNightMode(isNightMode)
     }
 }

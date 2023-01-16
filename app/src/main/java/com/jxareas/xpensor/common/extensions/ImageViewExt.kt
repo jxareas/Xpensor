@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.ImageViewCompat
 import com.jxareas.xpensor.R
-import com.jxareas.xpensor.common.utils.PreferenceUtils
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences
 
 private val mapOfDrawables = mapOf(
     0 to R.drawable.ic_family,
@@ -22,14 +22,14 @@ private val mapOfDrawables = mapOf(
     8 to R.drawable.ic_transport,
     9 to R.drawable.ic_other,
     10 to R.drawable.ic_restaurant,
-    11 to R.drawable.ic_services
+    11 to R.drawable.ic_services,
 )
 
 fun getImageViewTint(imageView: ImageView): String {
     val colorInt = imageView.imageTintList?.defaultColor
     return if (colorInt != null)
         String.format("#%06X", 0xFFFFFF and colorInt)
-    else PreferenceUtils.MAIN_COLOR
+    else UserPreferences.DEFAULT_COLOR
 }
 
 fun ImageView.setIcon(id: Int) {
@@ -39,10 +39,11 @@ fun ImageView.setIcon(id: Int) {
 fun ImageView.setTint(@ColorRes colorRes: Int) {
     ImageViewCompat.setImageTintList(
         this,
-        ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
+        ColorStateList.valueOf(ContextCompat.getColor(context, colorRes)),
     )
 }
 
 fun ImageView.setTint(value: String?) {
-    DrawableCompat.setTint(this.drawable, Color.parseColor(value ?: PreferenceUtils.MAIN_COLOR))
+    val defaultColor = UserPreferences.DEFAULT_COLOR
+    DrawableCompat.setTint(this.drawable, Color.parseColor(value ?: defaultColor))
 }

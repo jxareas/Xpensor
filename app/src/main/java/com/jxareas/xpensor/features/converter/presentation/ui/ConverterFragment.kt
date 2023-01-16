@@ -14,7 +14,7 @@ import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
-import com.jxareas.xpensor.common.extensions.toast
+import com.jxareas.xpensor.common.extensions.showToast
 import com.jxareas.xpensor.databinding.FragmentConverterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -81,7 +81,7 @@ class ConverterFragment : Fragment() {
                     }
                     is ConversionState.Error -> {
                         binding.progressBarConverter.isVisible = false
-                        toast(requireContext(), conversionState.error)
+                        showToast(conversionState.error)
                     }
                     else -> Unit
                 }
@@ -124,7 +124,7 @@ class ConverterFragment : Fragment() {
 
         if (amount != null) {
             viewModel.convertCurrency(amount, from, to)
-        } else toast(requireContext(), getString(R.string.enter_amount_error))
+        } else showToast(R.string.enter_amount_error)
     }
 
     override fun onDestroyView() {

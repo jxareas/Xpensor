@@ -7,7 +7,7 @@ import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.common.utils.OnBindViewHolder
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
-import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences.Companion.DEFAULT_CURRENCY
 import com.jxareas.xpensor.databinding.ListItemCategoryBinding
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 
@@ -21,7 +21,7 @@ class CategoryViewHolder(
 
         name.text = item.category.name
         amount.text = item.amount.toAmountFormat(withMinus = false)
-        currency.text = sharedPreferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY)
+        currency.text = sharedPreferences.getString(CURRENCY_PREFERENCE_KEY, DEFAULT_CURRENCY)
 
         name.isSelected = true
     }

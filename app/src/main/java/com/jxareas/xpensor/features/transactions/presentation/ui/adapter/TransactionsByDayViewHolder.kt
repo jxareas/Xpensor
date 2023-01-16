@@ -3,7 +3,7 @@ package com.jxareas.xpensor.features.transactions.presentation.ui.adapter
 import android.content.SharedPreferences
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.common.utils.PreferenceUtils.CURRENCY_PREFERENCE_KEY
-import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_CURRENCY
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences.Companion.DEFAULT_CURRENCY
 import com.jxareas.xpensor.databinding.ListItemDayInformationBinding
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionByDay
 
@@ -21,7 +21,7 @@ class TransactionsByDayViewHolder(
 
         with(binding) {
             amount.text = amountValue.toAmountFormat(withMinus = true)
-            currency.text = preferences.getString(CURRENCY_PREFERENCE_KEY, MAIN_CURRENCY)
+            currency.text = preferences.getString(CURRENCY_PREFERENCE_KEY, DEFAULT_CURRENCY)
 
             day.text = dateValue.dayOfMonth.toString()
             monthAndYear.text = monthAndYearValue

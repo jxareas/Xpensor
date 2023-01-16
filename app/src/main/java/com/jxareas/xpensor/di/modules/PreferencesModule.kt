@@ -3,6 +3,8 @@ package com.jxareas.xpensor.di.modules
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.jxareas.xpensor.core.data.local.preferences.DefaultUserPreferences
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,4 +20,9 @@ object PreferencesModule {
     @Provides
     fun providePreferences(@ApplicationContext context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
+
+    @Singleton
+    @Provides
+    fun provideDefaultUserPreferences(sharedPreferences: SharedPreferences): UserPreferences =
+        DefaultUserPreferences(sharedPreferences)
 }
