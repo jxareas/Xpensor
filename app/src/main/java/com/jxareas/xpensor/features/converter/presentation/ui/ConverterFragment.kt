@@ -65,8 +65,8 @@ class ConverterFragment : Fragment() {
     }
 
     private fun setupConversionCollector() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.conversion.collectLatest { conversionState ->
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.conversionState.collectLatest { conversionState ->
                 when (conversionState) {
                     is ConversionState.Ready -> {
                         with(binding) {
@@ -90,7 +90,7 @@ class ConverterFragment : Fragment() {
     }
 
     private fun setupEventCollector() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.eventSource.collectLatest { currencyConverterEvent ->
                 when (currencyConverterEvent) {
                     is CurrencyConversionEvent.Convert ->

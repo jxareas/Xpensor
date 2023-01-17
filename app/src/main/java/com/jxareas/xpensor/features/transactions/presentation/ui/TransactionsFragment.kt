@@ -185,7 +185,7 @@ class TransactionsFragment : Fragment() {
 
     private fun setupCollectors() {
 
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.transactionState.collectLatest { state ->
                 when (state) {
                     is TransactionState.Ready -> {
@@ -203,11 +203,11 @@ class TransactionsFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             mainViewModel.selectedDateRange.collectLatest(viewModel::onUpdateSelectedDateRange)
         }
 
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             mainViewModel.selectedAccount.collectLatest(viewModel::onUpdateSelectedAccount)
         }
     }

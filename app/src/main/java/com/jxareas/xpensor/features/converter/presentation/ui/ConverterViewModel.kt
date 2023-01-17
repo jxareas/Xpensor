@@ -16,8 +16,8 @@ class ConverterViewModel @Inject constructor(
     private val convertCurrencyUseCase: ConvertCurrencyUseCase,
 ) : ViewModel() {
 
-    private val _conversion = MutableStateFlow<ConversionState>(ConversionState.Idle)
-    val conversion = _conversion.asStateFlow()
+    private val _conversionState = MutableStateFlow<ConversionState>(ConversionState.Idle)
+    val conversionState = _conversionState.asStateFlow()
 
     private val _eventEmitter = Channel<CurrencyConversionEvent>(Channel.UNLIMITED)
     val eventSource = _eventEmitter.receiveAsFlow()
@@ -26,10 +26,10 @@ class ConverterViewModel @Inject constructor(
 
     fun convertCurrency(amount: Double, sourceCurrency: String, destinationCurrency: String) =
         launchScoped {
-            _conversion.value = ConversionState.Loading
+            _conversionState.value = ConversionState.Loading
             conversionResult =
                 convertCurrencyUseCase.invoke(amount, sourceCurrency, destinationCurrency)
-            _conversion.value =
+            _conversionState.value =
                 when (conversionResult) {
                     ConvertCurrencyUseCase.UNEXPECTED_ERROR ->
                         ConversionState.Error("Unexpected error")

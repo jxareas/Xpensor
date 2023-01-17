@@ -77,7 +77,7 @@ class ChartFragment : Fragment() {
     }
 
     private fun setupEventCollector() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.eventSource.collectLatest { event ->
                 when (event) {
                     is ChartEvent.DateSelected ->
@@ -110,11 +110,11 @@ class ChartFragment : Fragment() {
             }
         }
 
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             mainViewModel.selectedDateRange.collectLatest(viewModel::onUpdateSelectedDateRange)
         }
 
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             mainViewModel.selectedAccount.collectLatest(viewModel::onUpdateSelectedAccount)
         }
     }

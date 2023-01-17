@@ -85,7 +85,7 @@ class AccountsFragment : Fragment() {
                         val openAccountBottomSheetAction =
                             NavGraphDirections.actionGlobalAccountActions(
                                 event.account,
-                                totalNumberOfAccounts
+                                totalNumberOfAccounts,
                             )
                         findNavController().navigate(openAccountBottomSheetAction)
                     }
@@ -100,25 +100,25 @@ class AccountsFragment : Fragment() {
             AddAccountMenu {
                 viewModel.onAddNewAccountButtonClick()
             },
-            viewLifecycleOwner, Lifecycle.State.STARTED
+            viewLifecycleOwner, Lifecycle.State.STARTED,
         )
     }
 
     private fun setupRecyclerView() = binding.recyclerViewAccounts.run {
         adapter = accountsListAdapter
         addItemDecoration(
-            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL),
         )
 
         accountsListAdapter.setOnClickListener(
             AccountsListAdapter.OnClickListener { account ->
                 viewModel.onAccountSelected(account)
-            }
+            },
         )
     }
 
     private fun setupCollectors() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.accounts.collectLatest { newAccountList ->
                 accountsListAdapter.submitList(newAccountList)
             }
