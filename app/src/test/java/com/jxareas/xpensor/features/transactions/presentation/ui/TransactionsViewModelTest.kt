@@ -72,24 +72,24 @@ class TransactionsViewModelTest {
             val transactionDetails = mockk<TransactionDetails>()
 
             // Date Selection Event
-            viewModel.onSelectedDateClick()
-            assertEquals(TransactionEvent.DateSelected, awaitItem())
+            viewModel.onSelectDateClick()
+            assertEquals(TransactionUiEvent.DateSelected, awaitItem())
 
             // Transaction Creation Event
             viewModel.onAddTransactionClick(accountUi)
-            val openTheAddTransactionSheet = TransactionEvent
+            val openTheAddTransactionSheet = TransactionUiEvent
                 .OpenTheAddTransactionSheet(accountUi)
             assertEquals(openTheAddTransactionSheet, awaitItem())
 
             // Transaction Deletion Event
             viewModel.onDeleteButtonClick(transactionDetails)
-            val showDeleteTransactionDialog = TransactionEvent
+            val showDeleteTransactionDialog = TransactionUiEvent
                 .ShowTheDeleteTransactionDialog(transactionDetails)
             assertEquals(showDeleteTransactionDialog, awaitItem())
 
             // Confirm Transaction Deletion
             viewModel.onDeleteTransactionConfirm(transactionDetails)
-            val confirmTransactionDeletion = TransactionEvent
+            val confirmTransactionDeletion = TransactionUiEvent
                 .DeleteTransaction(transactionDetails)
             assertEquals(confirmTransactionDeletion, awaitItem())
 

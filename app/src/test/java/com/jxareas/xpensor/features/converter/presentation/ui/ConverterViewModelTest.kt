@@ -39,12 +39,12 @@ class ConverterViewModelTest {
 
             // Currency Swap
             viewModel.onSwapCurrenciesClick()
-            val currencySwap = CurrencyConversionEvent.Swap
+            val currencySwap = ConvertCurrencyUiEvent.Swap
             assertEquals(currencySwap, awaitItem())
 
             // Currency Conversion
             viewModel.onConvertButtonClick()
-            val currencyConversion = CurrencyConversionEvent.Convert
+            val currencyConversion = ConvertCurrencyUiEvent.Convert
             assertEquals(currencyConversion, awaitItem())
 
             cancelAndIgnoreRemainingEvents()

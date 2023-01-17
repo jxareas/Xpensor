@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
-import androidx.core.view.MenuHost
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
+import com.jxareas.xpensor.common.extensions.navigateUpWithNavController
+import com.jxareas.xpensor.common.extensions.setMenuOnActivity
 import com.jxareas.xpensor.common.extensions.setTint
 import com.jxareas.xpensor.common.extensions.showToast
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
@@ -25,6 +25,7 @@ import com.jxareas.xpensor.databinding.FragmentEditAccountBinding
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.ApplyChangesMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EditAccountFragment : Fragment() {
@@ -71,31 +72,33 @@ class EditAccountFragment : Fragment() {
         val account = args.editableAccount
         var color = account.color
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.eventSource.collectLatest { event ->
-                when (event) {
-                    is EditAccountEvent.UpdateAccount -> {
-                        val name = binding.textInputLayoutName.editText?.text.toString().trim()
-                        if (name.isEmpty()) {
-                            showToast(R.string.account_empty_name_error)
-                        } else {
-                            val amount =
-                                binding.textInputLayoutMoneyAmount.editText?.text.toString()
-                                    .toDoubleOrNull() ?: account.amount
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventSource
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { editAccountUiEvent ->
+                    when (editAccountUiEvent) {
+                        is EditAccountUiEvent.UpdateAccount -> {
+                            val name = binding.textInputLayoutName.editText?.text.toString().trim()
+                            if (name.isEmpty()) {
+                                showToast(R.string.account_empty_name_error)
+                            } else {
+                                val amount =
+                                    binding.textInputLayoutMoneyAmount.editText?.text.toString()
+                                        .toDoubleOrNull() ?: account.amount
 
-                            val newAccount =
-                                account.copy(name = name, amount = amount, color = color)
+                                val newAccount =
+                                    account.copy(name = name, amount = amount, color = color)
 
-                            viewModel.updateAccount(newAccount)
-                            findNavController().navigateUp()
+                                viewModel.updateAccount(newAccount)
+                                navigateUpWithNavController()
+                            }
+                        }
+                        is EditAccountUiEvent.UpdateCurrentColor -> {
+                            binding.selectedColor.setTint(editAccountUiEvent.color)
+                            color = editAccountUiEvent.color
                         }
                     }
-                    is EditAccountEvent.UpdateCurrentColor -> {
-                        binding.selectedColor.setTint(event.color)
-                        color = event.color
-                    }
                 }
-            }
         }
     }
 
@@ -111,14 +114,8 @@ class EditAccountFragment : Fragment() {
         }
     }
 
-    private fun setupMenu() {
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(
-            ApplyChangesMenu {
-                viewModel.onAccountEditionConfirmation()
-            },
-            viewLifecycleOwner, Lifecycle.State.STARTED
-        )
+    private fun setupMenu() = setMenuOnActivity {
+        ApplyChangesMenu(viewModel::onConfirmAccountEditionClick)
     }
 
     private fun setupListeners() = binding.run {

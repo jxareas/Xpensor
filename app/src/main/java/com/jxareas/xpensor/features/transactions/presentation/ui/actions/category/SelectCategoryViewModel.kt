@@ -30,7 +30,7 @@ class SelectCategoryViewModel @Inject constructor(
     private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
 
-    private val _eventEmitter = Channel<CategorySelectionEvent>(Channel.UNLIMITED)
+    private val _eventEmitter = Channel<CategorySelectionUiEvent>(Channel.UNLIMITED)
     val eventSource = _eventEmitter.receiveAsFlow()
 
     private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
@@ -68,6 +68,6 @@ class SelectCategoryViewModel @Inject constructor(
         accountUi: AccountUi,
         categoryWithAmountUi: CategoryWithAmountUi,
     ) = launchScoped {
-        _eventEmitter.send(CategorySelectionEvent.SelectCategory(accountUi, categoryWithAmountUi))
+        _eventEmitter.send(CategorySelectionUiEvent.SelectCategory(accountUi, categoryWithAmountUi))
     }
 }

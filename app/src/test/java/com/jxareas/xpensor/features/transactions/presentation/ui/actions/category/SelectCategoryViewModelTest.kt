@@ -58,7 +58,7 @@ class SelectCategoryViewModelTest {
             // Category Selection Event
             viewModel.onSelectCategoryClick(accountUi, categoryWithAmountUi)
             val selectCategoryEvent =
-                CategorySelectionEvent.SelectCategory(accountUi, categoryWithAmountUi)
+                CategorySelectionUiEvent.SelectCategory(accountUi, categoryWithAmountUi)
             assertEquals(selectCategoryEvent, awaitItem())
 
         }

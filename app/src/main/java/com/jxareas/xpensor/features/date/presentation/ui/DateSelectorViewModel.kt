@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DateSelectorViewModel @Inject constructor() : ViewModel() {
 
-    private val _eventEmitter = Channel<SelectDateEvent>(Channel.UNLIMITED)
+    private val _eventEmitter = Channel<SelectDateUiEvent>(Channel.UNLIMITED)
     val eventSource = _eventEmitter.receiveAsFlow()
 
     fun getDate(daysAgo: Int = 0): LocalDate =
@@ -25,26 +25,26 @@ class DateSelectorViewModel @Inject constructor() : ViewModel() {
         else getCurrentLocalDate()
 
     fun onSelectDate() = launchScoped {
-        _eventEmitter.send(SelectDateEvent.CustomDate)
+        _eventEmitter.send(SelectDateUiEvent.CustomDate)
     }
 
     fun onSelectToday() = launchScoped {
-        _eventEmitter.send(SelectDateEvent.Today)
+        _eventEmitter.send(SelectDateUiEvent.Today)
     }
 
     fun onSelectWeek() = launchScoped {
-        _eventEmitter.send(SelectDateEvent.Week)
+        _eventEmitter.send(SelectDateUiEvent.Week)
     }
 
     fun onSelectMonth() = launchScoped {
-        _eventEmitter.send(SelectDateEvent.Month)
+        _eventEmitter.send(SelectDateUiEvent.Month)
     }
 
     fun onSelectYear() = launchScoped {
-        _eventEmitter.send(SelectDateEvent.Year)
+        _eventEmitter.send(SelectDateUiEvent.Year)
     }
 
     fun onSelectAllTime() = launchScoped {
-        _eventEmitter.send(SelectDateEvent.AllTime)
+        _eventEmitter.send(SelectDateUiEvent.AllTime)
     }
 }

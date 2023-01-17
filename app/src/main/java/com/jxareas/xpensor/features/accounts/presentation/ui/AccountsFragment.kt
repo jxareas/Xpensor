@@ -5,24 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnticipateOvershootInterpolator
-import androidx.core.view.MenuHost
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.NavGraphDirections
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
+import com.jxareas.xpensor.common.extensions.navigateWithNavController
+import com.jxareas.xpensor.common.extensions.postponeEnterTransitionAndStartOnPreDraw
+import com.jxareas.xpensor.common.extensions.setMenuOnActivity
 import com.jxareas.xpensor.databinding.FragmentAccountsBinding
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.AddAccountMenu
 import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,7 +36,7 @@ class AccountsFragment : Fragment() {
     private val viewModel: AccountsViewModel by viewModels()
 
     @Inject
-    lateinit var accountsListAdapter: AccountsListAdapter
+    lateinit var accountListAdapter: AccountsListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,66 +63,60 @@ class AccountsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition().also {
-            view.doOnPreDraw { startPostponedEnterTransition() }
-        }
+        postponeEnterTransitionAndStartOnPreDraw()
         setupMenu()
         setupRecyclerView()
         setupCollectors()
-        setupEventCollectors()
+        setupEventCollector()
     }
 
-    private fun setupEventCollectors() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.eventSource.collectLatest { event ->
-                when (event) {
-                    is AccountEvent.NavigateToAddAccountScreen -> {
-                        val addAccountFragmentAction =
-                            AccountsFragmentDirections.actionAccountsFragmentToAddAccountFragment()
-                        findNavController().navigate(addAccountFragmentAction)
-                    }
-                    is AccountEvent.OpenTheAccountBottomSheet -> {
-                        val totalNumberOfAccounts = viewModel.accounts.value.size
-                        val openAccountBottomSheetAction =
-                            NavGraphDirections.actionGlobalAccountActions(
-                                event.account,
-                                totalNumberOfAccounts,
-                            )
-                        findNavController().navigate(openAccountBottomSheetAction)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun setupMenu() {
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(
-            AddAccountMenu {
-                viewModel.onAddNewAccountButtonClick()
-            },
-            viewLifecycleOwner, Lifecycle.State.STARTED,
-        )
+    private fun setupMenu() = setMenuOnActivity {
+        AddAccountMenu(viewModel::onAddNewAccountButtonClick)
     }
 
     private fun setupRecyclerView() = binding.recyclerViewAccounts.run {
-        adapter = accountsListAdapter
+        adapter = accountListAdapter
         addItemDecoration(
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL),
         )
 
-        accountsListAdapter.setOnClickListener(
+        accountListAdapter.setOnClickListener(
             AccountsListAdapter.OnClickListener { account ->
-                viewModel.onAccountSelected(account)
+                viewModel.onSelectAccountClick(account)
             },
         )
     }
 
     private fun setupCollectors() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.accounts.collectLatest { newAccountList ->
-                accountsListAdapter.submitList(newAccountList)
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.accounts
+                .flowWithLifecycle(lifecycle)
+                .collectLatest(accountListAdapter::submitList)
+        }
+    }
+
+    private fun setupEventCollector() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventSource
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { accountUiEvent ->
+                    when (accountUiEvent) {
+                        is AccountUiEvent.NavigateToAddAccountScreen -> {
+                            val addAccountFragmentAction =
+                                AccountsFragmentDirections.actionAccountsFragmentToAddAccountFragment()
+                            navigateWithNavController(addAccountFragmentAction)
+                        }
+                        is AccountUiEvent.OpenTheAccountBottomSheet -> {
+                            val totalNumberOfAccounts = viewModel.accounts.value.size
+                            val openAccountBottomSheetAction =
+                                NavGraphDirections.actionGlobalAccountActions(
+                                    accountUiEvent.account,
+                                    totalNumberOfAccounts,
+                                )
+                            navigateWithNavController(openAccountBottomSheetAction)
+                        }
+                    }
+                }
         }
     }
 

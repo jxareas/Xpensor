@@ -31,7 +31,7 @@ class TransactionsViewModel @Inject constructor(
     private val _transactionState = MutableStateFlow<TransactionState>(TransactionState.Idle)
     val transactionState = _transactionState.asStateFlow()
 
-    private val _eventEmitter = Channel<TransactionEvent>(Channel.UNLIMITED)
+    private val _eventEmitter = Channel<TransactionUiEvent>(Channel.UNLIMITED)
     val eventSource = _eventEmitter.receiveAsFlow()
 
     private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
@@ -76,19 +76,19 @@ class TransactionsViewModel @Inject constructor(
         launchGetTransactionsJob()
     }
 
-    fun onSelectedDateClick() = launchScoped {
-        _eventEmitter.send(TransactionEvent.DateSelected)
+    fun onSelectDateClick() = launchScoped {
+        _eventEmitter.send(TransactionUiEvent.DateSelected)
     }
 
     fun onAddTransactionClick(accountUi: AccountUi) = launchScoped {
-        _eventEmitter.send(TransactionEvent.OpenTheAddTransactionSheet(accountUi))
+        _eventEmitter.send(TransactionUiEvent.OpenTheAddTransactionSheet(accountUi))
     }
 
     fun onDeleteButtonClick(transactionDetails: TransactionDetails) = launchScoped {
-        _eventEmitter.send(TransactionEvent.ShowTheDeleteTransactionDialog(transactionDetails))
+        _eventEmitter.send(TransactionUiEvent.ShowTheDeleteTransactionDialog(transactionDetails))
     }
 
     fun onDeleteTransactionConfirm(transactionDetails: TransactionDetails) = launchScoped {
-        _eventEmitter.send(TransactionEvent.DeleteTransaction(transactionDetails))
+        _eventEmitter.send(TransactionUiEvent.DeleteTransaction(transactionDetails))
     }
 }

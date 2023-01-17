@@ -41,12 +41,12 @@ class AccountFilterViewModelTest {
 
     @Test
     fun testEventFlow() = runTest {
-        viewModel.events.test {
+        viewModel.eventSource.test {
             val accountUi = mockk<AccountUi>()
 
             // Account Selection
-            viewModel.onAccountSelected(accountUi)
-            val selectAccount = AccountFilterEvent.SelectAccount(accountUi)
+            viewModel.onSelectAccountClick(accountUi)
+            val selectAccount = AccountFilterUiEvent.SelectAccount(accountUi)
             assertEquals(selectAccount, awaitItem())
 
             cancelAndIgnoreRemainingEvents()

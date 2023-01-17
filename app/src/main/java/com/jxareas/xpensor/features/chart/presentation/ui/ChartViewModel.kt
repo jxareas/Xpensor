@@ -30,7 +30,7 @@ class ChartViewModel @Inject constructor(
     private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
 
-    private val _eventEmitter = Channel<ChartEvent>(Channel.UNLIMITED)
+    private val _eventEmitter = Channel<ChartUiEvent>(Channel.UNLIMITED)
     val eventSource = _eventEmitter.receiveAsFlow()
 
     private var fetchCategoriesJob: Job? = null
@@ -55,16 +55,16 @@ class ChartViewModel @Inject constructor(
     }
 
     fun onDateSelectedClick() = launchScoped {
-        _eventEmitter.send(ChartEvent.DateSelected)
+        _eventEmitter.send(ChartUiEvent.DateSelected)
     }
 
-    fun onUpdateSelectedDateRange(dateRange: DateRange = EmptyDateRange) {
+    fun onSelectedDateRangeUpdate(dateRange: DateRange = EmptyDateRange) {
         val (initialDate, finalDate) = dateRange
         _selectedDateRange.value = initialDate to finalDate
         launchFetchCategoriesJob()
     }
 
-    fun onUpdateSelectedAccount(account: AccountUi? = null) {
+    fun onSelectedAccountUpdate(account: AccountUi? = null) {
         _selectedAccountUi.value = account
         launchFetchCategoriesJob()
     }

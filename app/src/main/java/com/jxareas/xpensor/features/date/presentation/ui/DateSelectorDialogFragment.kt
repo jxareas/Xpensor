@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.jxareas.xpensor.R
@@ -21,6 +22,7 @@ import com.jxareas.xpensor.features.date.domain.model.WEEK
 import com.jxareas.xpensor.features.date.domain.model.YEAR
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DateSelectorDialogFragment : DialogFragment() {
@@ -61,10 +63,12 @@ class DateSelectorDialogFragment : DialogFragment() {
     }
 
     private fun setupEventCollector() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.eventSource.collectLatest { event ->
-                when (event) {
-                    is SelectDateEvent.CustomDate -> {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventSource
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { selectDateUiEvent ->
+                when (selectDateUiEvent) {
+                    is SelectDateUiEvent.CustomDate -> {
                         val datePicker = MaterialDatePicker.Builder.datePicker()
                             .setTitleText(getString(R.string.select_date))
                             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
@@ -78,27 +82,27 @@ class DateSelectorDialogFragment : DialogFragment() {
                         }
                         datePicker.show(childFragmentManager, DATE_PICKER_TAG)
                     }
-                    is SelectDateEvent.Today -> {
+                    is SelectDateUiEvent.Today -> {
                         val date = viewModel.getDate().toDateRange()
                         activityViewModel.onUpdateCurrentDateRange(date)
                         dismiss()
                     }
-                    is SelectDateEvent.Week -> {
+                    is SelectDateUiEvent.Week -> {
                         val lastWeek = viewModel.getDate(WEEK).fromDate()
                         activityViewModel.onUpdateCurrentDateRange(lastWeek)
                         dismiss()
                     }
-                    is SelectDateEvent.Month -> {
+                    is SelectDateUiEvent.Month -> {
                         val lastMonth = viewModel.getDate(MONTH).fromDate()
                         activityViewModel.onUpdateCurrentDateRange(lastMonth)
                         dismiss()
                     }
-                    is SelectDateEvent.Year -> {
+                    is SelectDateUiEvent.Year -> {
                         val lastYear = viewModel.getDate(YEAR).fromDate()
                         activityViewModel.onUpdateCurrentDateRange(lastYear)
                         dismiss()
                     }
-                    is SelectDateEvent.AllTime -> {
+                    is SelectDateUiEvent.AllTime -> {
                         activityViewModel.onUpdateCurrentDateRange(EmptyDateRange)
                         dismiss()
                     }

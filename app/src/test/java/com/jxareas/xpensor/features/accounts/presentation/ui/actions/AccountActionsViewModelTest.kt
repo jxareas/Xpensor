@@ -42,19 +42,19 @@ class AccountActionsViewModelTest {
 
             // Account Edition Event
             viewModel.onEditAccountClick(accountUi)
-            val navigateToEditAccountsScreen = AccountActionsEvent
+            val navigateToEditAccountsScreen = AccountActionsUiEvent
                 .NavigateToEditAccountsScreen(accountUi)
             assertEquals(navigateToEditAccountsScreen, awaitItem())
 
             // Account Deletion Event
             viewModel.onDeleteAccountClick(accountUi)
-            val showDeleteAccountDialog = AccountActionsEvent
+            val showDeleteAccountDialog = AccountActionsUiEvent
                 .ShowDeleteAccountDialog(accountUi)
             assertEquals(showDeleteAccountDialog, awaitItem())
 
             // Account Deletion Confirmation Event
             viewModel.onConfirmAccountDeletionClick()
-            val confirmAccountDeletion = AccountActionsEvent.DeleteAccount
+            val confirmAccountDeletion = AccountActionsUiEvent.DeleteAccount
             assertEquals(confirmAccountDeletion, awaitItem())
 
             cancelAndIgnoreRemainingEvents()

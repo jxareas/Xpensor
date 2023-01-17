@@ -17,7 +17,7 @@ class AddAccountViewModel @Inject constructor(
     private val addAccountUseCase: AddAccountUseCase,
 ) : ViewModel() {
 
-    private val _eventEmitter = Channel<AddAccountEvent>(Channel.UNLIMITED)
+    private val _eventEmitter = Channel<AddAccountUiEvent>(Channel.UNLIMITED)
     val eventSource = _eventEmitter.receiveAsFlow()
 
     fun createNewAccount(accountUi: AccountUi) = launchScoped {
@@ -25,12 +25,12 @@ class AddAccountViewModel @Inject constructor(
         addAccountUseCase.invoke(account)
     }
 
-    fun onCreateAccountConfirmation() = launchScoped {
-        _eventEmitter.send(AddAccountEvent.CreateNewAccount)
+    fun onConfirmAccountCreationClick() = launchScoped {
+        _eventEmitter.send(AddAccountUiEvent.CreateNewAccount)
     }
 
     fun onSelectColorButtonClick(image: ImageView) = launchScoped {
         val color = getImageViewTint(image)
-        _eventEmitter.send(AddAccountEvent.SelectAccountColor(color))
+        _eventEmitter.send(AddAccountUiEvent.SelectAccountColor(color))
     }
 }

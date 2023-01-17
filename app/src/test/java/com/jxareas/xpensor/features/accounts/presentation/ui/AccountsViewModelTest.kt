@@ -46,14 +46,14 @@ class AccountsViewModelTest {
             val accountUi = getAccountsUseCase.invoke().first().first().toAccountUi()
 
             // Account Selection Event
-            viewModel.onAccountSelected(accountUi)
-            val openAccountBottomSheet = AccountEvent
+            viewModel.onSelectAccountClick(accountUi)
+            val openAccountBottomSheet = AccountUiEvent
                 .OpenTheAccountBottomSheet(accountUi)
             assertEquals(openAccountBottomSheet, awaitItem())
 
             // Add New Account
             viewModel.onAddNewAccountButtonClick()
-            val navigateToAddAccountScreenEvent = AccountEvent
+            val navigateToAddAccountScreenEvent = AccountUiEvent
                 .NavigateToAddAccountScreen
             assertEquals(navigateToAddAccountScreenEvent, awaitItem())
 

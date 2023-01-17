@@ -24,19 +24,19 @@ class DateSelectorViewModelTest {
     fun testEventFlow() = runTest {
         viewModel.eventSource.test {
             viewModel.onSelectDate()
-            assertEquals(SelectDateEvent.CustomDate, awaitItem())
+            assertEquals(SelectDateUiEvent.CustomDate, awaitItem())
 
             viewModel.onSelectToday()
-            assertEquals(SelectDateEvent.Today, awaitItem())
+            assertEquals(SelectDateUiEvent.Today, awaitItem())
 
             viewModel.onSelectWeek()
-            assertEquals(SelectDateEvent.Week, awaitItem())
+            assertEquals(SelectDateUiEvent.Week, awaitItem())
 
             viewModel.onSelectYear()
-            assertEquals(SelectDateEvent.Year, awaitItem())
+            assertEquals(SelectDateUiEvent.Year, awaitItem())
 
             viewModel.onSelectAllTime()
-            assertEquals(SelectDateEvent.AllTime, awaitItem())
+            assertEquals(SelectDateUiEvent.AllTime, awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }

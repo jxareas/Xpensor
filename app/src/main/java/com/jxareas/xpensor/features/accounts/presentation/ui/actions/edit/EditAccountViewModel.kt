@@ -17,7 +17,7 @@ class EditAccountViewModel @Inject constructor(
     private val updateAccountUseCase: UpdateAccountUseCase,
 ) : ViewModel() {
 
-    private val _eventEmitter = Channel<EditAccountEvent>(Channel.UNLIMITED)
+    private val _eventEmitter = Channel<EditAccountUiEvent>(Channel.UNLIMITED)
     val eventSource = _eventEmitter.receiveAsFlow()
 
     fun updateAccount(accountUi: AccountUi) = launchScoped {
@@ -25,12 +25,12 @@ class EditAccountViewModel @Inject constructor(
         updateAccountUseCase.invoke(account)
     }
 
-    fun onAccountEditionConfirmation() = launchScoped {
-        _eventEmitter.send(EditAccountEvent.UpdateAccount)
+    fun onConfirmAccountEditionClick() = launchScoped {
+        _eventEmitter.send(EditAccountUiEvent.UpdateAccount)
     }
 
     fun onSelectColorButtonClick(image: ImageView) = launchScoped {
         val color = getImageViewTint(image)
-        _eventEmitter.send(EditAccountEvent.UpdateCurrentColor(color))
+        _eventEmitter.send(EditAccountUiEvent.UpdateCurrentColor(color))
     }
 }

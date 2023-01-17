@@ -15,7 +15,7 @@ class AccountActionsViewModel @Inject constructor(
     private val deleteAccountUseCase: DeleteAccountUseCase,
 ) : ViewModel() {
 
-    private val _eventEmitter = Channel<AccountActionsEvent>(Channel.UNLIMITED)
+    private val _eventEmitter = Channel<AccountActionsUiEvent>(Channel.UNLIMITED)
     val eventSource = _eventEmitter.receiveAsFlow()
 
     fun removeAccount(accountUi: AccountUi) = launchScoped {
@@ -24,14 +24,14 @@ class AccountActionsViewModel @Inject constructor(
     }
 
     fun onEditAccountClick(account: AccountUi) = launchScoped {
-        _eventEmitter.send(AccountActionsEvent.NavigateToEditAccountsScreen(account))
+        _eventEmitter.send(AccountActionsUiEvent.NavigateToEditAccountsScreen(account))
     }
 
     fun onDeleteAccountClick(account: AccountUi) = launchScoped {
-        _eventEmitter.send(AccountActionsEvent.ShowDeleteAccountDialog(account))
+        _eventEmitter.send(AccountActionsUiEvent.ShowDeleteAccountDialog(account))
     }
 
     fun onConfirmAccountDeletionClick() = launchScoped {
-        _eventEmitter.send(AccountActionsEvent.DeleteAccount)
+        _eventEmitter.send(AccountActionsUiEvent.DeleteAccount)
     }
 }

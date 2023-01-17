@@ -39,8 +39,8 @@ class AddAccountViewModelTest {
         viewModel.eventSource.test {
 
             // Account Creation Confirmation
-            viewModel.onCreateAccountConfirmation()
-            val createNewAccount = AddAccountEvent.CreateNewAccount
+            viewModel.onConfirmAccountCreationClick()
+            val createNewAccount = AddAccountUiEvent.CreateNewAccount
             assertEquals(createNewAccount, awaitItem())
 
             cancelAndIgnoreRemainingEvents()

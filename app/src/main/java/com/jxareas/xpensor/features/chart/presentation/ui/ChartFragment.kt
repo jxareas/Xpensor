@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnticipateOvershootInterpolator
-import androidx.core.view.MenuHost
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -23,7 +23,9 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
 import com.jxareas.xpensor.common.extensions.getThemeColor
+import com.jxareas.xpensor.common.extensions.navigateWithNavController
 import com.jxareas.xpensor.common.extensions.setCategoryAttributes
+import com.jxareas.xpensor.common.extensions.setMenuOnActivity
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.core.data.local.preferences.UserPreferences.Companion.DEFAULT_COLOR
 import com.jxareas.xpensor.core.presentation.MainViewModel
@@ -32,6 +34,7 @@ import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ChartFragment : Fragment() {
@@ -76,46 +79,42 @@ class ChartFragment : Fragment() {
         setupEventCollector()
     }
 
-    private fun setupEventCollector() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.eventSource.collectLatest { event ->
-                when (event) {
-                    is ChartEvent.DateSelected ->
-                        navigateToSelectDateDialogFragment()
-                }
-            }
-        }
-    }
-
-    private fun navigateToSelectDateDialogFragment() {
-        val direction =
-            ChartFragmentDirections.actionChartFragmentToDateSelectorDialogFragment()
-        findNavController().navigate(direction)
-    }
-
-    private fun setupMenu() {
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(
-            SelectDateMenu {
-                viewModel.onDateSelectedClick()
-            },
-            viewLifecycleOwner, Lifecycle.State.STARTED,
-        )
+    private fun setupMenu() = setMenuOnActivity {
+        SelectDateMenu(viewModel::onDateSelectedClick)
     }
 
     private fun setupCollectors() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.categories.collectLatest { newCategories ->
-                updateChartData(newCategories)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.categories.collectLatest(this@ChartFragment::updateChartData)
+                }
+
+                launch {
+                    mainViewModel.selectedDateRange.collectLatest(viewModel::onSelectedDateRangeUpdate)
+                }
+
+                launch {
+                    mainViewModel.selectedAccount.collectLatest(viewModel::onSelectedAccountUpdate)
+                }
+
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedDateRange.collectLatest(viewModel::onUpdateSelectedDateRange)
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedAccount.collectLatest(viewModel::onUpdateSelectedAccount)
+    private fun setupEventCollector() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventSource
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { chartUiEvent ->
+                    when (chartUiEvent) {
+                        is ChartUiEvent.DateSelected -> {
+                            val selectDateDialogAction = ChartFragmentDirections
+                                .actionChartFragmentToDateSelectorDialogFragment()
+                            navigateWithNavController(selectDateDialogAction)
+                        }
+                    }
+                }
         }
     }
 

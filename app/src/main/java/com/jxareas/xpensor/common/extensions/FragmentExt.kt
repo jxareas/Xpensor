@@ -5,10 +5,36 @@ import android.util.TypedValue
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuProvider
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.jxareas.xpensor.R
+
+fun Fragment.postponeEnterTransitionAndStartOnPreDraw() =
+    postponeEnterTransition().also {
+        requireView().doOnPreDraw { startPostponedEnterTransition() }
+    }
+
+fun Fragment.navigateWithNavController(navDirections: NavDirections) =
+    findNavController().navigate(navDirections)
+
+fun Fragment.navigateUpWithNavController() =
+    findNavController().navigateUp()
+
+
+fun Fragment.setMenuOnActivity(
+    owner: LifecycleOwner = viewLifecycleOwner,
+    state: Lifecycle.State = Lifecycle.State.STARTED,
+    menuProviderCreator: () -> MenuProvider,
+) = menuProviderCreator.invoke().let { provider ->
+    requireActivity().addMenuProvider(provider, owner, state)
+}
 
 fun Fragment.getDivider(context: Context) = DividerItemDecoration(
     context,

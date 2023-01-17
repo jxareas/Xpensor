@@ -26,7 +26,7 @@ class AccountsViewModel @Inject constructor(
     private val _accounts = MutableStateFlow(emptyList<AccountUi>())
     val accounts = _accounts.asStateFlow()
 
-    private val _eventEmitter = Channel<AccountEvent>(Channel.UNLIMITED)
+    private val _eventEmitter = Channel<AccountUiEvent>(Channel.UNLIMITED)
     val eventSource = _eventEmitter.receiveAsFlow()
 
     private var fetchAccountsJob: Job? = null
@@ -36,11 +36,11 @@ class AccountsViewModel @Inject constructor(
     }
 
     fun onAddNewAccountButtonClick() = launchScoped {
-        _eventEmitter.send(AccountEvent.NavigateToAddAccountScreen)
+        _eventEmitter.send(AccountUiEvent.NavigateToAddAccountScreen)
     }
 
-    fun onAccountSelected(accountUi: AccountUi) = launchScoped {
-        _eventEmitter.send(AccountEvent.OpenTheAccountBottomSheet(accountUi))
+    fun onSelectAccountClick(accountUi: AccountUi) = launchScoped {
+        _eventEmitter.send(AccountUiEvent.OpenTheAccountBottomSheet(accountUi))
     }
 
     private fun launchFetchAccountsJob() {

@@ -45,7 +45,7 @@ class ChartViewModelTest {
 
             // Date Selection Event
             viewModel.onDateSelectedClick()
-            assertEquals(ChartEvent.DateSelected, awaitItem())
+            assertEquals(ChartUiEvent.DateSelected, awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }

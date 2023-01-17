@@ -38,8 +38,8 @@ class EditAccountViewModelTest {
 
         viewModel.eventSource.test {
             // Account Edition Confirmation
-            viewModel.onAccountEditionConfirmation()
-            val accountEditionConfirmation = EditAccountEvent.UpdateAccount
+            viewModel.onConfirmAccountEditionClick()
+            val accountEditionConfirmation = EditAccountUiEvent.UpdateAccount
             assertEquals(accountEditionConfirmation, awaitItem())
 
             cancelAndIgnoreRemainingEvents()

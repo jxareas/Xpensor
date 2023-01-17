@@ -43,7 +43,7 @@ class AddTransactionViewModelTest {
 
             // Transaction Creation Event
             viewModel.onConfirmTransactionCreation()
-            val createNewTransactionEvent = AddTransactionEvent.CreateNewTransaction
+            val createNewTransactionEvent = AddTransactionUiEvent.CreateNewTransaction
             assertEquals(createNewTransactionEvent, awaitItem())
 
         }

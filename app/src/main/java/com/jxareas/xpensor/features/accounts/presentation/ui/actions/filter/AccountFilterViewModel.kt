@@ -10,12 +10,12 @@ import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccountUi
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,8 +26,8 @@ class AccountFilterViewModel @Inject constructor(
     private val _accounts = MutableStateFlow(emptyList<AccountUi>())
     val accounts = _accounts.asStateFlow()
 
-    private val _events = MutableSharedFlow<AccountFilterEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = Channel<AccountFilterUiEvent>(Channel.UNLIMITED)
+    val eventSource = _eventEmitter.receiveAsFlow()
 
     private var fetchAccountsJob: Job? = null
 
@@ -43,8 +43,8 @@ class AccountFilterViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun onAccountSelected(account: AccountUi) = launchScoped {
-        _events.emit(AccountFilterEvent.SelectAccount(account))
+    fun onSelectAccountClick(account: AccountUi) = launchScoped {
+        _eventEmitter.send(AccountFilterUiEvent.SelectAccount(account))
     }
 
     fun getTotalAccountsAmount(): Double =

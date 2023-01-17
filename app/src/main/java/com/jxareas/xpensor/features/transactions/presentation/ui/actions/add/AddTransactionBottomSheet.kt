@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.jxareas.xpensor.R
+import com.jxareas.xpensor.common.extensions.navigateWithNavController
 import com.jxareas.xpensor.common.extensions.setIcon
 import com.jxareas.xpensor.common.extensions.showSnackbar
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
@@ -18,6 +19,7 @@ import com.jxareas.xpensor.databinding.BottomSheetAddTransactionBinding
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddTransactionBottomSheet : BottomSheetDialogFragment() {
@@ -46,64 +48,6 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
         setupEventCollector()
     }
 
-    private fun setupCollectors() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.transactionState.collectLatest { state ->
-                when (state) {
-                    is AddTransactionState.Idle -> Unit
-                    is AddTransactionState.Valid -> navigateBackToTransactionFragment()
-                    is AddTransactionState.NotEnoughFunds -> showInvalidTransactionSnackbar()
-                }
-            }
-        }
-    }
-
-    private fun setupListeners() = binding.run {
-        buttonAddTransaction.setOnClickListener { viewModel.onConfirmTransactionCreation() }
-    }
-
-    private fun setupEventCollector() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.eventSource.collectLatest { event ->
-                when (event) {
-                    is AddTransactionEvent.CreateNewTransaction -> {
-                        val account = args.selectedAccount
-                        val details = args.selectedCategory
-                        val amount =
-                            binding.textInputLayoutExpense.editText?.text.toString()
-                                .toDoubleOrNull()
-                        if (amount == null || amount <= 0)
-                            showInvalidInputSnackbar()
-                        else {
-                            val note =
-                                binding.textInputLayoutDescription.editText?.text.toString()
-
-                            val transaction = Transaction(
-                                note = note,
-                                amount = amount,
-                            )
-
-                            viewModel.onAddTransaction(transaction, account.id, details.category.id)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun showInvalidTransactionSnackbar() =
-        showSnackbar(errorMessage = getString(R.string.not_enough_funds))
-
-    private fun showInvalidInputSnackbar() =
-        showSnackbar(errorMessage = getString(R.string.enter_expense_error))
-
-    private fun navigateBackToTransactionFragment() {
-        val direction =
-            AddTransactionBottomSheetDirections
-                .actionAddTransactionBottomSheetToTransactionsFragment()
-        findNavController().navigate(direction)
-    }
-
     private fun setupView() = binding.run {
         accountName.text = args.selectedAccount.name
         categoryName.text = args.selectedCategory.category.name
@@ -117,6 +61,72 @@ class AddTransactionBottomSheet : BottomSheetDialogFragment() {
         accountBackground.setBackgroundColor(Color.parseColor(args.selectedAccount.color))
         categoryBackground
             .setBackgroundColor(Color.parseColor(args.selectedCategory.category.iconColor))
+    }
+
+    private fun setupListeners() = binding.run {
+        buttonAddTransaction.setOnClickListener { viewModel.onConfirmTransactionCreation() }
+    }
+
+    private fun setupCollectors() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.transactionState
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { newTransactionState ->
+                    when (newTransactionState) {
+                        is NewTransactionState.Idle -> Unit
+                        is NewTransactionState.Valid -> navigateBackToTransactionFragment()
+                        is NewTransactionState.NotEnoughFunds -> showInvalidTransactionSnackbar()
+                    }
+                }
+        }
+    }
+
+    private fun setupEventCollector() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventSource
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { event ->
+                    when (event) {
+                        is AddTransactionUiEvent.CreateNewTransaction -> {
+                            val account = args.selectedAccount
+                            val details = args.selectedCategory
+                            val amount =
+                                binding.textInputLayoutExpense.editText?.text.toString()
+                                    .toDoubleOrNull()
+                            if (amount == null || amount <= 0)
+                                showInvalidInputSnackbar()
+                            else {
+                                val note =
+                                    binding.textInputLayoutDescription.editText?.text.toString()
+
+                                val transaction = Transaction(
+                                    note = note,
+                                    amount = amount,
+                                )
+
+                                viewModel.onAddTransaction(
+                                    transaction,
+                                    account.id,
+                                    details.category.id,
+                                )
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun showInvalidTransactionSnackbar() =
+        showSnackbar(errorMessage = getString(R.string.not_enough_funds))
+
+    private fun showInvalidInputSnackbar() =
+        showSnackbar(errorMessage = getString(R.string.enter_expense_error))
+
+    private fun navigateBackToTransactionFragment() {
+        val direction =
+            AddTransactionBottomSheetDirections
+                .actionAddTransactionBottomSheetToTransactionsFragment()
+        navigateWithNavController(direction)
     }
 
     override fun onDestroyView() {
