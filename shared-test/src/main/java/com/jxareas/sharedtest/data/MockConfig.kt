@@ -1,6 +1,6 @@
 package com.jxareas.sharedtest.data
 
-private const val NUMBER_OF_MOCKS = 20
+private const val NUMBER_OF_MOCKS = 10
 private const val INDEX_OFFSET = 287
 
 

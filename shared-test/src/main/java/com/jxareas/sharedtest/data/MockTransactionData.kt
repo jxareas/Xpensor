@@ -1,5 +1,7 @@
 package com.jxareas.sharedtest.data
 
+import com.jxareas.xpensor.features.transactions.data.local.entity.TransactionEntity
+import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionEntity
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionByDay
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
@@ -35,3 +37,6 @@ val mockTransactionsByDay = mockList { index ->
         amount = index.toDouble(),
     )
 }
+
+val mockTransactionEntities: List<TransactionEntity> =
+    mockTransactionDetails.map(TransactionDetails::toTransactionEntity)

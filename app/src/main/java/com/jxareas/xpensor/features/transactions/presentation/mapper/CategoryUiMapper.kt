@@ -1,5 +1,6 @@
 package com.jxareas.xpensor.features.transactions.presentation.mapper
 
+import com.jxareas.xpensor.features.transactions.data.local.entity.CategoryEntity
 import com.jxareas.xpensor.features.transactions.domain.model.Category
 import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryUi
@@ -12,6 +13,9 @@ fun Category.toCategoryUi(): CategoryUi =
         icon = icon,
         iconColor = iconColor,
     )
+
+fun Category.toCategoryEntity(): CategoryEntity =
+    CategoryEntity(id, name, icon, iconColor)
 
 fun CategoryUi.toCategory(): Category =
     Category(

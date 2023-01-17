@@ -4,10 +4,9 @@ import com.jxareas.xpensor.common.extensions.mapEach
 import com.jxareas.xpensor.features.transactions.data.local.source.TransactionLocalDataSource
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionWithCategoryAndAccount
 import com.jxareas.xpensor.features.transactions.data.local.views.TransactionsByDayView
-import com.jxareas.xpensor.features.transactions.data.mapper.toEntity
+import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionEntity
 import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionAmountPerDay
 import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionDetails
-import com.jxareas.xpensor.features.transactions.data.mapper.toTransactionEntity
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionByDay
 import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
@@ -60,7 +59,7 @@ class DefaultTransactionRepository @Inject constructor(
     }
 
     override suspend fun insertTransaction(details: TransactionDetails) {
-        val transactionEntity = details.toEntity()
+        val transactionEntity = details.toTransactionEntity()
         dao.insert(transactionEntity)
     }
 

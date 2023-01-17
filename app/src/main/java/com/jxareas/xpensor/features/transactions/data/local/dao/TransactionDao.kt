@@ -12,6 +12,9 @@ import java.time.LocalDate
 @Dao
 interface TransactionDao : RoomDao<TransactionEntity> {
 
+    @Query("SELECT * FROM transactions")
+    fun getAll() : Flow<List<TransactionEntity>>
+
     @Query(
         """
     SELECT * FROM view_transactions

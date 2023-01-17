@@ -51,7 +51,7 @@ fun TransactionsByDayView.toTransactionAmountPerDay(): TransactionByDay =
         amount = amountPerDay,
     )
 
-fun TransactionDetails.toEntity(): TransactionEntity =
+fun TransactionDetails.toTransactionEntity(): TransactionEntity =
     TransactionEntity(
         id = transaction.id,
         note = transaction.note,

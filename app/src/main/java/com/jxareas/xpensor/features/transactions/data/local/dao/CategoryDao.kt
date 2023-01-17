@@ -11,6 +11,9 @@ import java.time.LocalDate
 @Dao
 interface CategoryDao : RoomDao<CategoryEntity> {
 
+    @Query("SELECT * FROM categories")
+    fun getAll(): Flow<List<CategoryEntity>>
+
     @Query(
         """
     SELECT id, name, icon, icon_color, ifnull((SELECT SUM(amount) FROM transactions
