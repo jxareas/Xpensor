@@ -62,6 +62,7 @@
     <string name="delete_account_alert_message">All transactions from this account will be deleted.</string>
     <string name="cancel">Cancel</string>
     <string name="expense">Expense</string>
+    <string name="expenses_with_amount">Expenses \n %1$s</string>
     <string name="description">Description</string>
     <string name="to_category">To category</string>
     <string name="from_account">From account</string>

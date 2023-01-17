@@ -1,19 +1,12 @@
 package com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu
 
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import androidx.core.view.MenuProvider
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.utils.OnToolbarMenuItemClick
+import com.jxareas.xpensor.common.utils.SingleToolbarItemMenuProvider
 
-class ApplyChangesMenu(private val onItemClicked: OnToolbarMenuItemClick) : MenuProvider {
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) =
-        menuInflater.inflate(R.menu.apply_changes_menu, menu)
-
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
-        when (menuItem.itemId) {
-            R.id.apply_changes -> true.also { onItemClicked() }
-            else -> false
-        }
-}
+class ApplyChangesMenu(onToolbarMenuItemClick: OnToolbarMenuItemClick) :
+    SingleToolbarItemMenuProvider(
+        menuRes = R.menu.menu_apply_changes,
+        toolbarItemRes = R.id.menu_item_apply_changes,
+        onToolbarMenuItemClick = onToolbarMenuItemClick,
+    )

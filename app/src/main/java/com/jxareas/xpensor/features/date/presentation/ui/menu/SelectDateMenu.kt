@@ -1,22 +1,12 @@
 package com.jxareas.xpensor.features.date.presentation.ui.menu
 
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import androidx.core.view.MenuProvider
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.utils.OnToolbarMenuItemClick
+import com.jxareas.xpensor.common.utils.SingleToolbarItemMenuProvider
 
-class SelectDateMenu(private val onToolbarMenuItemClick: OnToolbarMenuItemClick) : MenuProvider {
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) =
-        menuInflater.inflate(R.menu.select_date_menu, menu)
-
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
-        when (menuItem.itemId) {
-            R.id.card_view_select_date -> {
-                onToolbarMenuItemClick()
-                true
-            }
-            else -> false
-        }
-}
+class SelectDateMenu(onToolbarMenuItemClick: OnToolbarMenuItemClick) :
+    SingleToolbarItemMenuProvider(
+        menuRes = R.menu.menu_select_date,
+        toolbarItemRes = R.id.menu_item_select_date,
+        onToolbarMenuItemClick = onToolbarMenuItemClick
+    )

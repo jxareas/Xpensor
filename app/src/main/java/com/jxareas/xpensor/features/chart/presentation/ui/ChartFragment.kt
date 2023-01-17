@@ -1,6 +1,7 @@
 package com.jxareas.xpensor.features.chart.presentation.ui
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -154,7 +155,8 @@ class ChartFragment : Fragment() {
                 holeRadius = 86f
                 setHoleColor(Color.TRANSPARENT)
                 setCenterTextColor(getThemeColor(com.google.android.material.R.attr.colorSecondary))
-                centerText = "Expenses\n$amountString"
+                centerText = resources.getString(R.string.expenses_with_amount, amountString)
+                setCenterTextTypeface(Typeface.DEFAULT_BOLD)
                 setCenterTextSize(20f)
                 description.isEnabled = false
                 legend.isEnabled = false
