@@ -43,7 +43,8 @@ class TransactionsFragment : Fragment() {
     private val binding: FragmentTransactionsBinding
         get() = _binding!!
 
-    private lateinit var bottomNavigation: BottomNavigationView
+    private val bottomNavigation: BottomNavigationView
+            by lazy { (requireActivity() as MainActivity).binding.bottomNavigation }
 
     private val viewModel: TransactionsViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -65,7 +66,6 @@ class TransactionsFragment : Fragment() {
             duration = resources.getLong(R.integer.material_motion_duration_long_1)
             setPathMotion(MaterialArcMotion())
         }
-        bottomNavigation = (requireActivity() as MainActivity).binding.bottomNavigation
     }
 
     override fun onCreateView(
@@ -101,10 +101,13 @@ class TransactionsFragment : Fragment() {
                         super.onScrolled(recyclerView, dx, dy)
                         val fab = binding.fabAddNewTransaction
 
-                        if (dy > 0 && fab.isExtended)
+                        if (dy > 0 && fab.isExtended) {
                             fab.shrink()
-                        else if (dy < 0 && !fab.isExtended)
+                            bottomNavigation.isVisible = false
+                        } else if (dy < 0 && !fab.isExtended) {
                             fab.extend()
+                            bottomNavigation.isVisible = true
+                        }
                     }
                 },
             )

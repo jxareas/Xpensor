@@ -12,6 +12,9 @@ interface AccountDao : RoomDao<AccountEntity> {
     @Query("SELECT * FROM accounts")
     fun getAll(): Flow<List<AccountEntity>>
 
+    @Query("SELECT SUM(amount) FROM accounts")
+    fun getTotalAccountsAmount(): Flow<Double>
+
     @Query("SELECT * FROM accounts where id = :accountId")
     suspend fun getById(accountId: Int): AccountEntity?
 

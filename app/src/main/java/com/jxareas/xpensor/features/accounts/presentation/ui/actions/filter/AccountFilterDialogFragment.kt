@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getDivider
 import com.jxareas.xpensor.common.extensions.setTint
-import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
 import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.DialogFragmentAccountFilterBinding
+import com.jxareas.xpensor.features.accounts.presentation.model.TotalAccountsAmountUi
 import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -75,13 +78,24 @@ class AccountFilterDialogFragment : DialogFragment() {
 
     private fun setupCollectors() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.accounts
-                .flowWithLifecycle(lifecycle)
-                .collectLatest { accounts ->
-                    accountListAdapter.submitList(accounts)
-                    binding.allAccountsAmount.text =
-                        viewModel.getTotalAccountsAmount().toAmountFormat(withMinus = false)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { viewModel.accounts.collectLatest(accountListAdapter::submitList) }
+
+                launch {
+                    viewModel.totalAccountsAmount
+                        .collectLatest(this@AccountFilterDialogFragment::setTotalAccountsAmountText)
                 }
+
+            }
+        }
+    }
+
+    private fun setTotalAccountsAmountText(accountsAmountUi: TotalAccountsAmountUi?) = binding.run {
+        accountsAmountUi?.let {
+            val amount = accountsAmountUi.totalAmount.toString()
+            val currency = accountsAmountUi.currencyName
+            allAccountsAmount.text = resources.getString(R.string.total_account_amount, amount)
+            allAccountsCurrency.text = resources.getString(R.string.preferred_currency, currency)
         }
     }
 

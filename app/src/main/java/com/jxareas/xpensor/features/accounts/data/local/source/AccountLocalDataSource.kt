@@ -8,6 +8,8 @@ interface AccountLocalDataSource : LocalDataSource<AccountEntity> {
 
     fun getAll(): Flow<List<AccountEntity>>
 
+    fun getTotalAccountsAmount(): Flow<Double>
+
     suspend fun getById(id: Int): AccountEntity?
 
     suspend fun updateAmount(accountId: Int, amount: Double)

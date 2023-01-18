@@ -61,6 +61,8 @@
     <string name="delete_account_alert_title">Are you sure you want to delete this account?</string>
     <string name="delete_account_alert_message">All transactions from this account will be deleted.</string>
     <string name="cancel">Cancel</string>
+    <string name="total_account_amount">%1$s</string>
+    <string name="preferred_currency">%1$s</string>
     <string name="expense">Expense</string>
     <string name="expenses_with_amount">Expenses \n %1$s</string>
     <string name="description">Description</string>

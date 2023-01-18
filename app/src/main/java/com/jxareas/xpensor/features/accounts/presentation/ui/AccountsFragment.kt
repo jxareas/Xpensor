@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.view.animation.AnticipateOvershootInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialSharedAxis
@@ -19,6 +21,7 @@ import com.jxareas.xpensor.common.extensions.navigateWithNavController
 import com.jxareas.xpensor.common.extensions.postponeEnterTransitionAndStartOnPreDraw
 import com.jxareas.xpensor.common.extensions.setMenuOnActivity
 import com.jxareas.xpensor.databinding.FragmentAccountsBinding
+import com.jxareas.xpensor.features.accounts.presentation.model.TotalAccountsAmountUi
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.AddAccountMenu
 import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,6 +73,7 @@ class AccountsFragment : Fragment() {
         setupEventCollector()
     }
 
+
     private fun setupMenu() = setMenuOnActivity {
         AddAccountMenu(viewModel::onAddNewAccountButtonClick)
     }
@@ -89,9 +93,26 @@ class AccountsFragment : Fragment() {
 
     private fun setupCollectors() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.accounts
-                .flowWithLifecycle(lifecycle)
-                .collectLatest(accountListAdapter::submitList)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.accounts.collectLatest(accountListAdapter::submitList)
+                }
+                launch {
+                    viewModel.totalAccountsAmount.collectLatest(this@AccountsFragment::setTotalAccountsAmountText)
+                }
+            }
+        }
+
+    }
+
+    private fun setTotalAccountsAmountText(totalAmountUi: TotalAccountsAmountUi?) = binding.run {
+        totalAmountUi?.let {
+            val totalAmountString = totalAmountUi.totalAmount.toString()
+            val currency = totalAmountUi.currencyName
+            textViewFullAmount.text =
+                resources.getString(R.string.total_account_amount, totalAmountString)
+            textViewMainCurrency.text =
+                resources.getString(R.string.preferred_currency, currency)
         }
     }
 

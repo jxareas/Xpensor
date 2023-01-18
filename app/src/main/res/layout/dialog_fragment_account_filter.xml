@@ -8,8 +8,8 @@
     tools:context=".features.accounts.presentation.ui.actions.filter.AccountFilterDialogFragment">
 
     <TextView
-        style="@style/TextAppearance.Xpensor.Headline1"
         android:id="@+id/select_account_label"
+        style="@style/TextAppearance.Xpensor.Headline1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -77,9 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="@string/all_accounts"
-                android:textStyle="bold"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/all_accounts_icon_color"
                 app:layout_constraintTop_toTopOf="@+id/all_accounts_icon_color" />
 
@@ -89,9 +89,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textColor="@color/blue_green"
+                android:textColor="?attr/colorOnPrimary"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/all_accounts_icon_color"
                 app:layout_constraintStart_toEndOf="@id/all_accounts_icon_color"
                 app:layout_constraintTop_toBottomOf="@id/all_accounts_label"
@@ -103,12 +103,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textColor="@color/blue_green"
+                android:textColor="?attr/colorOnPrimary"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/all_accounts_amount"
                 app:layout_constraintStart_toEndOf="@id/all_accounts_amount"
-                tools:text="BYN" />
+                tools:text="USD" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

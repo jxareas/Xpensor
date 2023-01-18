@@ -42,15 +42,15 @@ Bottom Items	|	Settings Menu	|	Date Selector Dialog | Expense Bottom Sheet	|
 
 This Project uses [**Material 3**](https://m3.material.io/), the latest version of Google's open source design system known as *Material Design*. It also supports [Dark Theme](https://developer.android.com/develop/ui/views/theming/darktheme), as evidenced by the screenshots below:
 
-| Accounts List  | Expenses | Expenses Chart | 
+| Accounts List  | Expenses | Expenses Chart |
 | ------------- | ------------- |  ------------- |
-| ![](assets/images/accounts.png)  | ![](assets/images/transactions.png)  | ![](assets/images/chart.png)  | 
-| ![](assets/images/accounts_dark.png)  | ![](assets/images/transactions_dark.png)  | ![](assets/images/chart_dark.png)  | 
+| ![](assets/images/accounts.png)  | ![](assets/images/transactions.png)  | ![](assets/images/chart.png)  |
+| ![](assets/images/accounts_dark.png)  | ![](assets/images/transactions_dark.png)  | ![](assets/images/chart_dark.png)  |
 
-| Account Filter  | Date Selector | Settings | 
+| Account Filter  | Date Selector | Settings |
 | ------------- | ------------- |  ------------- |
-| ![](assets/images/account_filter.png)  | ![](assets/images/date_filter.png)  | ![](assets/images/settings.png)  | 
-| ![](assets/images/account_filter_dark.png)  | ![](assets/images/date_filter_dark.png)  | ![](assets/images/settings_dark.png)  | 
+| ![](assets/images/account_filter.png)  | ![](assets/images/date_filter.png)  | ![](assets/images/settings.png)  |
+| ![](assets/images/account_filter_dark.png)  | ![](assets/images/date_filter_dark.png)  | ![](assets/images/settings_dark.png)  |
 
 ## 📝 Requirements 📝
 
@@ -81,7 +81,7 @@ The architecture used in this project is that of Clean Architecture, sticking to
 ![clean_architecture](assets/images/clean_architecture.png)
 
 
-## ⚙️ Technologies ⚙️
+## 🦾 Technologies 🦾
 
 This project uses many popular libraries and tools in the Android ecosystem:
 
@@ -102,7 +102,7 @@ This project uses many popular libraries and tools in the Android ecosystem:
 * **Material 3**: The latest version of Material Design, introduced in Android 12.
 * **Material Motion**: A set of transition patterns that can help users understand and navigate an app.
 
-## 🦾 Design Patterns 🦾
+## 🚀 Design Patterns 🚀
 
 Some common Software Design Patterns that can be found in this project and are oftenly used in the Android Ecosystem.
 
@@ -110,7 +110,7 @@ Some common Software Design Patterns that can be found in this project and are o
 * **Repository:** Mediates between the domain and data layer using a collection-like interface for accessing domain objects.
 * **Domain Model:** An object model of the domain, which incorporates data and behavior.
 * **Separated Interface:** Define an interface in a separate package from its implementation. This is done via the repository layers in order to force the data layer to be dependent on the domain layer (*Dependency Inversion*) and follow *Domain Driven Design*.
-* **Dependency Inversion:** High level modules should not depend on low level modules. 
+* **Dependency Inversion:** High level modules should not depend on low level modules.
 
 
 ## 🪶 Author(s) 🪶

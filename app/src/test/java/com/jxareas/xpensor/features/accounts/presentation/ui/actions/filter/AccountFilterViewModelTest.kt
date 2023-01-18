@@ -4,7 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.jxareas.sharedtest.data.mockAccounts
 import com.jxareas.sharedtest.rules.TestCoroutineRule
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences
 import com.jxareas.xpensor.features.accounts.domain.usecase.GetAccountsUseCase
+import com.jxareas.xpensor.features.accounts.domain.usecase.GetTotalAccountsAmountUseCase
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -30,13 +32,23 @@ class AccountFilterViewModelTest {
     @RelaxedMockK
     private lateinit var getAccountsUseCase: GetAccountsUseCase
 
+    @RelaxedMockK
+    private lateinit var getTotalAccountsAmountUseCase: GetTotalAccountsAmountUseCase
+
+    @RelaxedMockK
+    private lateinit var userPreferences: UserPreferences
+
     private lateinit var viewModel: AccountFilterViewModel
 
     @Before
     fun setup() {
         MockKAnnotations.init(this, relaxUnitFun = true, relaxed = true)
         every { getAccountsUseCase.invoke() } answers { flowOf(mockAccounts) }
-        viewModel = AccountFilterViewModel(getAccountsUseCase)
+        viewModel = AccountFilterViewModel(
+            getAccountsUseCase,
+            getTotalAccountsAmountUseCase,
+            userPreferences,
+        )
     }
 
     @Test

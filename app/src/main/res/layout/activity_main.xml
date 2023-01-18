@@ -8,7 +8,6 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimaryVariant"
@@ -24,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/actionBarItemBackground"
+            android:contentDescription="@string/settings"
             app:srcCompat="@drawable/ic_settings" />
 
         <LinearLayout

@@ -17,6 +17,9 @@ class AccountRoomLocalDataSource @Inject constructor(
     override fun getAll(): Flow<List<AccountEntity>> =
         accountDao.getAll()
 
+    override fun getTotalAccountsAmount(): Flow<Double> =
+        accountDao.getTotalAccountsAmount()
+
     override suspend fun getById(id: Int): AccountEntity? =
         accountDao.getById(id)
 

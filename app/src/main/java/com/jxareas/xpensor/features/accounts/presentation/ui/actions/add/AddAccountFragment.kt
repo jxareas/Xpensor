@@ -80,7 +80,6 @@ class AddAccountFragment : Fragment() {
                                         name = name,
                                         amount = amount,
                                         color = color,
-                                        id = AccountUi.EMPTY_ID,
                                     )
                                 viewModel.createNewAccount(account)
                                     .also { findNavController().navigateUp() }

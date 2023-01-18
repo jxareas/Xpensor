@@ -19,6 +19,9 @@ class DefaultAccountRepository @Inject constructor(
             listOfAccounts.map(AccountEntity::toAccountWithDetails)
         }
 
+    override fun getTotalAccountsAmount(): Flow<Double> =
+        accountLocalDataSource.getTotalAccountsAmount()
+
     override suspend fun getAccountById(accountId: Int): Account? =
         accountLocalDataSource.getById(accountId)?.let(AccountEntity::toAccountWithDetails)
 
