@@ -5,30 +5,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnticipateOvershootInterpolator
-import androidx.core.view.MenuHost
-import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.common.extensions.navigateWithNavController
+import com.jxareas.xpensor.common.extensions.postponeEnterTransitionAndStartOnPreDraw
+import com.jxareas.xpensor.common.extensions.setMenuOnActivity
+import com.jxareas.xpensor.core.presentation.MainActivity
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.FragmentTransactionsBinding
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import com.jxareas.xpensor.features.transactions.presentation.ui.adapter.TransactionAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,8 +43,11 @@ class TransactionsFragment : Fragment() {
     private val binding: FragmentTransactionsBinding
         get() = _binding!!
 
+    private val bottomNavigation: BottomNavigationView
+            by lazy { (requireActivity() as MainActivity).binding.bottomNavigation }
+
     private val viewModel: TransactionsViewModel by viewModels()
-    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     @Inject
     lateinit var transactionAdapter: TransactionAdapter
@@ -71,9 +79,7 @@ class TransactionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postponeEnterTransition().also {
-            view.doOnPreDraw { startPostponedEnterTransition() }
-        }
+        postponeEnterTransitionAndStartOnPreDraw()
         setupDate()
         setupRecyclerView()
         setupListeners()
@@ -82,17 +88,34 @@ class TransactionsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.transactionsRecyclerView.apply {
+        binding.recyclerViewTransactions.apply {
             adapter = transactionAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(
-                DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL),
+            )
+
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        val fab = binding.fabAddNewTransaction
+
+                        if (dy > 0 && fab.isExtended) {
+                            fab.shrink()
+                            bottomNavigation.isVisible = false
+                        } else if (dy < 0 && !fab.isExtended) {
+                            fab.extend()
+                            bottomNavigation.isVisible = true
+                        }
+                    }
+                },
             )
         }
     }
 
     private fun setupListeners() = binding.run {
-        buttonNewTransaction.setOnClickListener {
+        fabAddNewTransaction.setOnClickListener {
             val account = mainViewModel.selectedAccount.value ?: mainViewModel.accounts.value[0]
             viewModel.onAddTransactionClick(account)
         }
@@ -100,33 +123,35 @@ class TransactionsFragment : Fragment() {
 
     private fun setupEventCollector() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
+            viewModel.eventSource.collectLatest { event ->
                 when (event) {
-                    is TransactionEvent.DateSelected ->
+                    is TransactionUiEvent.DateSelected ->
                         navigateToSelectDialogFragment()
-                    is TransactionEvent.OpenTheAddTransactionSheet ->
-                        navigateToAddTransactionSheet(event.account)
-                    is TransactionEvent.DeleteTransaction ->
-                        viewModel.onDeleteTransaction(event.transaction)
-                    is TransactionEvent.ShowTheDeleteTransactionDialog ->
-                        if (!isAlertShowing) showAlertDialog(event.transaction)
+                    is TransactionUiEvent.OpenTheAddTransactionSheet ->
+                        navigateToSelectCategoryBottomSheet(event.account)
+                    is TransactionUiEvent.DeleteTransaction ->
+                        viewModel.deleteTransaction(event.transaction)
+                    is TransactionUiEvent.ShowTheDeleteTransactionDialog ->
+                        if (!isAlertShowing) showConfirmTransactionDeletionDialog(event.transaction)
                 }
             }
         }
     }
 
-    private fun showAlertDialog(transaction: TransactionView) =
+    private fun showConfirmTransactionDeletionDialog(details: TransactionDetails) =
         MaterialAlertDialogBuilder(requireContext())
             .setIcon(R.drawable.ic_warning)
             .setTitle(R.string.delete_transaction_alert_title)
             .setMessage(
                 getString(
-                    R.string.transaction_summary_dialog, transaction.categoryName,
-                    transaction.accountName, transaction.amount.toString()
-                )
+                    R.string.transaction_summary_dialog,
+                    details.category.name,
+                    details.account.name,
+                    details.transaction.amount.toString(),
+                ),
             )
             .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                viewModel.onDeleteTransactionConfirm(transaction)
+                viewModel.onDeleteTransactionConfirm(details)
                 isAlertShowing = false
             }
             .setNegativeButton(getString(R.string.cancel)) { _, _ ->
@@ -137,61 +162,60 @@ class TransactionsFragment : Fragment() {
             .show()
             .also { isAlertShowing = true }
 
-    private fun navigateToAddTransactionSheet(accountUi: AccountUi) {
-        val direction =
+    private fun navigateToSelectCategoryBottomSheet(accountUi: AccountUi) {
+        val selectCategoryBottomSheetAction =
             TransactionsFragmentDirections.actionTransactionsFragmentToSelectCategoryBottomSheet(
-                accountUi
+                accountUi,
             )
-        findNavController().navigate(direction)
+        navigateWithNavController(selectCategoryBottomSheetAction)
     }
 
     private fun navigateToSelectDialogFragment() {
-        val direction =
+        val dateSelectorDialogAction =
             TransactionsFragmentDirections.actionTransactionsFragmentToDateSelectorDialogFragment()
-        findNavController().navigate(direction)
+        navigateWithNavController(dateSelectorDialogAction)
     }
 
-    private fun setupDate() {
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(
-            SelectDateMenu {
-                viewModel.onSelectedDateClick()
-            },
-            viewLifecycleOwner, Lifecycle.State.STARTED
-        )
+    private fun setupDate() = setMenuOnActivity {
+        SelectDateMenu(viewModel::onSelectDateClick)
     }
 
     private fun setupCollectors() {
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.transactionState.collectLatest { state ->
-                when (state) {
-                    is TransactionState.Ready -> {
-                        binding.progressBar.isVisible = false
-                        binding.noTransaction.visibility = if (state.transactions.isEmpty())
-                            View.VISIBLE else View.INVISIBLE
-                        transactionAdapter.submitList(state.transactions)
-                    }
-                    is TransactionState.Loading -> {
-                        binding.progressBar.isVisible = true
-                    }
-                    is TransactionState.Idle -> Unit
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.transactionState
+                        .collectLatest(this@TransactionsFragment::handleTransactionState)
+                }
+                launch {
+                    mainViewModel.selectedDateRange
+                        .collectLatest(viewModel::onUpdateSelectedDateRange)
+                }
+                launch {
+                    mainViewModel.selectedAccount
+                        .collectLatest(viewModel::onUpdateSelectedAccount)
                 }
             }
         }
 
-        lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedDateRange.collectLatest { dateRange ->
-                viewModel.onUpdateSelectedDateRange(dateRange.first, dateRange.second)
+    }
+
+    private fun handleTransactionState(state: TransactionState) =
+        when (state) {
+            is TransactionState.Ready -> {
+                binding.progressBarTransactions.isVisible = false
+                binding.textViewNoTransactions.visibility =
+                    if (state.transactions.isEmpty())
+                        View.VISIBLE else View.INVISIBLE
+                transactionAdapter.submitList(state.transactions)
             }
+            is TransactionState.Loading -> {
+                binding.progressBarTransactions.isVisible = true
+            }
+            is TransactionState.Idle -> Unit
         }
 
-        lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedAccount.collectLatest { account ->
-                viewModel.onUpdateSelectedAccount(account)
-            }
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -8,7 +8,7 @@ import javax.inject.Inject
 @ViewModelScoped
 class AddUserAuthenticationPin @Inject constructor(private val preferences: SharedPreferences) {
 
-    operator fun invoke(pinCode: String) =
+    fun invoke(pinCode: String) =
         preferences.edit()
             .putString(PreferenceUtils.AUTH_CODE_PREFERENCE_KEY, pinCode)
             .putBoolean(PreferenceUtils.FIRST_TIME_PREFERENCE_KEY, false)

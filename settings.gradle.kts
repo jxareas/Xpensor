@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Xpensor"
 include(":app")
+include(":shared-test")

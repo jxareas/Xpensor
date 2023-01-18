@@ -7,16 +7,16 @@ import com.jxareas.xpensor.common.utils.DateUtils.getCurrentLocalDate
 import com.jxareas.xpensor.common.utils.DateUtils.toLocalDate
 import com.jxareas.xpensor.common.utils.DateUtils.toMilliseconds
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class DateSelectorViewModel @Inject constructor() : ViewModel() {
 
-    private val _events = MutableSharedFlow<DateSelectedEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = Channel<SelectDateUiEvent>(Channel.UNLIMITED)
+    val eventSource = _eventEmitter.receiveAsFlow()
 
     fun getDate(daysAgo: Int = 0): LocalDate =
         if (daysAgo != 0)
@@ -25,26 +25,26 @@ class DateSelectorViewModel @Inject constructor() : ViewModel() {
         else getCurrentLocalDate()
 
     fun onSelectDate() = launchScoped {
-        _events.emit(DateSelectedEvent.CustomDate)
+        _eventEmitter.send(SelectDateUiEvent.CustomDate)
     }
 
     fun onSelectToday() = launchScoped {
-        _events.emit(DateSelectedEvent.Today)
+        _eventEmitter.send(SelectDateUiEvent.Today)
     }
 
     fun onSelectWeek() = launchScoped {
-        _events.emit(DateSelectedEvent.Week)
+        _eventEmitter.send(SelectDateUiEvent.Week)
     }
 
     fun onSelectMonth() = launchScoped {
-        _events.emit(DateSelectedEvent.Month)
+        _eventEmitter.send(SelectDateUiEvent.Month)
     }
 
     fun onSelectYear() = launchScoped {
-        _events.emit(DateSelectedEvent.Year)
+        _eventEmitter.send(SelectDateUiEvent.Year)
     }
 
     fun onSelectAllTime() = launchScoped {
-        _events.emit(DateSelectedEvent.AllTime)
+        _eventEmitter.send(SelectDateUiEvent.AllTime)
     }
 }

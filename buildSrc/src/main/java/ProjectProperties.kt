@@ -12,21 +12,30 @@ object ProjectProperties {
 
     // Application
     const val APPLICATION_ID = "com.jxareas.xpensor"
-    const val VERSION_CODE = 2
-    const val VERSION_NAME = "0.1.0-alpha01"
+    const val VERSION_CODE = 3
+    const val VERSION_NAME = "0.1.0-alpha02"
 
     // ProGuard
-    const val PROGUARD_NAME = "proguard-android.txt"
-    const val PROGUARD_FILE = "proguard-rules.pro"
+    const val PROGUARD_ANDROID = "proguard-android.txt"
+    const val PROGUARD_ANDROID_OPTIMIZE = "proguard-android-optimize.txt"
+    const val PROGUARD_RULES = "proguard-rules.pro"
+    const val PROGUARD_CONSUMER_RULES = "consumer-rules.pro"
+
+    // ROOM Schemas for AutoMigration
+    const val ROOM_SCHEMA_LOCATION = "room.schemaLocation"
+    const val ROOM_SCHEMA_DIR = "schemas"
 
     // Configuration
+    const val IS_VECTOR_DRAWABLES_SUPPORT_ENABLED = true
     const val IS_MULTIDEX_ENABLED = true
     const val IS_MINIFY_ENABLED = false
     const val IS_VIEW_BINDING_ENABLED = true
     const val IS_CORE_LIBRARY_DESUGARING_ENABLED = true
 
+    // Test Runner
+    const val TEST_RUNNER_ANDROID_JUNIT = "androidx.test.runner.AndroidJUnitRunner"
+
     // Java
-    const val TEST_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
     const val JVM_TARGET = "1.8"
     val JAVA_VERSION = JavaVersion.VERSION_1_8
 
@@ -36,5 +45,10 @@ object ProjectProperties {
 
     // API Keys
     const val CURRENCY_API_KEY = "CURRENCY_API_KEY"
+
+    // Libraries
+    const val SHARED_TEST_NAMESPACE = "com.jxareas.sharedtest"
+    const val SHARED_TEST_PATH = ":shared-test"
+    const val APP_PATH = ":app"
 
 }

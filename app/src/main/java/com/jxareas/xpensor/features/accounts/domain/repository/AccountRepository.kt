@@ -1,18 +1,20 @@
 package com.jxareas.xpensor.features.accounts.domain.repository
 
-import com.jxareas.xpensor.features.accounts.domain.model.AccountWithDetails
+import com.jxareas.xpensor.features.accounts.domain.model.Account
 import kotlinx.coroutines.flow.Flow
 
 interface AccountRepository {
-    fun getAccounts(): Flow<List<AccountWithDetails>>
+    fun getAccounts(): Flow<List<Account>>
 
-    suspend fun getAccountById(accountId: Int): AccountWithDetails?
+    fun getTotalAccountsAmount() : Flow<Double>
 
-    suspend fun insertAccount(account: AccountWithDetails)
+    suspend fun getAccountById(accountId: Int): Account?
 
-    suspend fun updateAccount(account: AccountWithDetails)
+    suspend fun insertAccount(account: Account)
+
+    suspend fun updateAccount(account: Account)
 
     suspend fun updateAccountAmount(accountId: Int, amount: Double)
 
-    suspend fun deleteAccount(account: AccountWithDetails)
+    suspend fun deleteAccount(account: Account)
 }

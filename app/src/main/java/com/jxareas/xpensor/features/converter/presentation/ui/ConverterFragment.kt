@@ -8,16 +8,18 @@ import android.view.animation.AnticipateOvershootInterpolator
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
-import com.jxareas.xpensor.common.extensions.toast
+import com.jxareas.xpensor.common.extensions.showToast
 import com.jxareas.xpensor.databinding.FragmentConverterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ConverterFragment : Fragment() {
@@ -54,57 +56,62 @@ class ConverterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupConversionCollector()
+        setupCollectors()
         setupEventCollector()
         setupListeners()
     }
 
     private fun setupListeners() = binding.run {
         convertButton.setOnClickListener { viewModel.onConvertButtonClick() }
-        swapButton.setOnClickListener { viewModel.onSwapButtonClick() }
+        swapButton.setOnClickListener { viewModel.onSwapCurrenciesClick() }
     }
 
-    private fun setupConversionCollector() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.conversion.collectLatest { conversionState ->
-                when (conversionState) {
-                    is ConversionState.Ready -> {
-                        with(binding) {
-                            progressBar.isVisible = false
-                            resultText.text = conversionState.result
-                            addTransactionButton.isClickable = true
-                            addTransactionButton.alpha = 1f
+    private fun setupCollectors() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.conversionState
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { conversionState ->
+                    when (conversionState) {
+                        is ConversionState.Ready -> {
+                            with(binding) {
+                                progressBarConverter.isVisible = false
+                                resultText.text = conversionState.result
+                                addTransactionButton.isClickable = true
+                                addTransactionButton.alpha = 1f
+                            }
                         }
+                        is ConversionState.Loading -> {
+                            binding.progressBarConverter.isVisible = true
+                        }
+                        is ConversionState.Error -> {
+                            binding.progressBarConverter.isVisible = false
+                            showToast(conversionState.error)
+                        }
+                        else -> Unit
                     }
-                    is ConversionState.Loading -> {
-                        binding.progressBar.isVisible = true
-                    }
-                    is ConversionState.Error -> {
-                        binding.progressBar.isVisible = false
-                        toast(requireContext(), conversionState.error)
-                    }
-                    else -> Unit
                 }
-            }
         }
     }
 
     private fun setupEventCollector() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { currencyConverterEvent ->
-                when (currencyConverterEvent) {
-                    is CurrencyConverterEvent.Convert ->
-                        handleConvertEvent()
-                    is CurrencyConverterEvent.Swap ->
-                        handleSwapEvent()
-                    is CurrencyConverterEvent.OpenTheAddTransactionSheet ->
-                        handleOpenTransactionSheetEvent()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventSource
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { convertCurrencyUiEvent ->
+                    when (convertCurrencyUiEvent) {
+                        is ConvertCurrencyUiEvent.Convert ->
+                            handleConvertEvent()
+                        is ConvertCurrencyUiEvent.Swap ->
+                            handleSwapEvent()
+                        is ConvertCurrencyUiEvent.OpenTheAddTransactionSheet ->
+                            handleOpenTransactionSheetEvent()
+                    }
                 }
-            }
         }
     }
 
     private fun handleOpenTransactionSheetEvent() {
+        // TODO : Handle Open the Transaction Sheet
     }
 
     private fun handleSwapEvent() {
@@ -122,8 +129,8 @@ class ConverterFragment : Fragment() {
         val to = binding.spinnerTo.selectedItem.toString()
 
         if (amount != null) {
-            viewModel.convert(amount, from, to)
-        } else toast(requireContext(), getString(R.string.enter_amount_error))
+            viewModel.convertCurrency(amount, from, to)
+        } else showToast(R.string.enter_amount_error)
     }
 
     override fun onDestroyView() {

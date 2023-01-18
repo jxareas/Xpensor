@@ -5,31 +5,32 @@ import androidx.lifecycle.ViewModel
 import com.jxareas.xpensor.common.extensions.getImageViewTint
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.features.accounts.domain.usecase.AddAccountUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class AddAccountViewModel @Inject constructor(
     private val addAccountUseCase: AddAccountUseCase,
-    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
-    private val _events = MutableSharedFlow<AddAccountEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = Channel<AddAccountUiEvent>(Channel.UNLIMITED)
+    val eventSource = _eventEmitter.receiveAsFlow()
 
-    suspend fun addAccount(accountUi: AccountUi) =
-        addAccountUseCase(accountUiMapper.mapToDomain(accountUi))
+    fun createNewAccount(accountUi: AccountUi) = launchScoped {
+        val account = accountUi.toAccount()
+        addAccountUseCase.invoke(account)
+    }
 
-    fun onApplyChangesButtonClick() = launchScoped {
-        _events.emit(AddAccountEvent.CreateNewAccount)
+    fun onConfirmAccountCreationClick() = launchScoped {
+        _eventEmitter.send(AddAccountUiEvent.CreateNewAccount)
     }
 
     fun onSelectColorButtonClick(image: ImageView) = launchScoped {
         val color = getImageViewTint(image)
-        _events.emit(AddAccountEvent.SelectAccountColor(color))
+        _eventEmitter.send(AddAccountUiEvent.SelectAccountColor(color))
     }
 }

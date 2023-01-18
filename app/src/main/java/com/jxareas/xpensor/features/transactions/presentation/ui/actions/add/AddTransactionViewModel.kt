@@ -5,11 +5,11 @@ import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
 import com.jxareas.xpensor.features.transactions.domain.usecase.AddTransactionUseCase
 import com.jxareas.xpensor.features.transactions.domain.usecase.ValidateTransactionUseCase
-import com.jxareas.xpensor.features.transactions.presentation.ui.actions.add.event.AddTransactionEvent
-import com.jxareas.xpensor.features.transactions.presentation.ui.actions.add.state.AddTransactionState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,22 +18,23 @@ class AddTransactionViewModel @Inject constructor(
     private val validateTransactionUseCase: ValidateTransactionUseCase,
 ) : ViewModel() {
 
-    private val _transactionState = MutableSharedFlow<AddTransactionState>()
-    val transactionState = _transactionState.asSharedFlow()
+    private val _transactionState =
+        MutableStateFlow<NewTransactionState>(NewTransactionState.Idle)
+    val transactionState = _transactionState.asStateFlow()
 
-    private val _events = MutableSharedFlow<AddTransactionEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = Channel<AddTransactionUiEvent>(Channel.UNLIMITED)
+    val eventSource = _eventEmitter.receiveAsFlow()
 
-    suspend fun onAddTransaction(transaction: Transaction) {
-        val isTransactionValid = validateTransactionUseCase(transaction)
+    fun onAddTransaction(transaction: Transaction, accountId: Int, categoryId: Int) = launchScoped {
+        val isTransactionValid = validateTransactionUseCase.invoke(transaction, accountId)
         if (isTransactionValid)
-            addTransactionUseCase(transaction).also {
-                _transactionState.emit(AddTransactionState.ValidTransaction)
+            addTransactionUseCase.invoke(transaction, accountId, categoryId).also {
+                _transactionState.emit(NewTransactionState.Valid)
             }
-        else _transactionState.emit(AddTransactionState.InvalidTransaction)
+        else _transactionState.emit(NewTransactionState.NotEnoughFunds)
     }
 
-    fun onApplyChanges() = launchScoped {
-        _events.emit(AddTransactionEvent.CreateNewTransaction)
+    fun onConfirmTransactionCreation() = launchScoped {
+        _eventEmitter.send(AddTransactionUiEvent.CreateNewTransaction)
     }
 }

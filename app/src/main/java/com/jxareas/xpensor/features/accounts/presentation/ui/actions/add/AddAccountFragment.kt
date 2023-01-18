@@ -5,23 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.view.MenuHost
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
+import com.jxareas.xpensor.common.extensions.setMenuOnActivity
 import com.jxareas.xpensor.common.extensions.setTint
-import com.jxareas.xpensor.common.extensions.toast
-import com.jxareas.xpensor.common.utils.PreferenceUtils
+import com.jxareas.xpensor.common.extensions.showToast
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences
 import com.jxareas.xpensor.databinding.FragmentAddAccountBinding
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import com.jxareas.xpensor.features.accounts.presentation.ui.actions.menu.ApplyChangesMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddAccountFragment : Fragment() {
@@ -59,38 +60,37 @@ class AddAccountFragment : Fragment() {
     }
 
     private fun setupEventCollector() {
-        var color = PreferenceUtils.MAIN_COLOR
-        lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { addAccountEvent ->
-                when (addAccountEvent) {
-                    is AddAccountEvent.CreateNewAccount -> {
-                        val name = binding.textInputLayoutName.editText?.text.toString().trim()
-                        if (name.isEmpty()) {
-                            toast(
-                                requireContext(),
-                                getString(R.string.account_empty_name_error)
-                            )
-                        } else {
-                            val amount =
-                                binding.textInputLayoutMoneyAmount.editText?.text.toString()
-                                    .toDoubleOrNull() ?: 0.0
+        var color = UserPreferences.DEFAULT_COLOR
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventSource
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { addAccountUiEvent ->
+                    when (addAccountUiEvent) {
+                        is AddAccountUiEvent.CreateNewAccount -> {
+                            val name = binding.textInputLayoutName.editText?.text.toString().trim()
+                            if (name.isEmpty()) {
+                                showToast(R.string.account_empty_name_error)
+                            } else {
+                                val amount =
+                                    binding.textInputLayoutMoneyAmount.editText?.text.toString()
+                                        .toDoubleOrNull() ?: 0.0
 
-                            val account =
-                                AccountUi(
-                                    name = name,
-                                    amount = amount,
-                                    color = color,
-                                    id = AccountUi.EMPTY_ID
-                                )
-                            viewModel.addAccount(account).also { findNavController().navigateUp() }
+                                val account =
+                                    AccountUi(
+                                        name = name,
+                                        amount = amount,
+                                        color = color,
+                                    )
+                                viewModel.createNewAccount(account)
+                                    .also { findNavController().navigateUp() }
+                            }
+                        }
+                        is AddAccountUiEvent.SelectAccountColor -> {
+                            binding.selectedColor.setTint(addAccountUiEvent.color)
+                            color = addAccountUiEvent.color
                         }
                     }
-                    is AddAccountEvent.SelectAccountColor -> {
-                        binding.selectedColor.setTint(addAccountEvent.color)
-                        color = addAccountEvent.color
-                    }
                 }
-            }
         }
     }
 
@@ -113,14 +113,8 @@ class AddAccountFragment : Fragment() {
         color15.setOnClickListener { viewModel.onSelectColorButtonClick(it as ImageView) }
     }
 
-    private fun setupMenu() {
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(
-            ApplyChangesMenu {
-                viewModel.onApplyChangesButtonClick()
-            },
-            viewLifecycleOwner, Lifecycle.State.STARTED
-        )
+    private fun setupMenu() = setMenuOnActivity {
+        ApplyChangesMenu(viewModel::onConfirmAccountCreationClick)
     }
 
     override fun onDestroyView() {

@@ -27,6 +27,7 @@ plugins {
         .version(Versions.DETEKT)
 }
 
+apply(from = BuildScripts.HOOKS)
 subprojects {
     apply(from = "${rootProject.projectDir}/${BuildScripts.KTLINT}")
     apply(from = "${rootProject.projectDir}/${BuildScripts.VERSIONS}")

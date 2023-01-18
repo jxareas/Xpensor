@@ -7,16 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getDivider
 import com.jxareas.xpensor.common.extensions.setTint
-import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.DialogFragmentAccountFilterBinding
+import com.jxareas.xpensor.features.accounts.presentation.model.TotalAccountsAmountUi
 import com.jxareas.xpensor.features.accounts.presentation.ui.adapter.AccountsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,10 +32,10 @@ class AccountFilterDialogFragment : DialogFragment() {
         get() = _binding!!
 
     private val viewModel: AccountFilterViewModel by viewModels()
-    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     @Inject
-    internal lateinit var accountsListAdapter: AccountsListAdapter
+    internal lateinit var accountListAdapter: AccountsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,27 +54,6 @@ class AccountFilterDialogFragment : DialogFragment() {
         setupEventCollector()
     }
 
-    private fun setupEventCollector() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
-                when (event) {
-                    is AccountFilterEvent.SelectAccount ->
-                        mainViewModel.onUpdateSelectedAccount(event.account).also { dismiss() }
-                }
-            }
-        }
-    }
-
-    private fun setupCollectors() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.accounts.collectLatest { accounts ->
-                accountsListAdapter.submitList(accounts)
-                binding.allAccountsAmount.text =
-                    viewModel.getTotalAccountsAmount().toAmountFormat(withMinus = false)
-            }
-        }
-    }
-
     private fun setupView() = binding.run {
         allAccountsCurrency.text = mainViewModel.getCurrency()
         allAccountsIconColor.setTint(mainViewModel.selectedAccount.value?.color)
@@ -80,15 +64,54 @@ class AccountFilterDialogFragment : DialogFragment() {
     }
 
     private fun setupRecyclerView() = binding.recyclerViewAccounts.run {
-        adapter = accountsListAdapter
+        adapter = accountListAdapter
         layoutManager = LinearLayoutManager(requireContext())
         addItemDecoration(getDivider(requireContext()))
 
-        accountsListAdapter.setOnClickListener(
+        accountListAdapter.setOnClickListener(
             AccountsListAdapter.OnClickListener { account ->
-                viewModel.onAccountSelected(account)
-            }
+                viewModel.onSelectAccountClick(account)
+            },
         )
+    }
+
+
+    private fun setupCollectors() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { viewModel.accounts.collectLatest(accountListAdapter::submitList) }
+
+                launch {
+                    viewModel.totalAccountsAmount
+                        .collectLatest(this@AccountFilterDialogFragment::setTotalAccountsAmountText)
+                }
+
+            }
+        }
+    }
+
+    private fun setTotalAccountsAmountText(accountsAmountUi: TotalAccountsAmountUi?) = binding.run {
+        accountsAmountUi?.let {
+            val amount = accountsAmountUi.totalAmount.toString()
+            val currency = accountsAmountUi.currencyName
+            allAccountsAmount.text = resources.getString(R.string.total_account_amount, amount)
+            allAccountsCurrency.text = resources.getString(R.string.preferred_currency, currency)
+        }
+    }
+
+    private fun setupEventCollector() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventSource
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { accountFilterUiEvent ->
+                    when (accountFilterUiEvent) {
+                        is AccountFilterUiEvent.SelectAccount -> {
+                            mainViewModel.onUpdateSelectedAccount(accountFilterUiEvent.account)
+                            dismiss()
+                        }
+                    }
+                }
+        }
     }
 
     override fun onDestroyView() {

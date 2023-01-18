@@ -1,4 +1,7 @@
 object BuildScripts {
-    const val KTLINT = "buildscripts/ktlint.gradle"
-    const val VERSIONS = "buildscripts/versions.gradle"
+    private const val DEFAULT_PATH = "buildscripts/"
+
+    const val KTLINT = DEFAULT_PATH.plus("ktlint.gradle")
+    const val VERSIONS = DEFAULT_PATH.plus("versions.gradle")
+    const val HOOKS = DEFAULT_PATH.plus("hooks.gradle")
 }

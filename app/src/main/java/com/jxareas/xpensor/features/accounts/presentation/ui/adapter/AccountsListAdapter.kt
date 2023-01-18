@@ -1,10 +1,10 @@
 package com.jxareas.xpensor.features.accounts.presentation.ui.adapter
 
-import android.content.SharedPreferences
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import com.jxareas.xpensor.common.extensions.invoke
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences
 import com.jxareas.xpensor.databinding.ListItemAccountBinding
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import javax.inject.Inject
@@ -12,9 +12,9 @@ import javax.inject.Singleton
 
 @Singleton
 class AccountsListAdapter @Inject constructor(
-    private val preferences: SharedPreferences,
+    private val userPreferences: UserPreferences,
 ) : ListAdapter<AccountUi, AccountsViewHolder>(
-    AsyncDifferConfig.Builder(AccountDiffCallback).build()
+    AsyncDifferConfig.Builder(AccountDiffCallback).build(),
 ) {
 
     private var onClickListener: AccountsListAdapter.OnClickListener? = null
@@ -25,8 +25,8 @@ class AccountsListAdapter @Inject constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountsViewHolder =
         AccountsViewHolder(
-            preferences,
-            parent invoke ListItemAccountBinding::inflate
+            parent invoke ListItemAccountBinding::inflate,
+            userPreferences,
         ).apply {
             val account by lazy { currentList[bindingAdapterPosition] }
             itemView.setOnClickListener {

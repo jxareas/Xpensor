@@ -1,6 +1,5 @@
 package com.jxareas.xpensor.features.transactions.presentation.ui.adapter
 
-import android.content.SharedPreferences
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
@@ -8,15 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.jxareas.xpensor.common.extensions.invoke
 import com.jxareas.xpensor.common.utils.OnBindViewHolder
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences
 import com.jxareas.xpensor.databinding.CardItemTransactionBinding
 import com.jxareas.xpensor.databinding.ListItemDayInformationBinding
-import com.jxareas.xpensor.features.transactions.domain.model.TransactionWithDetails
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import javax.inject.Inject
 
 class TransactionAdapter @Inject constructor(
-    private val preferences: SharedPreferences,
+    private val userPreferences: UserPreferences,
 ) : ListAdapter<Any, TransactionAdapter.ViewHolder>(
-    AsyncDifferConfig.Builder(TransactionDiffCallback).build()
+    AsyncDifferConfig.Builder(TransactionDiffCallback).build(),
 ) {
     abstract class ViewHolder(binding: ViewBinding) :
         RecyclerView.ViewHolder(binding.root),
@@ -32,12 +32,12 @@ class TransactionAdapter @Inject constructor(
             TRANSACTION_VIEW_TYPE ->
                 TransactionViewHolder(
                     parent invoke CardItemTransactionBinding::inflate,
-                    preferences
+                    userPreferences,
                 )
             else ->
                 TransactionsByDayViewHolder(
                     parent invoke ListItemDayInformationBinding::inflate,
-                    preferences
+                    userPreferences,
                 )
         }
 
@@ -54,7 +54,7 @@ class TransactionAdapter @Inject constructor(
         }
 
     override fun getItemViewType(position: Int): Int =
-        if (currentList[position] is TransactionWithDetails)
+        if (currentList[position] is TransactionDetails)
             TRANSACTION_VIEW_TYPE
         else DAY_INFO_VIEW_TYPE
 }

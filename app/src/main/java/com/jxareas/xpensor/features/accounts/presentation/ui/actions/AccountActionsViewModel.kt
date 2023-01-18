@@ -3,36 +3,35 @@ package com.jxareas.xpensor.features.accounts.presentation.ui.actions
 import androidx.lifecycle.ViewModel
 import com.jxareas.xpensor.common.extensions.launchScoped
 import com.jxareas.xpensor.features.accounts.domain.usecase.DeleteAccountUseCase
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountActionsViewModel @Inject constructor(
     private val deleteAccountUseCase: DeleteAccountUseCase,
-    private val accountUiMapper: AccountUiMapper,
 ) : ViewModel() {
 
-    private val _events = MutableSharedFlow<AccountActionsEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = Channel<AccountActionsUiEvent>(Channel.UNLIMITED)
+    val eventSource = _eventEmitter.receiveAsFlow()
 
-    suspend fun removeAccount(accountUi: AccountUi) {
-        val account = accountUiMapper.mapToDomain(accountUi)
-        deleteAccountUseCase(account)
+    fun removeAccount(accountUi: AccountUi) = launchScoped {
+        val account = accountUi.toAccount()
+        deleteAccountUseCase.invoke(account)
     }
 
-    fun onEditAccount(account: AccountUi) = launchScoped {
-        _events.emit(AccountActionsEvent.NavigateToEditAccountsScreen(account))
+    fun onEditAccountClick(account: AccountUi) = launchScoped {
+        _eventEmitter.send(AccountActionsUiEvent.NavigateToEditAccountsScreen(account))
     }
 
-    fun onDeleteAccount(account: AccountUi) = launchScoped {
-        _events.emit(AccountActionsEvent.ShowDeleteAccountDialog(account))
+    fun onDeleteAccountClick(account: AccountUi) = launchScoped {
+        _eventEmitter.send(AccountActionsUiEvent.ShowDeleteAccountDialog(account))
     }
 
-    fun onDeleteAccountConfirmation() = launchScoped {
-        _events.emit(AccountActionsEvent.DeleteAccount)
+    fun onConfirmAccountDeletionClick() = launchScoped {
+        _eventEmitter.send(AccountActionsUiEvent.DeleteAccount)
     }
 }

@@ -1,7 +1,7 @@
 package com.jxareas.xpensor.features.transactions.domain.usecase
 
 import com.jxareas.xpensor.features.accounts.domain.repository.AccountRepository
-import com.jxareas.xpensor.features.transactions.data.local.views.TransactionView
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
@@ -12,13 +12,13 @@ class DeleteTransactionUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
 ) {
 
-    suspend operator fun invoke(transaction: TransactionView) {
+    suspend fun invoke(details: TransactionDetails) {
 
-        val account = accountRepository.getAccountById(transaction.id)
+        val account = accountRepository.getAccountById(details.account.id)
         if (account != null) {
-            val updatedAmount = account.amount + transaction.amount
-            accountRepository.updateAccountAmount(transaction.accountId, updatedAmount)
-            transactionRepository.deleteTransactionById(transaction.id)
+            val updatedAmount = account.amount + details.transaction.amount
+            accountRepository.updateAccountAmount(details.account.id, updatedAmount)
+            transactionRepository.deleteTransactionById(details.transaction.id)
         }
     }
 }

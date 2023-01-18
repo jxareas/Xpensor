@@ -1,7 +1,7 @@
 package com.jxareas.xpensor.di.modules
 
-import com.jxareas.xpensor.features.converter.data.api.constants.ApiConstants
-import com.jxareas.xpensor.features.converter.data.api.interceptor.AuthenticationInterceptor
+import com.jxareas.xpensor.features.converter.data.remote.api.FreeCurrencyApi
+import com.jxareas.xpensor.features.converter.data.remote.api.interceptor.AuthenticationInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -21,7 +21,7 @@ class NetworkModule {
     private val moshi = MoshiConverterFactory.create(
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
-            .build()
+            .build(),
     )
 
     @Provides
@@ -42,7 +42,7 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl(ApiConstants.CURRENCY_API_BASE_URL)
+            .baseUrl(FreeCurrencyApi.CURRENCY_API_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(moshi)
             .build()

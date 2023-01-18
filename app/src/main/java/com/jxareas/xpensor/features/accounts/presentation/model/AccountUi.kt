@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AccountUi(
-    val id: Int?,
+    val id: Int = AccountUi.EMPTY_ID,
     val name: String,
     val amount: Double,
     val color: String,

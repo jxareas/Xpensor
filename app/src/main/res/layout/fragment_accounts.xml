@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:transitionGroup="true"
     tools:context=".features.accounts.presentation.ui.AccountsFragment">
 
     <TextView
@@ -28,6 +29,7 @@
         android:textAllCaps="true"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/text_view_accounts_label"
         app:layout_constraintEnd_toStartOf="@id/text_view_main_currency"
         app:layout_constraintTop_toTopOf="@id/text_view_accounts_label"
@@ -43,6 +45,7 @@
         android:textAllCaps="true"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/text_view_full_amount"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="USD" />

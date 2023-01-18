@@ -1,19 +1,20 @@
 package com.jxareas.xpensor.features.chart.presentation.ui
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnticipateOvershootInterpolator
-import androidx.core.view.MenuHost
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -23,15 +24,18 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.jxareas.xpensor.R
 import com.jxareas.xpensor.common.extensions.getLong
 import com.jxareas.xpensor.common.extensions.getThemeColor
+import com.jxareas.xpensor.common.extensions.navigateWithNavController
 import com.jxareas.xpensor.common.extensions.setCategoryAttributes
+import com.jxareas.xpensor.common.extensions.setMenuOnActivity
 import com.jxareas.xpensor.common.utils.DateUtils.toAmountFormat
-import com.jxareas.xpensor.common.utils.PreferenceUtils.MAIN_COLOR
-import com.jxareas.xpensor.core.presentation.MainActivityViewModel
+import com.jxareas.xpensor.core.data.local.preferences.UserPreferences.Companion.DEFAULT_COLOR
+import com.jxareas.xpensor.core.presentation.MainViewModel
 import com.jxareas.xpensor.databinding.FragmentChartBinding
 import com.jxareas.xpensor.features.date.presentation.ui.menu.SelectDateMenu
-import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
+import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ChartFragment : Fragment() {
@@ -41,7 +45,7 @@ class ChartFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: ChartViewModel by viewModels()
-    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,54 +80,46 @@ class ChartFragment : Fragment() {
         setupEventCollector()
     }
 
-    private fun setupEventCollector() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.events.collectLatest { event ->
-                when (event) {
-                    is ChartEvent.DateSelected ->
-                        navigateToSelectDateDialogFragment()
-                }
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedDateRange.collectLatest { dateRange ->
-                viewModel.onUpdateSelectedDateRange(dateRange.first, dateRange.second)
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            mainViewModel.selectedAccount.collectLatest { account ->
-                viewModel.onUpdateSelectedAccount(account)
-            }
-        }
-    }
-
-    private fun navigateToSelectDateDialogFragment() {
-        val direction =
-            ChartFragmentDirections.actionChartFragmentToDateSelectorDialogFragment()
-        findNavController().navigate(direction)
-    }
-
-    private fun setupMenu() {
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(
-            SelectDateMenu {
-                viewModel.onSelectedDateClick()
-            },
-            viewLifecycleOwner, Lifecycle.State.STARTED
-        )
+    private fun setupMenu() = setMenuOnActivity {
+        SelectDateMenu(viewModel::onDateSelectedClick)
     }
 
     private fun setupCollectors() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.categories.collectLatest { newCategories ->
-                updateChartData(newCategories)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.categories.collectLatest(this@ChartFragment::updateChartData)
+                }
+
+                launch {
+                    mainViewModel.selectedDateRange.collectLatest(viewModel::onSelectedDateRangeUpdate)
+                }
+
+                launch {
+                    mainViewModel.selectedAccount.collectLatest(viewModel::onSelectedAccountUpdate)
+                }
+
             }
         }
     }
 
-    private fun updateChartData(details: List<CategoryWithDetails>) {
+    private fun setupEventCollector() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.eventSource
+                .flowWithLifecycle(lifecycle)
+                .collectLatest { chartUiEvent ->
+                    when (chartUiEvent) {
+                        is ChartUiEvent.DateSelected -> {
+                            val selectDateDialogAction = ChartFragmentDirections
+                                .actionChartFragmentToDateSelectorDialogFragment()
+                            navigateWithNavController(selectDateDialogAction)
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun updateChartData(details: List<CategoryWithAmountUi>) {
         if (details.isNotEmpty()) {
             val currency = mainViewModel.getCurrency()
 
@@ -143,7 +139,7 @@ class ChartFragment : Fragment() {
 
             if (amount == 0.0) {
                 entries.add(PieEntry(1f))
-                entryColors.add(Color.parseColor(MAIN_COLOR))
+                entryColors.add(Color.parseColor(DEFAULT_COLOR))
                 binding.chart.alpha = 0.3f
             } else binding.chart.alpha = 1f
 
@@ -159,7 +155,8 @@ class ChartFragment : Fragment() {
                 holeRadius = 86f
                 setHoleColor(Color.TRANSPARENT)
                 setCenterTextColor(getThemeColor(com.google.android.material.R.attr.colorSecondary))
-                centerText = "Expenses\n$amountString"
+                centerText = resources.getString(R.string.expenses_with_amount, amountString)
+                setCenterTextTypeface(Typeface.DEFAULT_BOLD)
                 setCenterTextSize(20f)
                 description.isEnabled = false
                 legend.isEnabled = false
@@ -171,7 +168,7 @@ class ChartFragment : Fragment() {
         }
     }
 
-    private fun updateCategories(categories: List<CategoryWithDetails>, currency: String?) =
+    private fun updateCategories(categories: List<CategoryWithAmountUi>, currency: String?) =
         binding.run {
             category1.setCategoryAttributes(categories[0], currency)
             category2.setCategoryAttributes(categories[1], currency)

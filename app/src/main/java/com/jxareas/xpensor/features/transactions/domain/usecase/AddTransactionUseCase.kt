@@ -2,6 +2,7 @@ package com.jxareas.xpensor.features.transactions.domain.usecase
 
 import com.jxareas.xpensor.features.accounts.domain.repository.AccountRepository
 import com.jxareas.xpensor.features.transactions.domain.model.Transaction
+import com.jxareas.xpensor.features.transactions.domain.model.TransactionDetails
 import com.jxareas.xpensor.features.transactions.domain.repository.TransactionRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
@@ -12,11 +13,21 @@ class AddTransactionUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) {
 
-    suspend operator fun invoke(transaction: Transaction) {
-        accountRepository.getAccountById(transaction.accountId)?.let { account ->
+    suspend fun invoke(transaction: Transaction, accountId: Int, categoryId: Int) {
+        accountRepository.getAccountById(accountId)?.let { account ->
             val amount = account.amount - transaction.amount
-            accountRepository.updateAccountAmount(transaction.accountId, amount)
-            transactionRepository.insertTransaction(transaction)
+            accountRepository.updateAccountAmount(accountId, amount)
+            transactionRepository.insertTransaction(transaction, accountId, categoryId)
         }
     }
+
+    suspend fun invoke(details: TransactionDetails) {
+        accountRepository.getAccountById(details.account.id)?.let { account ->
+            val amount = account.amount - details.transaction.amount
+            accountRepository.updateAccountAmount(account.id, amount)
+            transactionRepository.insertTransaction(details)
+        }
+    }
+
+
 }

@@ -3,70 +3,71 @@ package com.jxareas.xpensor.features.transactions.presentation.ui.actions.catego
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jxareas.xpensor.common.extensions.launchScoped
-import com.jxareas.xpensor.features.accounts.presentation.mapper.AccountUiMapper
+import com.jxareas.xpensor.common.extensions.mapEach
+import com.jxareas.xpensor.features.accounts.presentation.mapper.toAccount
 import com.jxareas.xpensor.features.accounts.presentation.model.AccountUi
+import com.jxareas.xpensor.features.date.domain.model.DateRange
+import com.jxareas.xpensor.features.date.domain.model.EmptyDateRange
+import com.jxareas.xpensor.features.transactions.domain.model.CategoryWithDetails
 import com.jxareas.xpensor.features.transactions.domain.usecase.GetCategoriesUseCase
-import com.jxareas.xpensor.features.transactions.presentation.mapper.CategoryWithAmountUiMapper
+import com.jxareas.xpensor.features.transactions.presentation.mapper.toCategoryWithAmountUi
 import com.jxareas.xpensor.features.transactions.presentation.model.CategoryWithAmountUi
-import com.jxareas.xpensor.features.transactions.presentation.ui.actions.category.event.SelectCategoryEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.time.LocalDate
+import kotlinx.coroutines.flow.receiveAsFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class SelectCategoryViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val accountUiMapper: AccountUiMapper,
-    private val categoryUiMapper: CategoryWithAmountUiMapper,
 ) : ViewModel() {
 
     private val _categories = MutableStateFlow(emptyList<CategoryWithAmountUi>())
     val categories = _categories.asStateFlow()
 
-    private val _events = MutableSharedFlow<SelectCategoryEvent>()
-    val events = _events.asSharedFlow()
+    private val _eventEmitter = Channel<CategorySelectionUiEvent>(Channel.UNLIMITED)
+    val eventSource = _eventEmitter.receiveAsFlow()
 
     private val _selectedAccount = MutableStateFlow<AccountUi?>(null)
-    private val _selectedDateRange = MutableStateFlow<Pair<LocalDate?, LocalDate?>>(null to null)
+    private val _selectedDateRange = MutableStateFlow(EmptyDateRange)
 
-    private var getCategoriesJob: Job? = null
+    private var fetchCategoriesJob: Job? = null
 
     init {
-        launchGetCategoriesJob()
+        launchFetchCategoriesJob()
     }
 
-    private fun launchGetCategoriesJob() {
-        getCategoriesJob?.cancel()
-        val account = _selectedAccount.value?.let(accountUiMapper::mapToDomain)
-        getCategoriesJob =
-            getCategoriesUseCase(_selectedDateRange.value, account)
-                .onEach { categories ->
-                    _categories.value = categoryUiMapper.mapFromList(categories)
-                }
+    private fun launchFetchCategoriesJob() {
+        fetchCategoriesJob?.cancel()
+        val account = _selectedAccount.value?.toAccount()
+
+        fetchCategoriesJob =
+            getCategoriesUseCase.invoke(_selectedDateRange.value, account)
+                .mapEach(CategoryWithDetails::toCategoryWithAmountUi)
+                .onEach(_categories::value::set)
                 .launchIn(viewModelScope)
     }
 
-    fun setDateRange(from: LocalDate? = null, to: LocalDate? = null) {
-        _selectedDateRange.value = from to to
-        launchGetCategoriesJob()
+    fun onUpdateSelectedDateRange(dateRange: DateRange = EmptyDateRange) {
+        val (initialDate, finalDate) = dateRange
+        _selectedDateRange.value = initialDate to finalDate
+        launchFetchCategoriesJob()
     }
 
-    fun setSelectedAccount(accountUi: AccountUi? = null) {
+    fun onUpdateSelectedAccount(accountUi: AccountUi? = null) {
         _selectedAccount.value = accountUi
-        launchGetCategoriesJob()
+        launchFetchCategoriesJob()
     }
 
-    fun selectCategoryClick(
+    fun onSelectCategoryClick(
         accountUi: AccountUi,
         categoryWithAmountUi: CategoryWithAmountUi,
     ) = launchScoped {
-        _events.emit(SelectCategoryEvent.SelectCategory(accountUi, categoryWithAmountUi))
+        _eventEmitter.send(CategorySelectionUiEvent.SelectCategory(accountUi, categoryWithAmountUi))
     }
 }
