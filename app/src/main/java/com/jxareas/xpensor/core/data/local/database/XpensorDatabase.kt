@@ -1,7 +1,9 @@
 package com.jxareas.xpensor.core.data.local.database
 
+import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.jxareas.xpensor.core.data.local.converters.DateConverter
@@ -31,9 +33,18 @@ abstract class XpensorDatabase : RoomDatabase() {
     abstract val categoryDao: CategoryDao
     abstract val transactionDao: TransactionDao
 
-    companion object {
-        const val DATABASE_VERSION = 2
-        const val DATABASE_NAME = "xpensor_sample.db"
-        const val DATABASE_PATH = "database/$DATABASE_NAME"
+    internal companion object : DatabaseProvider.Room<XpensorDatabase> {
+        internal const val DATABASE_VERSION = 2
+        private const val DATABASE_NAME = "xpensor.db"
+        private const val DATABASE_PATH = "database/$DATABASE_NAME"
+
+        private fun xpensorDatabaseBuilder(context: Context) =
+            Room.databaseBuilder(context, XpensorDatabase::class.java, DATABASE_NAME)
+
+        override fun provideWithContext(context: Context): XpensorDatabase =
+            xpensorDatabaseBuilder(context)
+                .createFromAsset(DATABASE_PATH)
+                .build()
+
     }
 }

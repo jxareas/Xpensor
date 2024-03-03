@@ -2,11 +2,11 @@ package com.jxareas.xpensor.di
 
 import android.app.Application
 import android.content.Context
-import androidx.room.Room
 import com.jxareas.xpensor.core.data.local.database.XpensorDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -20,12 +20,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(app: Application): XpensorDatabase =
-        Room.databaseBuilder(
-            app.applicationContext,
-            XpensorDatabase::class.java,
-            XpensorDatabase.DATABASE_NAME,
-        ).createFromAsset(XpensorDatabase.DATABASE_PATH)
-            .build()
+    fun provideDatabase(@ApplicationContext context : Context): XpensorDatabase =
+        XpensorDatabase.provideWithContext(context)
 
 }
