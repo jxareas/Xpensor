@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface CurrencyModule {
+interface CurrencyConverterModule {
 
     @Binds
     @Singleton
